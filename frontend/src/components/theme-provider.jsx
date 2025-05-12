@@ -1,10 +1,24 @@
-// filepath: c:\Users\kamal\Desktop\mdUi-dummy\pages\_app.jsx
-import { ThemeProvider } from "next-themes";
+import { createContext, useState, useEffect, useContext } from "react";
+import '../App.css';
+// Create a Theme Context
+const ThemeContext = createContext();
 
-export const  CustomThemeProvider=({ Component, pageProps }) =>{
+export const CustomThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
-    <ThemeProvider attribute="class">
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
-}
+};
+
+// Custom Hook for Theme
+export const useTheme = () => useContext(ThemeContext);

@@ -1,11 +1,9 @@
+const css = require("tailwindcss-animate");
+
 const  config = {
-  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,jsx,ts,tsx}",
-    "./components/**/*.{js,jsx,ts,tsx}",
-    "./app/**/*.{js,jsx,ts,tsx}",
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
   ],
   prefix: "",
   theme: {
@@ -79,7 +77,7 @@ const  config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [css],
 };
 
 
