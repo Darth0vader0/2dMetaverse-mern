@@ -8,12 +8,29 @@ import { Label } from "../../components/ui/label"
 import { PageBackground } from "../../components/page-background"
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin =async  (e) => {
     e.preventDefault()
+    const result =await  fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+    if (!result.ok) {
+      const error = await result.json()
+      setErrorMessage(error.message) // Set the error message to be displayed
+      return
+    }
+
     // In a real app, you would authenticate the user here
     navigate("/settings") // Use react-router-dom's navigate function
   }
@@ -28,14 +45,17 @@ export default function LoginPage() {
           </CardHeader>
           <form onSubmit={handleLogin}>
             <CardContent className="space-y-4">
+              {errorMessage && ( // Conditionally render the error message
+                <div className="text-red-500 text-sm">{errorMessage}</div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="username"
+                  type="text"
+                  placeholder="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>

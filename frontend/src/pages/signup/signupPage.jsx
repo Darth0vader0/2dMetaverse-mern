@@ -6,24 +6,24 @@ import { Label } from "../../components/ui/label"
 import { PageBackground } from "../../components/page-background"
 
 export default function SignupPage() {
-  const [fullName, setFullName] = useState("")
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [nickname, setNickname] = useState("")
   const [error, setError] = useState("")
   const handleSignup = async (e) => {
     e.preventDefault()
     // In a real app, you would register the user here
-    const result = await fetch("/api/signup", {
+    const result = await fetch("http://localhost:5000/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fullName,
+        username,
         email,
+        nickname,
         password,
-        confirmPassword,
       }),
 
     })
@@ -51,12 +51,12 @@ export default function SignupPage() {
                 <div className="text-red-500 text-sm">{error}</div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="username">username</Label>
                 <Input
                   id="fullName"
                   placeholder="John Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
@@ -72,22 +72,22 @@ export default function SignupPage() {
                 />
               </div>
               <div className="space-y-2">
+                <Label htmlFor="confirmPassword">nickname</Label>
+                <Input
+                  id="nickname"
+                  type="text"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
               </div>
