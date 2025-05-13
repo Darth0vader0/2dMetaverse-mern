@@ -10,10 +10,30 @@ export default function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-
-  const handleSignup = (e) => {
+  const [error, setError] = useState("")
+  const handleSignup = async (e) => {
     e.preventDefault()
     // In a real app, you would register the user here
+    const result = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName,
+        email,
+        password,
+        confirmPassword,
+      }),
+
+    })
+    if (!result.ok) {
+      const error = await result.json()
+      setError(error.message)
+      return;
+    }
+    // If the signup is successful, redirect to the settings page
+
     window.location.href = "/settings" // Replace Next.js router with plain navigation
   }
 
@@ -27,6 +47,9 @@ export default function SignupPage() {
           </CardHeader>
           <form onSubmit={handleSignup}>
             <CardContent className="space-y-4">
+              {error && ( // Conditionally render the error message
+                <div className="text-red-500 text-sm">{error}</div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input

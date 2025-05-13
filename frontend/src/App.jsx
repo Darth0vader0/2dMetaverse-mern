@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" element={<RootLayout><LoginPage></LoginPage></RootLayout>} />
         <Route path="/metaverse" element={<RootLayout><MetaversePage></MetaversePage></RootLayout>} /> 
         <Route path="/settings" element={<RootLayout><SettingsPage></SettingsPage></RootLayout>} /> 
-        <Route path="/" element={<Navigate to="/login" replace />}> </Route>
+        <Route path="/" element={<Navigate to="/home" replace />}> </Route>
       </Routes>
     </Router>
     </>
