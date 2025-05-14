@@ -1,32 +1,29 @@
-"use client"
+"use client";
 
+import { User, UserRoundPen, Shield, Home, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Home, User, Volume2, Shield, LogOut, Menu } from "lucide-react";
-import { cn } from "../libs/utils";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { cn } from "../libs/utils";
 
-export function Sidebar() {
-  const location = useLocation();
-  const navigate = useNavigate();
+export function Sidebar({ activeTab, setActiveTab }) {
   const [open, setOpen] = useState(false);
 
   const sidebarItems = [
     {
       name: "Profile",
       icon: User,
-      path: "/settings",
+      tab: "profile",
     },
     {
-      name: "Sound & Music",
-      icon: Volume2,
-      path: "/settings?tab=sound",
+      name: "Avatar Customization",
+      icon: UserRoundPen,
+      tab: "avatar",
     },
     {
       name: "Privacy",
       icon: Shield,
-      path: "/settings?tab=privacy",
+  
     },
   ];
 
@@ -41,10 +38,13 @@ export function Sidebar() {
           <Button
             key={item.name}
             variant="ghost"
-            className={cn("w-full justify-start", location.pathname === item.path && "bg-muted")}
+            className={cn(
+              "w-full justify-start",
+              activeTab === item.tab && "bg-muted" // Highlight active tab
+            )}
             onClick={() => {
-              navigate(item.path);
-              setOpen(false);
+              setActiveTab(item.tab); // Update activeTab state
+              setOpen(false); // Close the sidebar (for mobile)
             }}
           >
             <item.icon className="mr-2 h-4 w-4" />
@@ -56,7 +56,7 @@ export function Sidebar() {
           variant="ghost"
           className="w-full justify-start text-primary"
           onClick={() => {
-            navigate("/metaverse");
+            setActiveTab("metaverse"); // Example: Set a tab for "Join World"
             setOpen(false);
           }}
         >
@@ -70,7 +70,7 @@ export function Sidebar() {
           variant="ghost"
           className="w-full justify-start text-muted-foreground"
           onClick={() => {
-            navigate("/");
+            setActiveTab("logout"); // Example: Handle logout tab
             setOpen(false);
           }}
         >
