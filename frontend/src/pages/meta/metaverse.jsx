@@ -139,7 +139,7 @@ export default function MetaversePage() {
                       <div 
                         key={world.id} 
                         className="border rounded-lg p-4 flex items-center gap-4 cursor-pointer hover:bg-accent/50 transition-colors"
-                        onClick={() => handleJoinWorld(world.id)}
+                        onClick={() => window.location.href = `/game`}
                       >
                         <div className={`h-14 w-14 rounded-full flex items-center justify-center ${world.color} text-white flex-shrink-0`}>
                           <span className="text-2xl">{world.image}</span>

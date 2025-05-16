@@ -7,6 +7,7 @@ import SignupPage from "./pages/signup/signupPage"
 import LoginPage from "./pages/login/loginPage"
 import MetaversePage from './pages/meta/metaverse';
 import SettingsPage from './pages/settings/settingPage';
+import PhaserGame from './pages/meta/phaserGame';
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<RootLayout><LoginPage></LoginPage></RootLayout>} />
         <Route path="/metaverse" element={<RootLayout><MetaversePage></MetaversePage></RootLayout>} /> 
         <Route path="/settings" element={<RootLayout><SettingsPage></SettingsPage></RootLayout>} /> 
+        <Route path="/game" element={<RootLayout><PhaserGame /></RootLayout>} /> 
         <Route path="/" element={<Navigate to="/home" replace />}> </Route>
       </Routes>
     </Router>
