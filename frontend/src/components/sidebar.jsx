@@ -56,7 +56,7 @@ export function Sidebar({ activeTab, setActiveTab }) {
           variant="ghost"
           className="w-full justify-start text-primary"
           onClick={() => {
-            setActiveTab("metaverse"); // Example: Set a tab for "Join World"
+           window.location.href='/metaverse' // Example: Set a tab for "Join World"
             setOpen(false);
           }}
         >
