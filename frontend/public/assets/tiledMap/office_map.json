@@ -22,12 +22,12 @@
         }, 
         {
          "id":4,
-         "image":"../final_map.png",
+         "image":"..\/..\/..\/..\/..\/..\/Downloads\/final map.png",
          "imageheight":470,
          "imagewidth":1148,
          "name":"background map",
          "offsetx":2,
-         "offsety":-4.66666666666669,
+         "offsety":-4.66667,
          "opacity":1,
          "type":"imagelayer",
          "visible":true,
@@ -40,7 +40,7 @@
          "name":"chairs",
          "objects":[
                 {
-                 "height":22.8181818181818,
+                 "height":22.8182,
                  "id":1,
                  "name":"chair_0",
                  "properties":[
@@ -55,6 +55,11 @@
                          "value":"ch_0"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -67,9 +72,9 @@
                  "rotation":0,
                  "type":"chairs",
                  "visible":true,
-                 "width":13.6363636363637,
-                 "x":197.818181818182,
-                 "y":93.1818181818182
+                 "width":13.6364,
+                 "x":197.818,
+                 "y":93.1818
                 }, 
                 {
                  "height":15.5,
@@ -87,6 +92,11 @@
                          "value":"ch_1"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -97,7 +107,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":11.75,
                  "x":37,
@@ -119,6 +129,11 @@
                          "value":"ch_2"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -129,7 +144,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16,
                  "x":62.25,
@@ -151,6 +166,11 @@
                          "value":"ch_3"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -161,7 +181,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14.5,
                  "x":85.25,
@@ -183,6 +203,11 @@
                          "value":"ch_4"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -193,7 +218,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":15.75,
                  "x":55,
@@ -215,6 +240,11 @@
                          "value":"ch_6"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -225,7 +255,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16.75,
                  "x":51.75,
@@ -247,6 +277,11 @@
                          "value":"ch_7"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -257,7 +292,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":15.5,
                  "x":29.75,
@@ -279,6 +314,11 @@
                          "value":"ch_8"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -289,7 +329,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":17.25,
                  "x":21.75,
@@ -311,6 +351,11 @@
                          "value":"ch_9"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -321,7 +366,7 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14.5,
                  "x":170.5,
@@ -343,6 +388,11 @@
                          "value":"ch_10"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -353,14 +403,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":12,
                  "x":135.5,
                  "y":419.75
                 }, 
                 {
-                 "height":15.0909090909091,
+                 "height":15.0909,
                  "id":16,
                  "name":"chair_11",
                  "properties":[
@@ -375,6 +425,11 @@
                          "value":"ch_11"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -385,14 +440,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":11.6363636363636,
-                 "x":139.454545454545,
-                 "y":223.090909090909
+                 "width":11.6364,
+                 "x":139.455,
+                 "y":223.091
                 }, 
                 {
-                 "height":16.1818181818182,
+                 "height":16.1818,
                  "id":17,
                  "name":"chair_12",
                  "properties":[
@@ -407,6 +462,11 @@
                          "value":"ch_12"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -417,14 +477,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":11.2727272727273,
-                 "x":192.181818181818,
-                 "y":200.181818181818
+                 "width":11.2727,
+                 "x":192.182,
+                 "y":200.182
                 }, 
                 {
-                 "height":10.3636363636364,
+                 "height":10.3636,
                  "id":18,
                  "name":"chair_13",
                  "properties":[
@@ -439,6 +499,11 @@
                          "value":"ch_13"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -449,14 +514,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":12.9090909090909,
-                 "x":309.454545454545,
-                 "y":136.727272727273
+                 "width":12.9091,
+                 "x":309.455,
+                 "y":136.727
                 }, 
                 {
-                 "height":13.8181818181818,
+                 "height":13.8182,
                  "id":19,
                  "name":"chair_14",
                  "properties":[
@@ -471,6 +536,11 @@
                          "value":"ch_14"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -481,14 +551,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":8.54545454545456,
-                 "x":313.454545454545,
-                 "y":170.909090909091
+                 "width":8.54545,
+                 "x":313.455,
+                 "y":170.909
                 }, 
                 {
-                 "height":11.8181818181818,
+                 "height":11.8182,
                  "id":20,
                  "name":"chair_15",
                  "properties":[
@@ -503,6 +573,11 @@
                          "value":"ch_15"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -513,14 +588,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":12.5454545454546,
-                 "x":291.454545454545,
-                 "y":213.272727272727
+                 "width":12.5455,
+                 "x":291.455,
+                 "y":213.273
                 }, 
                 {
-                 "height":12.3636363636364,
+                 "height":12.3636,
                  "id":21,
                  "name":"chair_16",
                  "properties":[
@@ -535,6 +610,11 @@
                          "value":"ch_16"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -545,14 +625,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":9.27272727272725,
-                 "x":295.090909090909,
-                 "y":248.727272727273
+                 "width":9.27273,
+                 "x":295.091,
+                 "y":248.727
                 }, 
                 {
-                 "height":11.4545454545455,
+                 "height":11.4545,
                  "id":24,
                  "name":"chair_17",
                  "properties":[
@@ -567,6 +647,11 @@
                          "value":"ch_17"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -577,14 +662,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":14.9090909090909,
-                 "x":352.909090909091,
-                 "y":204.909090909091
+                 "width":14.9091,
+                 "x":352.909,
+                 "y":204.909
                 }, 
                 {
-                 "height":22.0000000000001,
+                 "height":22,
                  "id":25,
                  "name":"chair_18",
                  "properties":[
@@ -599,6 +684,11 @@
                          "value":"ch_18"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -609,15 +699,15 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":16.1818181818182,
-                 "x":345.636363636364,
-                 "y":261.272727272727
+                 "width":16.1818,
+                 "x":345.636,
+                 "y":261.273
                 },
             
                 {
-                 "height":23.6363636363637,
+                 "height":23.6364,
                  "id":26,
                  "name":"chair_19",
                  "properties":[
@@ -632,6 +722,11 @@
                          "value":"ch_19"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -642,14 +737,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":16.7272727272727,
-                 "x":375.090909090909,
-                 "y":259.272727272727
+                 "width":16.7273,
+                 "x":375.091,
+                 "y":259.273
                 }, 
                 {
-                 "height":17.0909090909091,
+                 "height":17.0909,
                  "id":27,
                  "name":" chair_20",
                  "properties":[
@@ -664,6 +759,11 @@
                          "value":"ch_20"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -674,14 +774,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":12,
-                 "x":223.454545454545,
-                 "y":382.181818181818
+                 "x":223.455,
+                 "y":382.182
                 }, 
                 {
-                 "height":11.8181818181818,
+                 "height":11.8182,
                  "id":28,
                  "name":"chair_21",
                  "properties":[
@@ -696,6 +796,11 @@
                          "value":"ch_21"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -706,14 +811,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":12,
-                 "x":291.454545454545,
-                 "y":354.363636363636
+                 "x":291.455,
+                 "y":354.364
                 }, 
                 {
-                 "height":14.3636363636364,
+                 "height":14.3636,
                  "id":29,
                  "name":"chair_22",
                  "properties":[
@@ -728,6 +833,11 @@
                          "value":"ch_22"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -738,14 +848,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":9.27272727272731,
-                 "x":295.454545454545,
-                 "y":389.818181818182
+                 "width":9.27273,
+                 "x":295.455,
+                 "y":389.818
                 }, 
                 {
-                 "height":9.27272727272731,
+                 "height":9.27273,
                  "id":30,
                  "name":"chair_23",
                  "properties":[
@@ -760,6 +870,11 @@
                          "value":"ch_23"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -770,11 +885,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":11.8181818181818,
-                 "x":405.090909090909,
-                 "y":313.818181818182
+                 "width":11.8182,
+                 "x":405.091,
+                 "y":313.818
                 }, 
                 {
                  "height":14,
@@ -792,6 +907,11 @@
                          "value":"ch_5"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -802,14 +922,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":9,
                  "x":409.5,
                  "y":346.5
                 }, 
                 {
-                 "height":8.66666666666669,
+                 "height":8.66667,
                  "id":141,
                  "name":"chair_24",
                  "properties":[
@@ -824,6 +944,11 @@
                          "value":"ch_24"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -834,14 +959,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":13.6666666666666,
+                 "width":13.6667,
                  "x":477,
-                 "y":380.666666666667
+                 "y":380.667
                 }, 
                 {
-                 "height":9.66666666666663,
+                 "height":9.66667,
                  "id":142,
                  "name":"chair_25",
                  "properties":[
@@ -856,6 +981,11 @@
                          "value":"ch_25"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -866,9 +996,9 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.6666666666666,
+                 "width":15.6667,
                  "x":497,
                  "y":435
                 }, 
@@ -888,6 +1018,11 @@
                          "value":"ch_26"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -898,14 +1033,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.3333333333334,
-                 "x":612.333333333333,
-                 "y":415.333333333333
+                 "width":15.3333,
+                 "x":612.333,
+                 "y":415.333
                 }, 
                 {
-                 "height":22.6666666666667,
+                 "height":22.6667,
                  "id":144,
                  "name":"chair_28",
                  "properties":[
@@ -920,6 +1055,11 @@
                          "value":"ch_28"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -930,14 +1070,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":16.3333333333334,
-                 "x":623.666666666667,
-                 "y":227.666666666667
+                 "width":16.3333,
+                 "x":623.667,
+                 "y":227.667
                 }, 
                 {
-                 "height":19.6666666666667,
+                 "height":19.6667,
                  "id":145,
                  "name":"chair_27",
                  "properties":[
@@ -952,6 +1092,11 @@
                          "value":"ch_27"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -962,11 +1107,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":15,
-                 "x":594.333333333333,
-                 "y":230.333333333333
+                 "x":594.333,
+                 "y":230.333
                 }, 
                 {
                  "height":9,
@@ -984,6 +1129,11 @@
                          "value":"ch_29"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -994,11 +1144,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14,
                  "x":601,
-                 "y":173.333333333333
+                 "y":173.333
                 }, 
                 {
                  "height":11,
@@ -1016,6 +1166,11 @@
                          "value":"ch_30"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1026,11 +1181,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16,
                  "x":633,
-                 "y":93.3333333333333
+                 "y":93.3333
                 }, 
                 {
                  "height":21,
@@ -1048,6 +1203,11 @@
                          "value":"ch_31"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1058,9 +1218,9 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.3333333333333,
+                 "width":15.3333,
                  "x":688,
                  "y":94
                 }, 
@@ -1080,6 +1240,11 @@
                          "value":"ch_32"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1090,14 +1255,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":15,
                  "x":701,
                  "y":198
                 }, 
                 {
-                 "height":7.33333333333331,
+                 "height":7.33333,
                  "id":150,
                  "name":"chair_33",
                  "properties":[
@@ -1112,6 +1277,11 @@
                          "value":"ch_33"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1122,10 +1292,10 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.3333333333334,
-                 "x":844.333333333333,
+                 "width":15.3333,
+                 "x":844.333,
                  "y":371
                 }, 
                 {
@@ -1144,6 +1314,11 @@
                          "value":"ch_34"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1154,14 +1329,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":15,
-                 "x":838.666666666667,
+                 "x":838.667,
                  "y":426
                 }, 
                 {
-                 "height":21.6666666666667,
+                 "height":21.6667,
                  "id":152,
                  "name":"chair_35",
                  "properties":[
@@ -1176,6 +1351,11 @@
                          "value":"ch_35"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1186,11 +1366,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14,
-                 "x":868.333333333333,
-                 "y":423.333333333333
+                 "x":868.333,
+                 "y":423.333
                 },
             
                 {
@@ -1209,6 +1389,11 @@
                          "value":"ch_36"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1219,14 +1404,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":11.6666666666666,
+                 "width":11.6667,
                  "x":871,
                  "y":122
                 }, 
                 {
-                 "height":9.33333333333333,
+                 "height":9.33333,
                  "id":154,
                  "name":"chair_37",
                  "properties":[
@@ -1241,6 +1426,11 @@
                          "value":"ch_37"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1251,11 +1441,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.6666666666666,
+                 "width":15.6667,
                  "x":950,
-                 "y":97.3333333333333
+                 "y":97.3333
                 }, 
                 {
                  "height":21,
@@ -1273,6 +1463,11 @@
                          "value":"ch_39"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1283,14 +1478,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":14.3333333333334,
-                 "x":973.666666666667,
-                 "y":150.666666666667
+                 "width":14.3333,
+                 "x":973.667,
+                 "y":150.667
                 }, 
                 {
-                 "height":16.6666666666667,
+                 "height":16.6667,
                  "id":157,
                  "name":"chair_38",
                  "properties":[
@@ -1305,6 +1500,11 @@
                          "value":"ch_38"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1315,10 +1515,10 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16,
-                 "x":942.666666666667,
+                 "x":942.667,
                  "y":154
                 }, 
                 {
@@ -1337,6 +1537,11 @@
                          "value":"ch_48"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1347,14 +1552,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14,
                  "x":1057,
-                 "y":98.3333333333333
+                 "y":98.3333
                 }, 
                 {
-                 "height":16.6666666666667,
+                 "height":16.6667,
                  "id":159,
                  "name":"chair_47",
                  "properties":[
@@ -1369,6 +1574,11 @@
                          "value":"ch_47"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1379,14 +1589,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":18.6666666666667,
-                 "x":1048.66666666667,
-                 "y":154.333333333333
+                 "width":18.6667,
+                 "x":1048.67,
+                 "y":154.333
                 }, 
                 {
-                 "height":17.6666666666667,
+                 "height":17.6667,
                  "id":160,
                  "name":"chair_46",
                  "properties":[
@@ -1401,6 +1611,11 @@
                          "value":"ch_46"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1411,11 +1626,11 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":14,
                  "x":1080,
-                 "y":153.666666666667
+                 "y":153.667
                 }, 
                 {
                  "height":10,
@@ -1433,6 +1648,11 @@
                          "value":"ch_45"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1443,14 +1663,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16,
-                 "x":1032.66666666667,
+                 "x":1032.67,
                  "y":227
                 }, 
                 {
-                 "height":17.3333333333333,
+                 "height":17.3333,
                  "id":162,
                  "name":"chair_44",
                  "properties":[
@@ -1465,6 +1685,11 @@
                          "value":"ch_44"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1475,14 +1700,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":14.3333333333333,
+                 "width":14.3333,
                  "x":1026,
-                 "y":285.333333333333
+                 "y":285.333
                 }, 
                 {
-                 "height":20.6666666666667,
+                 "height":20.6667,
                  "id":163,
                  "name":"chair_43",
                  "properties":[
@@ -1497,6 +1722,11 @@
                          "value":"ch_43"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1507,14 +1737,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":14.3333333333335,
-                 "x":1056.66666666667,
-                 "y":281.333333333333
+                 "width":14.3333,
+                 "x":1056.67,
+                 "y":281.333
                 }, 
                 {
-                 "height":21.3333333333334,
+                 "height":21.3333,
                  "id":164,
                  "name":"chair_41",
                  "properties":[
@@ -1529,6 +1759,11 @@
                          "value":"ch_41"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1539,14 +1774,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":13,
-                 "x":1032.66666666667,
-                 "y":424.666666666667
+                 "x":1032.67,
+                 "y":424.667
                 }, 
                 {
-                 "height":21.3333333333333,
+                 "height":21.3333,
                  "id":165,
                  "name":"chair_42",
                  "properties":[
@@ -1561,6 +1796,11 @@
                          "value":"ch_42"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1571,14 +1811,14 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
                  "width":16,
-                 "x":1084.33333333333,
-                 "y":423.333333333333
+                 "x":1084.33,
+                 "y":423.333
                 }, 
                 {
-                 "height":22.6666666666667,
+                 "height":22.6667,
                  "id":166,
                  "name":"chair_40",
                  "properties":[
@@ -1593,6 +1833,11 @@
                          "value":"ch_40"
                         }, 
                         {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"isSittable",
                          "type":"bool",
                          "value":true
@@ -1603,15 +1848,15 @@
                          "value":"chair"
                         }],
                  "rotation":0,
-                 "type":"chair",
+                 "type":"chairs",
                  "visible":true,
-                 "width":15.3333333333334,
-                 "x":973.666666666667,
-                 "y":424.333333333333
+                 "width":15.3333,
+                 "x":973.667,
+                 "y":424.333
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -1629,6 +1874,11 @@
                          "name":"isClickedToOpen",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
                         }, 
                         {
                          "name":"isOpen",
@@ -1651,6 +1901,11 @@
                          "name":"isClickedToOpen",
                          "type":"bool",
                          "value":false
+                        }, 
+                        {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":true
                         }, 
                         {
                          "name":"isOpen",
@@ -1687,11 +1942,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":7.99999999999999,
-                 "x":127.333333333333,
-                 "y":182.333333333333
+                 "width":8,
+                 "x":127.333,
+                 "y":182.333
                 }, 
                 {
                  "height":21,
@@ -1704,7 +1959,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":11.5,
                  "x":114,
@@ -1721,7 +1976,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":20,
                  "x":246,
@@ -1738,14 +1993,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":8,
                  "x":324,
                  "y":208
                 }, 
                 {
-                 "height":5.66666666666669,
+                 "height":5.66667,
                  "id":44,
                  "name":"walls",
                  "properties":[
@@ -1755,14 +2010,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":117.333333333333,
-                 "x":8.66666666666667,
-                 "y":270.333333333333
+                 "width":117.333,
+                 "x":8.66667,
+                 "y":270.333
                 }, 
                 {
-                 "height":100.666666666667,
+                 "height":100.667,
                  "id":45,
                  "name":"walls",
                  "properties":[
@@ -1772,10 +2027,10 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":5.66666666666667,
-                 "x":120.333333333333,
+                 "width":5.66667,
+                 "x":120.333,
                  "y":277
                 }, 
                 {
@@ -1789,7 +2044,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":9.25,
                  "x":324.5,
@@ -1806,14 +2061,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":7,
                  "x":262.5,
                  "y":365.5
                 }, 
                 {
-                 "height":25.3333333333333,
+                 "height":25.3333,
                  "id":48,
                  "name":"walls",
                  "properties":[
@@ -1823,14 +2078,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":28.3333333333333,
+                 "width":28.3333,
                  "x":310,
                  "y":419
                 }, 
                 {
-                 "height":41.3333333333333,
+                 "height":41.3333,
                  "id":49,
                  "name":"walls",
                  "properties":[
@@ -1840,7 +2095,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":42,
                  "x":368,
@@ -1857,7 +2112,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":244.5,
                  "x":2.5,
@@ -1874,7 +2129,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":6,
                  "x":2.5,
@@ -1891,7 +2146,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":5,
                  "x":2.5,
@@ -1908,7 +2163,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":432.5,
                  "x":6.5,
@@ -1925,14 +2180,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":9,
                  "x":434,
                  "y":279
                 }, 
                 {
-                 "height":52.3333333333333,
+                 "height":52.3333,
                  "id":63,
                  "name":"walls",
                  "properties":[
@@ -1942,14 +2197,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":19,
-                 "x":246.666666666667,
-                 "y":31.3333333333333
+                 "x":246.667,
+                 "y":31.3333
                 }, 
                 {
-                 "height":49.6666666666667,
+                 "height":49.6667,
                  "id":64,
                  "name":"walls",
                  "properties":[
@@ -1959,11 +2214,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":18,
                  "x":324,
-                 "y":33.6666666666667
+                 "y":33.6667
                 }, 
                 {
                  "height":6,
@@ -1976,15 +2231,15 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":57.6666666666667,
-                 "x":266.333333333333,
-                 "y":31.3333333333333
+                 "width":57.6667,
+                 "x":266.333,
+                 "y":31.3333
                 },
             
                 {
-                 "height":53.3333333333333,
+                 "height":53.3333,
                  "id":66,
                  "name":"walls",
                  "properties":[
@@ -1994,14 +2249,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":69.3333333333333,
-                 "x":172.333333333333,
-                 "y":7.33333333333333
+                 "width":69.3333,
+                 "x":172.333,
+                 "y":7.33333
                 }, 
                 {
-                 "height":60.3333333333333,
+                 "height":60.3333,
                  "id":67,
                  "name":"walls",
                  "properties":[
@@ -2011,14 +2266,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":162.666666666667,
+                 "width":162.667,
                  "x":10,
                  "y":8
                 }, 
                 {
-                 "height":47.6666666666667,
+                 "height":47.6667,
                  "id":68,
                  "name":"walls",
                  "properties":[
@@ -2028,11 +2283,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":80,
                  "x":68,
-                 "y":91.6666666666667
+                 "y":91.6667
                 }, 
                 {
                  "height":50,
@@ -2045,14 +2300,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":7.33333333333331,
-                 "x":342.333333333333,
-                 "y":82.6666666666667
+                 "width":7.33333,
+                 "x":342.333,
+                 "y":82.6667
                 }, 
                 {
-                 "height":52.6666666666667,
+                 "height":52.6667,
                  "id":70,
                  "name":"walls",
                  "properties":[
@@ -2062,14 +2317,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":39,
-                 "x":342.333333333333,
-                 "y":133.333333333333
+                 "x":342.333,
+                 "y":133.333
                 }, 
                 {
-                 "height":5.33333333333334,
+                 "height":5.33333,
                  "id":71,
                  "name":"walls",
                  "properties":[
@@ -2079,11 +2334,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":53.6666666666667,
-                 "x":381.333333333333,
-                 "y":132.666666666667
+                 "width":53.6667,
+                 "x":381.333,
+                 "y":132.667
                 }, 
                 {
                  "height":48,
@@ -2096,14 +2351,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":23,
-                 "x":411.666666666667,
+                 "x":411.667,
                  "y":137
                 }, 
                 {
-                 "height":42.6666666666667,
+                 "height":42.6667,
                  "id":73,
                  "name":"walls",
                  "properties":[
@@ -2113,7 +2368,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":75,
                  "x":448,
@@ -2130,7 +2385,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":73.5,
                  "x":446.5,
@@ -2147,7 +2402,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":108.5,
                  "x":10.25,
@@ -2164,7 +2419,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":7.75,
                  "x":18,
@@ -2181,7 +2436,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":14.5,
                  "x":127.75,
@@ -2198,14 +2453,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":7.33333333333333,
-                 "x":119.333333333333,
+                 "width":7.33333,
+                 "x":119.333,
                  "y":427
                 }, 
                 {
-                 "height":107.666666666667,
+                 "height":107.667,
                  "id":80,
                  "name":"walls",
                  "properties":[
@@ -2215,14 +2470,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":13.6666666666667,
-                 "x":433.666666666667,
-                 "y":122.333333333333
+                 "width":13.6667,
+                 "x":433.667,
+                 "y":122.333
                 }, 
                 {
-                 "height":61.6666666666667,
+                 "height":61.6667,
                  "id":81,
                  "name":"walls",
                  "properties":[
@@ -2232,14 +2487,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":179.333333333333,
-                 "x":447.666666666667,
+                 "width":179.333,
+                 "x":447.667,
                  "y":5
                 }, 
                 {
-                 "height":43.6666666666667,
+                 "height":43.6667,
                  "id":82,
                  "name":"walls",
                  "properties":[
@@ -2249,11 +2504,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":71.6666666666667,
-                 "x":516.333333333333,
-                 "y":82.6666666666667
+                 "width":71.6667,
+                 "x":516.333,
+                 "y":82.6667
                 }, 
                 {
                  "height":92,
@@ -2266,14 +2521,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":6,
-                 "x":573.333333333333,
+                 "x":573.333,
                  "y":164
                 }, 
                 {
-                 "height":44.3333333333334,
+                 "height":44.3333,
                  "id":84,
                  "name":"walls",
                  "properties":[
@@ -2283,15 +2538,15 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":49.6666666666667,
-                 "x":468.333333333333,
-                 "y":322.666666666667
+                 "width":49.6667,
+                 "x":468.333,
+                 "y":322.667
                 },
             
                 {
-                 "height":65.3333333333334,
+                 "height":65.3333,
                  "id":85,
                  "name":"walls",
                  "properties":[
@@ -2301,14 +2556,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":10.6666666666667,
-                 "x":452.666666666667,
-                 "y":322.666666666667
+                 "width":10.6667,
+                 "x":452.667,
+                 "y":322.667
                 }, 
                 {
-                 "height":71.6666666666667,
+                 "height":71.6667,
                  "id":86,
                  "name":"walls",
                  "properties":[
@@ -2318,14 +2573,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":6.33333333333326,
+                 "width":6.33333,
                  "x":548,
-                 "y":322.666666666667
+                 "y":322.667
                 }, 
                 {
-                 "height":4.33333333333331,
+                 "height":4.33333,
                  "id":87,
                  "name":"walls",
                  "properties":[
@@ -2335,14 +2590,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":28.6666666666667,
-                 "x":518.333333333333,
-                 "y":362.333333333333
+                 "width":28.6667,
+                 "x":518.333,
+                 "y":362.333
                 }, 
                 {
-                 "height":7.33333333333331,
+                 "height":7.33333,
                  "id":88,
                  "name":"walls",
                  "properties":[
@@ -2352,14 +2607,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":245.666666666667,
-                 "x":444.666666666667,
-                 "y":448.333333333333
+                 "width":245.667,
+                 "x":444.667,
+                 "y":448.333
                 }, 
                 {
-                 "height":36.3333333333333,
+                 "height":36.3333,
                  "id":89,
                  "name":"walls",
                  "properties":[
@@ -2369,14 +2624,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":66.3333333333334,
-                 "x":641.666666666667,
+                 "width":66.3333,
+                 "x":641.667,
                  "y":412
                 }, 
                 {
-                 "height":60.3333333333333,
+                 "height":60.3333,
                  "id":90,
                  "name":"walls",
                  "properties":[
@@ -2386,14 +2641,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":7.66666666666663,
-                 "x":815.666666666667,
+                 "width":7.66667,
+                 "x":815.667,
                  "y":390
                 }, 
                 {
-                 "height":7.66666666666669,
+                 "height":7.66667,
                  "id":92,
                  "name":"walls",
                  "properties":[
@@ -2403,11 +2658,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
-                 "width":210.333333333333,
+                 "width":210.333,
                  "x":691,
-                 "y":448.666666666667
+                 "y":448.667
                 }, 
                 {
                  "height":9.5,
@@ -2420,7 +2675,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":240.5,
                  "x":901,
@@ -2437,7 +2692,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":152,
                  "x":984,
@@ -2454,7 +2709,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":8.5,
                  "x":1016.5,
@@ -2471,7 +2726,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":82,
                  "x":701.5,
@@ -2488,7 +2743,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":73,
                  "x":626.5,
@@ -2505,7 +2760,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":51,
                  "x":785,
@@ -2522,7 +2777,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":296,
                  "x":838,
@@ -2539,7 +2794,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":129.5,
                  "x":911,
@@ -2556,7 +2811,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":37,
                  "x":1097,
@@ -2573,7 +2828,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":15,
                  "x":1132.5,
@@ -2590,7 +2845,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":14,
                  "x":1134.5,
@@ -2608,7 +2863,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":20.5,
                  "x":819.5,
@@ -2625,7 +2880,7 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":10.5,
                  "x":737,
@@ -2642,14 +2897,14 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":18,
                  "x":1115,
                  "y":247
                 }, 
                 {
-                 "height":14.5454545454546,
+                 "height":14.5455,
                  "id":110,
                  "name":"walls",
                  "properties":[
@@ -2659,11 +2914,11 @@
                          "value":true
                         }],
                  "rotation":0,
-                 "type":"wall",
+                 "type":"walls",
                  "visible":true,
                  "width":16,
-                 "x":1114.18181818182,
-                 "y":378.545454545455
+                 "x":1114.18,
+                 "y":378.545
                 }],
          "opacity":1,
          "properties":[
@@ -2690,7 +2945,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2712,7 +2967,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2734,7 +2989,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2756,7 +3011,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2778,7 +3033,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2800,7 +3055,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2822,7 +3077,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2844,7 +3099,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2866,7 +3121,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2888,7 +3143,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2903,14 +3158,14 @@
                  "y":132.5
                 }, 
                 {
-                 "height":38.7272727272727,
+                 "height":38.7273,
                  "id":124,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2920,19 +3175,19 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":74.7272727272727,
+                 "width":74.7273,
                  "x":334,
                  "y":218
                 }, 
                 {
-                 "height":53.8181818181819,
+                 "height":53.8182,
                  "id":125,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2942,9 +3197,9 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":15.8181818181818,
-                 "x":417.818181818182,
-                 "y":309.454545454545
+                 "width":15.8182,
+                 "x":417.818,
+                 "y":309.455
                 }, 
                 {
                  "height":38.25,
@@ -2954,7 +3209,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2976,7 +3231,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -2998,7 +3253,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3020,7 +3275,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3042,7 +3297,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3064,7 +3319,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3087,7 +3342,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3109,7 +3364,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3131,7 +3386,7 @@
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3146,14 +3401,14 @@
                  "y":110.25
                 }, 
                 {
-                 "height":21.6363636363637,
+                 "height":21.6364,
                  "id":135,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3163,19 +3418,19 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":45.6363636363636,
-                 "x":959.636363636364,
-                 "y":401.454545454545
+                 "width":45.6364,
+                 "x":959.636,
+                 "y":401.455
                 }, 
                 {
-                 "height":22.3636363636364,
+                 "height":22.3636,
                  "id":136,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3185,19 +3440,19 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":45.6363636363636,
-                 "x":1015.63636363636,
-                 "y":400.181818181818
+                 "width":45.6364,
+                 "x":1015.64,
+                 "y":400.182
                 }, 
                 {
-                 "height":23.2727272727273,
+                 "height":23.2727,
                  "id":138,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3207,19 +3462,19 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":47.0909090909092,
-                 "x":1069.27272727273,
+                 "width":47.0909,
+                 "x":1069.27,
                  "y":400
                 }, 
                 {
-                 "height":37.2727272727273,
+                 "height":37.2727,
                  "id":139,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3229,19 +3484,19 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":73.0909090909091,
-                 "x":1014.36363636364,
-                 "y":239.636363636364
+                 "width":73.0909,
+                 "x":1014.36,
+                 "y":239.636
                 }, 
                 {
-                 "height":38.1818181818182,
+                 "height":38.1818,
                  "id":140,
                  "name":"tables",
                  "properties":[
                         {
                          "name":"isCollidable",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }, 
                         {
                          "name":"isOqupied",
@@ -3251,9 +3506,9 @@
                  "rotation":0,
                  "type":"table",
                  "visible":true,
-                 "width":70.909090909091,
-                 "x":1041.27272727273,
-                 "y":110.727272727273
+                 "width":70.9091,
+                 "x":1041.27,
+                 "y":110.727
                 }],
          "opacity":1,
          "type":"objectgroup",
