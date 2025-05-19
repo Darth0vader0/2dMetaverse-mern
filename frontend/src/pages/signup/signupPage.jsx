@@ -41,10 +41,10 @@ export default function SignupPage() {
 
   return (
    
-  <PageBackground className="items-center justify-center relative overflow-hidden">
+  <PageBackground className="items-center  justify-center relative overflow-hidden">
     {/* Background GIF */}
     <img
-      src="/gifs/signup-bg.png"
+      src="/gifs/signup-bg.gif"
       alt="background"
       className="absolute inset-0 w-full h-full object-cover z-0"
       draggable={false}
