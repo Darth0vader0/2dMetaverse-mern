@@ -31,22 +31,33 @@ export default function Home() {
       </div>
 
       {/* Right side - Content */}
-      <div className="hidden md:flex w-1/2 h-full bg-background flex-col justify-center items-start p-12">
-        <div className="max-w-md">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Step Into Your Own 2D World</h1>
-          <p className="text-muted-foreground mb-8">Create, Explore, and Hang Out in a Personalized 2D Metaverse</p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button onClick={() => window.location.href='/login'}>Login</Button>
-            <Button onClick={() =>window.location.href='/signup'} variant="outline">
-              Sign Up
-            </Button>
-            <Button onClick={() => window.location.href='/metaverse'} variant="ghost">
-              Explore as Guest
-            </Button>
-          </div>
-        </div>
-      </div>
-
+  {/* Right side - Content */}
+<div className="hidden md:flex w-1/2 h-full bg-background flex-col justify-center items-start p-12 relative overflow-hidden">
+  {/* Background Video */}
+  <video
+    className="absolute inset-0 w-full h-full object-cover z-0"
+    src="/videos/metaverse-bg.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+  />
+  {/* Overlay for readability */}
+  <div className="absolute inset-0 bg-black/70 z-10" />
+  <div className="max-w-md relative z-20">
+    <h1 className="text-4xl font-bold tracking-tight mb-4">Step Into Your Own 2D World</h1>
+    <p className="text-muted-foreground mb-8">Create, Explore, and Hang Out in a Personalized 2D Metaverse</p>
+    <div className="flex flex-col sm:flex-row gap-4">
+      <Button onClick={() => window.location.href='/login'}>Login</Button>
+      <Button onClick={() =>window.location.href='/signup'} variant="outline">
+        Sign Up
+      </Button>
+      <Button onClick={() => window.location.href='/metaverse'} variant="ghost">
+        Explore as Guest
+      </Button>
+    </div>
+  </div>
+</div>
       {/* Mobile view - Content overlay */}
       <div className="absolute inset-0 flex md:hidden flex-col justify-center items-center p-6 bg-black/50 text-white">
         <div className="max-w-md text-center">

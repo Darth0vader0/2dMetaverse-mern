@@ -13,9 +13,9 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin =async  (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    const result =await  fetch("http://localhost:5000/api/login", {
+    const result = await fetch("http://localhost:5000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,19 +27,27 @@ export default function LoginPage() {
     })
     if (!result.ok) {
       const error = await result.json()
-      setErrorMessage(error.message) // Set the error message to be displayed
+      setErrorMessage(error.message)
       return
     }
     const data = await result.json()
-    localStorage.setItem('user', JSON.stringify(data.user)) // Store user data in localStorage
-     // Set the user state with username and nickname
-    // In a real app, you would authenticate the user here
-    navigate("/settings") // Use react-router-dom's navigate function
+    localStorage.setItem('user', JSON.stringify(data.user))
+    navigate("/settings")
   }
 
   return (
-    <PageBackground className="items-center justify-center">
-      <div className="w-full max-w-md p-4">
+    <PageBackground className="items-center justify-center relative overflow-hidden">
+      {/* Background GIF */}
+      <img
+        src="/gifs/metaverse-bg.gif"
+        alt="background"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        draggable={false}
+      />
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 bg-black/70 z-10" />
+      {/* Login Form */}
+      <div className="w-full max-w-md p-4 relative z-20">
         <Card className="w-full shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
@@ -47,11 +55,11 @@ export default function LoginPage() {
           </CardHeader>
           <form onSubmit={handleLogin}>
             <CardContent className="space-y-4">
-              {errorMessage && ( // Conditionally render the error message
+              {errorMessage && (
                 <div className="text-red-500 text-sm">{errorMessage}</div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
                   type="text"
