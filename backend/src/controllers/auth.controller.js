@@ -6,14 +6,14 @@ dotenv.config();
 
 class AuthController {
     async signup(req, res) {
-        const { username, password, email, nickname } = req.body;
+        const { username, password, email, nickname,gender } = req.body;
         try {
             const existingUser = await User.findOne({ $or: [{ username }, { email }] });
             if (existingUser) {
                 return res.status(400).json({ message: 'Username or email already exists' });
             }
             const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = new User({ username, password: hashedPassword, email, nickname });
+            const newUser = new User({ username, password: hashedPassword, email, nickname ,gender});
             if (!newUser) {
                 return res.status(500).json({ message: 'User creation failed' });
             }
@@ -49,7 +49,7 @@ class AuthController {
                 maxAge:  24 * 60 * 60 * 1000, // 1day
                 path: "/",
             });
-            return res.status(200).json({ message: 'Login successful' });
+            return res.status(200).json({ message: 'Login successful', user });
 
         } catch (error) {
             return res.status(500).json({ message: 'Server error', error });

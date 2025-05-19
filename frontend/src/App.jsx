@@ -9,15 +9,16 @@ import MetaversePage from './pages/meta/metaverse';
 import SettingsPage from './pages/settings/settingPage';
 import PhaserGame from './pages/meta/phaserGame';
 function App() {
+ 
   return (
     <>
     <Router>
       <Routes>
         <Route path="/home" element={<RootLayout><Home /></RootLayout>} />
         <Route path="/signup" element={<RootLayout><SignupPage></SignupPage></RootLayout>} />
-        <Route path="/login" element={<RootLayout><LoginPage></LoginPage></RootLayout>} />
+        <Route path="/login" element={<RootLayout><LoginPage  ></LoginPage></RootLayout>} />
         <Route path="/metaverse" element={<RootLayout><MetaversePage></MetaversePage></RootLayout>} /> 
-        <Route path="/settings" element={<RootLayout><SettingsPage></SettingsPage></RootLayout>} /> 
+        <Route path="/settings" element={<RootLayout><SettingsPage ></SettingsPage></RootLayout>} /> 
         <Route path="/game" element={<RootLayout><PhaserGame /></RootLayout>} /> 
         <Route path="/" element={<Navigate to="/home" replace />}> </Route>
       </Routes>

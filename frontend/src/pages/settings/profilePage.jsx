@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { Input } from "../../components/ui/input"
@@ -8,16 +8,20 @@ import { Label } from "../../components/ui/label"
 import { Switch } from "../../components/ui/switch"
 import { PageBackground } from "../../components/page-background"
 
+
 export default function ProfilePage() {
-    const [username, setUsername] = useState("")
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [musicEnabled, setMusicEnabled] = useState(true)
   const [privacyEnabled, setPrivacyEnabled] = useState(false)
+  const [user, setUser] = useState({ username: "Guest" }) // Default user state
     const handleSaveSettings = () => {
     // In a real app, you would save the settings here
     window.location.href = "/metaverse" // Replace with actual navigation
   }
-
+  useEffect(() =>
+    setUser(JSON.parse(localStorage.getItem('user')) || { username: "Guest" })
+  , []); // Load user from localStorage on mount
+    
     return(
         <main className="flex-1 overflow-auto p-4 md:p-6">
           <div className="mx-auto max-w-4xl pb-20">
@@ -39,13 +43,8 @@ export default function ProfilePage() {
                     <Button variant="outline">Upload Avatar</Button>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="username">Username</Label>
-                    <Input
-                      id="username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Enter your username"
-                    />
+                    <Label htmlFor="username">Username : {user.username} </Label>
+                    <h2 className=" "></h2>
                   </div>
                 </CardContent>
               </Card>

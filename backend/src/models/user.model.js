@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     password:{type :String,required:true},
     email:{type :String,required:true,unique:true},
     nickname:{type :String,required:true},
-    avatar:{type :String,default:"red"}
+    gender:{type :String ,default:"male",required:true,},
+    avatar:{type :String,default:"bob"}
 })
 
 const User = mongoose.model('User', userSchema);

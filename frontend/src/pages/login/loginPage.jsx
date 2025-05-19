@@ -30,7 +30,9 @@ export default function LoginPage() {
       setErrorMessage(error.message) // Set the error message to be displayed
       return
     }
-
+    const data = await result.json()
+    localStorage.setItem('user', JSON.stringify(data.user)) // Store user data in localStorage
+     // Set the user state with username and nickname
     // In a real app, you would authenticate the user here
     navigate("/settings") // Use react-router-dom's navigate function
   }

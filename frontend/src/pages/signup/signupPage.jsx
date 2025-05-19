@@ -10,6 +10,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [nickname, setNickname] = useState("")
+  const [gender,setGender] = useState('male')
   const [error, setError] = useState("")
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -24,6 +25,7 @@ export default function SignupPage() {
         email,
         nickname,
         password,
+        gender
       }),
 
     })
@@ -91,6 +93,44 @@ export default function SignupPage() {
                   required
                 />
               </div>
+<div className="space-y-2">
+  <Label htmlFor="gender">Gender</Label>
+  <div className="flex items-center gap-6 mt-1">
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="male"
+        checked={gender === "male"}
+        onChange={() => setGender("male")}
+        className="accent-purple-600"
+      />
+      <span>Male</span>
+    </label>
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="female"
+        checked={gender === "female"}
+        onChange={() => setGender("female")}
+        className="accent-pink-500"
+      />
+      <span>Female</span>
+    </label>
+    <label className="flex items-center gap-2">
+      <input
+        type="radio"
+        name="gender"
+        value="other"
+        checked={gender === "other"}
+        onChange={() => setGender("other")}
+        className="accent-blue-400"
+      />
+      <span>Other</span>
+    </label>
+  </div>
+</div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button type="submit" className="w-full">

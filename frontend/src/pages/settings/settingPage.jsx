@@ -13,10 +13,10 @@ export default function SettingsPage() {
     <PageBackground>
       <div className="flex min-h-screen">
         {/* Pass activeTab and setActiveTab as props to Sidebar */}
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab}  />
         <div className="flex-1 p-4">
           {/* Render content based on activeTab */}
-          {activeTab === "profile" && <ProfilePage />}
+          {activeTab === "profile" && <ProfilePage  />}
           {activeTab === "avatar" && <AvatarCustomizationPage />}
         </div>
       </div>

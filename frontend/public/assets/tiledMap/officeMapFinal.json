@@ -1444,7 +1444,7 @@
                         {
                          "name":"direction",
                          "type":"string",
-                         "value":"other"
+                         "value":"south"
                         }, 
                         {
                          "name":"isCollidable",

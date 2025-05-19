@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 "use client"
-
+import { useNavigate } from "react-router-dom"
 import React, { useEffect, useState } from "react"
 import { Button } from "../../components/ui/button"
 import { ArrowLeft, Plus, Users, Globe, Star, X } from "lucide-react"
@@ -17,7 +18,7 @@ export default function MetaversePage() {
   const [spaceName, setSpaceName] = useState("")
   const [spaceCapacity, setSpaceCapacity] = useState("10")
   const [joinCode, setJoinCode] = useState("")
-  
+  const navigate = useNavigate()
   // Sample existing worlds
   const existingWorlds = [
     { id: 1, name: "Central Plaza", users: 42, image: "🏙️", color: "bg-purple-600" },
@@ -40,7 +41,7 @@ export default function MetaversePage() {
   }, [])
 
   const handleNavigation = (path) => {
-    window.location.href = path
+    navigate(path)
   }
 
     const handleJoinWorld = (worldId) => {
