@@ -11,15 +11,15 @@ export default function AvatarCustomizationPage() {
 
   // Replace emoji with image paths (ensure these images exist in public/avatars/)
   const maleAvatars = [
-    { id: 1, name: "bob", image: "/avatars/male1.jpg", color: "bg-blue-600" },
-    { id: 2, name: "tom", image: "/avatars/male2.jpg", color: "bg-gray-600" },
-    { id: 3, name: "david", image: "/avatars/male3.png", color: "bg-green-600" },
+    { id: 1, name: "bob", image: "/avatars/bob.jpg", color: "bg-blue-600" },
+    { id: 2, name: "tom", image: "/avatars/tom.jpg", color: "bg-gray-600" },
+    { id: 3, name: "david", image: "/avatars/david.png", color: "bg-green-600" },
   ]
 
   const femaleAvatars = [
-    { id: 1, name: "alice", image: "/avatars/female1.jpg", color: "bg-purple-600" },
-    { id: 2, name: "natasha", image: "/avatars/female2.jpg", color: "bg-pink-600" },
-    { id: 3, name: "nisha", image: "/avatars/female3.png", color: "bg-red-600" },
+    { id: 1, name: "alice", image: "/avatars/alice.jpg", color: "bg-purple-600" },
+    { id: 2, name: "natasha", image: "/avatars/natasha.jpg", color: "bg-pink-600" },
+    { id: 3, name: "nisha", image: "/avatars/nisha.png", color: "bg-red-600" },
   ]
 
   const avatars = gender === "male" ? maleAvatars : femaleAvatars
@@ -37,7 +37,27 @@ export default function AvatarCustomizationPage() {
     setCurrentAvatar(0) // Reset to first avatar when changing gender
   }
 
-  const handleSaveAvatar = () => {
+  const handleSaveAvatar = async () => {
+
+    localStorage.setItem("avatar", JSON.stringify(avatars[currentAvatar]))
+    // save avatar name in backend
+    const response = await fetch("http://localhost:5000/api/save-avatar", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatarName: avatars[currentAvatar].name,
+      }
+    ),
+    credentials: "include",
+    })
+    if (!response.ok) {
+      const error = await response.json()
+      console.error("Error saving avatar:", error)
+      return
+    }
+    // If the save is successful, redirect to the settings page
     // In a real app, you would save the selected avatar here
     window.location.href = "/settings" // Navigate back to settings
   }

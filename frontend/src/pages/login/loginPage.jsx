@@ -24,6 +24,7 @@ export default function LoginPage() {
         username,
         password,
       }),
+      credentials: "include",
     })
     if (!result.ok) {
       const error = await result.json()

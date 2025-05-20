@@ -36,7 +36,8 @@ class AuthController {
             if (!isPasswordValid) {
                 return res.status(400).json({ message: 'Invalid username or password' });
             }
-            const token = jwt.sign({ id: user._id,
+            const token = jwt.sign({ 
+                id: user._id,
                 nickname:user.nickname,
                 username
              }, process.env.JWT_SECRET, { expiresIn: '24h' });
@@ -52,6 +53,26 @@ class AuthController {
             return res.status(200).json({ message: 'Login successful', user });
 
         } catch (error) {
+            return res.status(500).json({ message: 'Server error', error });
+        }
+    }
+
+    async saveAvatar(req, res) {
+        const { avatarName } = req.body;
+        console.log(req.user);
+        if (!avatarName) {
+            return res.status(400).json({ message: 'Avatar name is required' });
+        }
+        try {
+            const user = await User.findById(req.user.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            user.avatar = avatarName;
+            await user.save();
+            return res.status(200).json({ message: 'Avatar saved successfully' });
+        }
+        catch (error) {
             return res.status(500).json({ message: 'Server error', error });
         }
     }

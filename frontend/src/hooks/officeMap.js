@@ -6,12 +6,15 @@ export default class OfficeMapScene extends Phaser.Scene {
   }
 
   preload() {
+    const avatar = JSON.parse(localStorage.getItem('avatar'));
+    
+
     this.load.image('tiles', '/assets/background/final_map.png');
     this.load.tilemapTiledJSON('officeMap', '/assets/tiledMap/officeMapFinal.json');
-    this.load.spritesheet('avatar', '/avatars/animation_frames/female1.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('avatar', `/avatars/animation_frames/${avatar.name}.png`, { frameWidth: 64, frameHeight:64  });
 
-    this.load.image('female1Back', '/avatars/sitting/female1Back.png');
-    this.load.image('female1Top', '/avatars/sitting/female1Top1.png');
+    this.load.image('female1Back', `/avatars/sitting/${avatar.name}Back.png`);
+    this.load.image('female1Top', `/avatars/sitting/${avatar.name}Top.png`);
   }
 
   create() {
