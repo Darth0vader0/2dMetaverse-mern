@@ -22,9 +22,13 @@ export default function MetaversePage() {
   // Sample existing worlds
   const existingWorlds = [
     { id: 1, name: "Central Plaza", users: 42, image: "🏙️", color: "bg-purple-600" },
-    { id: 2, name: "Fantasy Land", users: 28, image: "🏰", color: "bg-blue-600" },
-    { id: 3, name: "Tech Hub", users: 15, image: "🚀", color: "bg-green-600" },
-    { id: 4, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" }
+    // { id: 2, name: "Fantasy Land", users: 28, image: "🏰", color: "bg-blue-600" },
+    // { id: 3, name: "Tech Hub", users: 15, image: "🚀", color: "bg-green-600" },
+    // { id: 4, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+    // { id: 5, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+    // { id: 6, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+    // { id: 44, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+    // { id: 42, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
   ]
 
   useEffect(() => {

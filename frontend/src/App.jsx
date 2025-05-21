@@ -9,7 +9,30 @@ import MetaversePage from './pages/meta/metaverse';
 import SettingsPage from './pages/settings/settingPage';
 import PhaserGame from './pages/meta/phaserGame';
 function App() {
+ //no one can open inspect tab
  
+  //  React.useEffect(() => {
+  //   const handleKeyDown = (e) => {
+  //     // F12, Ctrl+Shift+I/J/C, Ctrl+U
+  //     if (
+  //       e.keyCode === 123 || // F12
+  //       (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
+  //       (e.ctrlKey && e.key === 'u')
+  //     ) {
+  //       e.preventDefault();
+  //       e.stopPropagation();
+  //     }
+  //   };
+  //   const handleContextMenu = (e) => {
+  //     e.preventDefault();
+  //   };
+  //   window.addEventListener('keydown', handleKeyDown);
+  //   window.addEventListener('contextmenu', handleContextMenu);
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyDown);
+  //     window.removeEventListener('contextmenu', handleContextMenu);
+  //   };
+  // }, []);
   return (
     <>
     <Router>

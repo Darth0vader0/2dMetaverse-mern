@@ -22,7 +22,8 @@ app.get('/', (req, res) => {
 
 app.post('/api/signup', AuthController.signup);
 app.post('/api/login', AuthController.login);
-app.put('/api/save-avatar', AuthMiddlware.verifyToken,AuthController.saveAvatar);
+app.put('/api/save-avatar', AuthMiddlware.verifyToken, AuthController.saveAvatar);
+app.post('/api/create-space', AuthMiddlware.verifyToken, SpaceController.createSpace);
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
