@@ -19,22 +19,47 @@ export default function MetaversePage() {
   const [spaceCapacity, setSpaceCapacity] = useState("10")
   const [joinCode, setJoinCode] = useState("")
   const navigate = useNavigate()
-  // Sample existing worlds
-  const existingWorlds = [
-    { id: 1, name: "Central Plaza", users: 42, image: "🏙️", color: "bg-purple-600" },
-    // { id: 2, name: "Fantasy Land", users: 28, image: "🏰", color: "bg-blue-600" },
-    // { id: 3, name: "Tech Hub", users: 15, image: "🚀", color: "bg-green-600" },
-    // { id: 4, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
-    // { id: 5, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
-    // { id: 6, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
-    // { id: 44, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
-    // { id: 42, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
-  ]
+  const [existingWorlds ,setExistingWorlds]= useState([]);
 
-  useEffect(() => {
+  // Sample existing worlds
+  // const existingWorlds = [
+  //   { id: 1, name: "Central Plaza", users: 42, image: "🏙️", color: "bg-purple-600" },
+  //   // { id: 2, name: "Fantasy Land", users: 28, image: "🏰", color: "bg-blue-600" },
+  //   // { id: 3, name: "Tech Hub", users: 15, image: "🚀", color: "bg-green-600" },
+  //   // { id: 4, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+  //   // { id: 5, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+  //   // { id: 6, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+  //   // { id: 44, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+  //  
+  // ]
+
+  useEffect( () => {
     // Simulate fetching query parameters (replace with actual logic if needed)
     const urlParams = new URLSearchParams(window.location.search)
     setIsGuest(urlParams.get("guest") === "true")
+    const fetchWorlds = async () => {
+      await fetch('http://localhost:5000/api/get-spaces',{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    })
+    if (!fetchWorlds.ok) {
+      const error = await fetchWorlds.json()
+      alert(`Error fetching worlds: ${error.message}`)
+      return
+    }
+    const worlds = await fetchWorlds.json();
+    const formattedWorlds = worlds.map((world) => ({
+      id: world._id,
+      name: world.name,
+      users: world.members.length,
+      image: world.name.slice(0,1).toUpperCase(),
+      color: world.color
+    }))
+    setExistingWorlds(formattedWorlds)
+    }
 
     // Simulate game loading
     const timer = setTimeout(() => {
@@ -42,7 +67,7 @@ export default function MetaversePage() {
     }, 1500)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [existingWorlds])
 
   const handleNavigation = (path) => {
     navigate(path)
@@ -57,8 +82,45 @@ export default function MetaversePage() {
       setGameLoaded(true)
     }, 1000)
   }
-  const handleCreateSpace = () => {
+  const handleCreateSpace = async () => {
     if (!spaceName) return
+    if (!spaceCapacity) return
+    // Validate space name and capacity
+    if (spaceName.length < 3 || spaceName.length > 20) {
+      alert("Space name must be between 3 and 20 characters.")
+      return
+    }
+    if (isNaN(spaceCapacity) || spaceCapacity < 1 || spaceCapacity > 100) {
+      alert("Capacity must be a number between 1 and 100.")
+      return
+    }
+    // create space logic
+    const response = await fetch('http://localhost:5000/api/create-space',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: spaceName, maxMembers: spaceCapacity })
+      ,credentials: 'include'
+
+    })
+    if (!response.ok) {
+      const error = await response.json()
+      alert(`Error creating space: ${error.message}`)
+      return
+    }
+    const result = await response.json();
+    console.log(result)
+     // { id: 42, name: "Cosmic Voyage", users: 31, image: "🌌", color: "bg-indigo-600" },
+    const newWorld = {
+      id: result.space._id,
+      name: result.space.name,
+      users : result.space.members.length,
+      image : result.space.name.slice(0,1).toUpperCase(),
+      color: result.space.color
+    }
+
+    setExistingWorlds((prevWorlds) => [...prevWorlds, newWorld])
     
     // In a real app, this would create a new space on the server
     console.log(`Creating space: ${spaceName} with capacity ${spaceCapacity}`)
@@ -121,7 +183,7 @@ export default function MetaversePage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button onClick={() => setShowCreateModal(true)} className="flex-1 h-20 text-lg flex flex-col gap-2 items-center justify-center">
+                    <Button onClick={() =>{setSpaceName('') ;setSpaceCapacity(''); setShowCreateModal(true)} } className="flex-1 h-20 text-lg flex flex-col gap-2 items-center justify-center">
                       <Plus className="h-6 w-6" />
                       <span>Create New Space</span>
                     </Button>

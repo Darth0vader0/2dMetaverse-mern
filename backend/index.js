@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const connectDb = require('./src/config/db');
 const AuthController = require('./src/controllers/auth.controller');
 const AuthMiddlware = require('./src/middleware/auth.middleware');
+const SpaceController = require('./src/controllers/space.controller')
 connectDb();
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -23,8 +24,8 @@ app.get('/', (req, res) => {
 app.post('/api/signup', AuthController.signup);
 app.post('/api/login', AuthController.login);
 app.put('/api/save-avatar', AuthMiddlware.verifyToken, AuthController.saveAvatar);
-app.post('/api/create-space', AuthMiddlware.verifyToken, SpaceController.createSpace);
-
+app.post('/api/create-space', AuthMiddlware.verifyToken,SpaceController.createSpace);
+app.get('/api/get-spaces', AuthMiddlware.verifyToken, SpaceController.getSpace);
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
 } )

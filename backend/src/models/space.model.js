@@ -14,7 +14,7 @@ const SpaceSchema = new mongoose.Schema({
       joinedAt: { type: Date, default: Date.now },
     }
   ],
-
+  color:{type:String,default : "bg-blue-600"},
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 
