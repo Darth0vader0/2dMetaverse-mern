@@ -38,36 +38,36 @@ export default function MetaversePage() {
     const urlParams = new URLSearchParams(window.location.search)
     setIsGuest(urlParams.get("guest") === "true")
     const fetchWorlds = async () => {
-      await fetch('http://localhost:5000/api/get-spaces',{
+     const response = await fetch('http://localhost:5000/api/get-spaces',{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include'
     })
-    if (!fetchWorlds.ok) {
-      const error = await fetchWorlds.json()
+    if (!response.ok) {
+      const error = await response.json()
       alert(`Error fetching worlds: ${error.message}`)
       return
     }
-    const worlds = await fetchWorlds.json();
-    const formattedWorlds = worlds.map((world) => ({
+    const result = await response.json();
+    const formattedWorlds = result.spaces.map((world) => ({
       id: world._id,
       name: world.name,
       users: world.members.length,
-      image: world.name.slice(0,1).toUpperCase(),
+      image: world.name.slice(0, 1).toUpperCase(),
       color: world.color
     }))
     setExistingWorlds(formattedWorlds)
     }
-
+    fetchWorlds()
     // Simulate game loading
     const timer = setTimeout(() => {
       setGameLoaded(true)
     }, 1500)
 
     return () => clearTimeout(timer)
-  }, [existingWorlds])
+  }, [])
 
   const handleNavigation = (path) => {
     navigate(path)
@@ -195,7 +195,7 @@ export default function MetaversePage() {
                 </CardContent>
               </Card>
 
-              <Card className="shadow-sm">
+              <Card className="shadow-sm ">
                 <CardHeader>
                   <CardTitle>Featured Worlds</CardTitle>
                   <CardDescription>Explore popular metaverse spaces</CardDescription>

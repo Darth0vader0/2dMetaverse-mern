@@ -7,7 +7,7 @@ dotenv.config();
 const { v4: uuidv4 } = require('uuid');
 
 class SpaceController {
-    static color = ['bg-indigo-600','bg-blue-600','bg-green-600','bg-purple-600', "bg-orange-500" ,"bg-yellow-500"];
+    static color = ['bg-blue-600','bg-green-600','bg-purple-600', "bg-orange-600" ,"bg-yellow-600"];
     async createSpace(req, res) {
         const { name, maxMembers } = req.body;
         const { id } = req.user;
