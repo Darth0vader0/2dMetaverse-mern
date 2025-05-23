@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
 import { PageBackground } from "../../components/page-background"
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -15,7 +16,7 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    const result = await fetch("http://localhost:5000/api/login", {
+    const result = await fetch(`${backendUrl}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

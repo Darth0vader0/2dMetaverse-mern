@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export default function AvatarCustomizationPage() {
   const [gender, setGender] = useState("male") // "male" or "female"
   const [currentAvatar, setCurrentAvatar] = useState(0)
@@ -41,7 +41,7 @@ export default function AvatarCustomizationPage() {
 
     localStorage.setItem("avatar", JSON.stringify(avatars[currentAvatar]))
     // save avatar name in backend
-    const response = await fetch("http://localhost:5000/api/save-avatar", {
+    const response = await fetch(`${backendUrl}/api/save-avatar`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

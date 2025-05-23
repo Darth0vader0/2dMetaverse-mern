@@ -7,7 +7,7 @@ dotenv.config();
 const { v4: uuidv4 } = require('uuid');
 
 class SpaceController {
-    static color = ['bg-blue-600','bg-green-600','bg-purple-600', "bg-orange-600" ,"bg-yellow-600"];
+    static color = ['bg-blue-600','bg-green-600','bg-purple-600' ,'bg-red-600','bg-pink-600'];
     async createSpace(req, res) {
         const { name, maxMembers } = req.body;
         const { id } = req.user;
@@ -54,9 +54,36 @@ class SpaceController {
     async getSpace(req, res) {
         const { id } = req.user;
         try {
-            const spaces = await Space.find({ creator: id, $or: [{ members: { $elemMatch: { userId: id } } }] })
+            const spaces = await Space.find({$or: [{ creator: id }, { 'members.userId': id }] })
                
             return res.status(200).json({ message: 'Spaces fetched successfully', spaces });
+        } catch (error) {
+            return res.status(500).json({ message: 'Server error', error });
+        }
+    }
+    async joinSpaceByCode(req,res){
+        const { code } = req.body;
+        const { id } = req.user;
+        try {
+            const space = await Space.findOne({ slug: code.slice(14) });
+            if (!space) {
+                return res.status(404).json({ message: 'Space not found' });
+            }
+            const existingMember = space.members.find(member => member.userId.toString() === id);
+            if (existingMember) {
+                return res.status(400).json({ message: 'Already a member of this space' });
+            }
+            if (space.members.length >= space.maxMembers) {
+                return res.status(400).json({ message: 'Space is full' });
+            }
+            space.members.push({
+                userId: id,
+                nickname: req.user.nickname,
+                avatarUrl: req.user.avatarUrl,
+                joinedAt: Date.now(),
+            });
+            await space.save();
+            return res.status(200).json({ message: 'Joined space successfully', space });
         } catch (error) {
             return res.status(500).json({ message: 'Server error', error });
         }

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 "use client"
 import { useNavigate } from "react-router-dom"
 import React, { useEffect, useState } from "react"
@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export default function MetaversePage() {
   const [isGuest, setIsGuest] = useState(false)
   const [gameLoaded, setGameLoaded] = useState(false)
@@ -18,6 +18,8 @@ export default function MetaversePage() {
   const [spaceName, setSpaceName] = useState("")
   const [spaceCapacity, setSpaceCapacity] = useState("10")
   const [joinCode, setJoinCode] = useState("")
+  const [shareModel, setShareModel] = useState(false)
+  const [shareCode, setShareCode] = useState("")
   const navigate = useNavigate()
   const [existingWorlds ,setExistingWorlds]= useState([]);
 
@@ -38,7 +40,7 @@ export default function MetaversePage() {
     const urlParams = new URLSearchParams(window.location.search)
     setIsGuest(urlParams.get("guest") === "true")
     const fetchWorlds = async () => {
-     const response = await fetch('http://localhost:5000/api/get-spaces',{
+     const response = await fetch(`${backendUrl}/api/get-spaces`,{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,12 +53,14 @@ export default function MetaversePage() {
       return
     }
     const result = await response.json();
+    console.log(result)
     const formattedWorlds = result.spaces.map((world) => ({
       id: world._id,
       name: world.name,
       users: world.members.length,
       image: world.name.slice(0, 1).toUpperCase(),
-      color: world.color
+      color: world.color,
+      slug: world.slug
     }))
     setExistingWorlds(formattedWorlds)
     }
@@ -72,9 +76,13 @@ export default function MetaversePage() {
   const handleNavigation = (path) => {
     navigate(path)
   }
-
+    const handleShareWorld = (world) => {
+      setShareModel(true)
+      setShareCode("join.myWorld//"+world.slug)
+    }
     const handleJoinWorld = (worldId) => {
     // In a real app, this would connect to the world
+    navigate('/game')
     console.log(`Joining world ${worldId}`)
     // For demo purposes, just show a loading state
     setGameLoaded(false)
@@ -95,7 +103,7 @@ export default function MetaversePage() {
       return
     }
     // create space logic
-    const response = await fetch('http://localhost:5000/api/create-space',{
+    const response = await fetch(`${backendUrl}/api/create-space`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -117,7 +125,8 @@ export default function MetaversePage() {
       name: result.space.name,
       users : result.space.members.length,
       image : result.space.name.slice(0,1).toUpperCase(),
-      color: result.space.color
+      color: result.space.color,
+      slug: result.space.slug
     }
 
     setExistingWorlds((prevWorlds) => [...prevWorlds, newWorld])
@@ -134,8 +143,39 @@ export default function MetaversePage() {
     }, 1000)
   }
   
-  const handleJoinByCode = () => {
+  const handleJoinByCode =async () => {
     if (!joinCode) return
+    // Validate join code
+    if (joinCode.length < 5 ) {
+      alert("Join code must be between 5 and 10 characters.")
+      return
+    }
+    const response = await fetch(`${backendUrl}/api/join-space`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code: joinCode })
+      ,credentials: 'include'
+
+    })
+    if (!response.ok) {
+      const error = await response.json()
+      alert(`Error joining space: ${error.message}`)
+      return
+    }
+    const result = await response.json();
+    console.log(result)
+    const newWorld = {
+      id: result.space._id,
+      name: result.space.name,
+      users : result.space.members.length,
+      image : result.space.name.slice(0,1).toUpperCase(),
+      color: result.space.color,
+      slug: result.space.slug
+    }
+    setExistingWorlds((prevWorlds) => [...prevWorlds, newWorld])
+
     
     // In a real app, this would validate and join the space
     console.log(`Joining space with code: ${joinCode}`)
@@ -206,7 +246,7 @@ export default function MetaversePage() {
                       <div 
                         key={world.id} 
                         className="border rounded-lg p-4 flex items-center gap-4 cursor-pointer hover:bg-accent/50 transition-colors"
-                        onClick={() => window.location.href = `/game`}
+                        onClick={()=> handleShareWorld(world)}
                       >
                         <div className={`h-14 w-14 rounded-full flex items-center justify-center ${world.color} text-white flex-shrink-0`}>
                           <span className="text-2xl">{world.image}</span>
@@ -218,7 +258,7 @@ export default function MetaversePage() {
                             <span>{world.users} online</span>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" onClick={(e) =>{e.stopPropagation();handleJoinWorld(world.id)} }>
                           Join
                         </Button>
                       </div>
@@ -296,7 +336,30 @@ export default function MetaversePage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
+
+      {/* Share Space Modal */}
+        <Dialog open={shareModel} onOpenChange={setShareModel}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Share your Code</DialogTitle>
+            <DialogDescription>
+              share this code with your friends to join the same space
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="join-code">Space Code</Label>
+              <Input 
+                id="join-code" 
+                value={shareCode} 
+                readOnly
+                autoFocus
+              />
+            </div>
+          </div>
+         
+        </DialogContent>
+      </Dialog>
       {/* Join by Code Modal */}
       <Dialog open={showJoinModal} onOpenChange={setShowJoinModal}>
         <DialogContent className="sm:max-w-md">

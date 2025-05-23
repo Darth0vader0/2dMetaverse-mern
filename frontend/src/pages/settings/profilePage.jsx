@@ -38,9 +38,9 @@ export default function ProfilePage() {
                 <CardContent className="space-y-4">
                   <div className="flex flex-col sm:flex-row items-center gap-4">
                     <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center">
-                     {<img src={JSON.parse(localStorage.getItem('avatar')).image} alt="Avatar" className="rounded-full w-full h-full object-cover" />}
+                     {<img src={JSON.parse(localStorage.getItem('avatar'))?.image || '/avatars/bob.jpg'} alt="Avatar" className="rounded-full w-full h-full object-cover" />}
                     </div>
-                    <Button variant="outline">{JSON.parse(localStorage.getItem('avatar')).name}</Button>
+                    <Button variant="outline">{JSON.parse(localStorage.getItem('avatar'))?.name || "bob" }</Button>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="username">Username : {user.username} </Label>

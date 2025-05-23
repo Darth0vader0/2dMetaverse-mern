@@ -26,6 +26,7 @@ app.post('/api/login', AuthController.login);
 app.put('/api/save-avatar', AuthMiddlware.verifyToken, AuthController.saveAvatar);
 app.post('/api/create-space', AuthMiddlware.verifyToken,SpaceController.createSpace);
 app.get('/api/get-spaces', AuthMiddlware.verifyToken, SpaceController.getSpace);
+app.post('/api/join-space', AuthMiddlware.verifyToken, SpaceController.joinSpaceByCode);
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
 } )

@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
 import { PageBackground } from "../../components/page-background"
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export default function SignupPage() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
@@ -12,10 +12,11 @@ export default function SignupPage() {
   const [nickname, setNickname] = useState("")
   const [gender,setGender] = useState('male')
   const [error, setError] = useState("")
+
   const handleSignup = async (e) => {
     e.preventDefault()
     // In a real app, you would register the user here
-    const result = await fetch("http://localhost:5000/api/signup", {
+    const result = await fetch(`${backendUrl}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
