@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
-export default function MetaversePage() {
+export default function MetaversePage({setRoomId}) {
   const [isGuest, setIsGuest] = useState(false)
   const [gameLoaded, setGameLoaded] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -82,6 +82,7 @@ export default function MetaversePage() {
     }
     const handleJoinWorld = (worldId) => {
     // In a real app, this would connect to the world
+    setRoomId(worldId)
     navigate('/game')
     console.log(`Joining world ${worldId}`)
     // For demo purposes, just show a loading state

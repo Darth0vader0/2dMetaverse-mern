@@ -8,8 +8,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ArrowLeft, Clock, GitBranch, Coffee, Code, Zap, Activity, Users, Crown, UserCircle2 } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
-
-export default function PhaserGame() {
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import io from "socket.io-client";
+const socket = io(backendUrl);
+export default function PhaserGame({roomId}) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [stats, setStats] = useState({
@@ -37,6 +39,31 @@ export default function PhaserGame() {
   };
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user')) ;
+    const avatar = JSON.parse(localStorage.getItem('avatar')) ;
+    socket.emit('joinRoom', {username: user.username , nickname:user.nickname,roomId,avatar:avatar.name});
+    socket.on('currentPlayers', (players) => {
+      
+     console.log('Current players in room:', players);
+    });
+    socket.on('newPlayer', (player) => {
+      console.log('New player joined:', player);
+    });
+    socket.on("playerLeft",(nickname) => {
+      console.log(`${nickname} has left the room`);
+    });
+    socket.on('playerMoved', (data) => {
+      console.log('Player moved:', data);
+      // Handle player movement updates here
+    });
+    return () => {
+      socket.off('currentPlayers');
+      socket.off('newPlayer');
+    }
+  },[roomId]);
+
+
+  useEffect(() => {
     if (!gameRef.current) {
       const container = document.getElementById('phaser-container');
 
@@ -52,11 +79,13 @@ export default function PhaserGame() {
           },
         },
         scene: [OfficeMapScene],
+        socket,
         scale: {
           mode: Phaser.Scale.NONE, // we will size it manually
           autoCenter: Phaser.Scale.NO_CENTER,
         },
       });
+      gameRef.current.scene.start('OfficeMapScene', { socket });
 
       // Handle window resize to make game responsive
       const handleResize = () => {
@@ -88,6 +117,7 @@ export default function PhaserGame() {
   };
 
   const handleExit = () => {
+    socket.emit('leaveRoom');
     // Save progress or handle any cleanup
     window.location.href = '/metaverse';
   };

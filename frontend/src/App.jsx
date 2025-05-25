@@ -33,6 +33,7 @@ function App() {
   //     window.removeEventListener('contextmenu', handleContextMenu);
   //   };
   // }, []);
+  const [roomId, setRoomId] = React.useState("");
   return (
     <>
     <Router>
@@ -40,9 +41,9 @@ function App() {
         <Route path="/home" element={<RootLayout><Home /></RootLayout>} />
         <Route path="/signup" element={<RootLayout><SignupPage></SignupPage></RootLayout>} />
         <Route path="/login" element={<RootLayout><LoginPage  ></LoginPage></RootLayout>} />
-        <Route path="/metaverse" element={<RootLayout><MetaversePage></MetaversePage></RootLayout>} /> 
+        <Route path="/metaverse" element={<RootLayout><MetaversePage setRoomId={setRoomId}></MetaversePage></RootLayout>} /> 
         <Route path="/settings" element={<RootLayout><SettingsPage ></SettingsPage></RootLayout>} /> 
-        <Route path="/game" element={<RootLayout><PhaserGame /></RootLayout>} /> 
+        <Route path="/game" element={<RootLayout><PhaserGame roomId={roomId} /></RootLayout>} /> 
         <Route path="/" element={<Navigate to="/home" replace />}> </Route>
       </Routes>
     </Router>

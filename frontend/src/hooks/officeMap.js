@@ -4,6 +4,9 @@ export default class OfficeMapScene extends Phaser.Scene {
   constructor() {
     super('OfficeMapScene');
   }
+   init(data) {
+    this.socket = data.socket;
+  }
 
   preload() {
     const avatar = JSON.parse(localStorage.getItem('avatar'));
@@ -18,6 +21,11 @@ export default class OfficeMapScene extends Phaser.Scene {
   }
 
   create() {
+    const socket = this.socket;
+    if (!socket) {
+      console.error('Socket not initialized in OfficeMapScene');
+    }
+
     const map = this.make.tilemap({ key: 'officeMap' });
     this.add.image(1, -3, 'tiles').setOrigin(0);
 
@@ -101,7 +109,9 @@ export default class OfficeMapScene extends Phaser.Scene {
 
   update() {
     const speed = 80;
-
+    let moved = false;
+    let direction = '';
+    let animKey = '';
     if (this.isSitting) {
       if (Phaser.Input.Keyboard.JustDown(this.keyQ)) {
         if (this.sittingSprite) this.sittingSprite.destroy();
@@ -193,20 +203,42 @@ this.sittingSprite = this.add.image(
 
     this.player.setVelocity(0);
 
-    if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-speed);
-      this.player.anims.play('walk-left', true);
-    } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(speed);
-      this.player.anims.play('walk-right', true);
-    } else if (this.cursors.up.isDown) {
-      this.player.setVelocityY(-speed);
-      this.player.anims.play('walk-up', true);
-    } else if (this.cursors.down.isDown) {
-      this.player.setVelocityY(speed);
-      this.player.anims.play('walk-down', true);
-    } else {
-      this.player.anims.stop();
-    }
+   if (this.cursors.left.isDown) {
+    this.player.setVelocityX(-speed);
+    this.player.anims.play('walk-left', true);
+    moved = true;
+    direction = 'left';
+    animKey = 'walk-left';
+  } else if (this.cursors.right.isDown) {
+    this.player.setVelocityX(speed);
+    this.player.anims.play('walk-right', true);
+    moved = true;
+    direction = 'right';
+    animKey = 'walk-right';
+  } else if (this.cursors.up.isDown) {
+    this.player.setVelocityY(-speed);
+    this.player.anims.play('walk-up', true);
+    moved = true;
+    direction = 'up';
+    animKey = 'walk-up';
+  } else if (this.cursors.down.isDown) {
+    this.player.setVelocityY(speed);
+    this.player.anims.play('walk-down', true);
+    moved = true;
+    direction = 'down';
+    animKey = 'walk-down';
+  } else {
+    this.player.anims.stop();
+  }
+ // Emit movement only if moved
+  if (moved && this.socket) {
+    this.socket.emit('playerMovement', {
+      x: this.player.x,
+      y: this.player.y,
+      direction,
+      animKey,
+    });
+  }
+
   }
 }

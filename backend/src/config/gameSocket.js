@@ -3,6 +3,7 @@ const gameSocket = (io) => {
 
     io.on('connection', (socket) => {
         socket.on('joinRoom', ({ username, nickname, avatar, roomId }) => {
+            console.log(`User ${username} joined room ${roomId}`);
             socket.join(roomId);
 
             players[socket.id] = {
@@ -38,6 +39,7 @@ const gameSocket = (io) => {
         });
 
         socket.on('playerMovement', ({ x, y, direction, animKey }) => {
+            console.log(`User ${players[socket.id]?.username} moved to (${x}, ${y}) in room ${players[socket.id]?.roomId}`);
             if (players[socket.id]) {
                 const player = players[socket.id];
                 player.x = x;
@@ -54,7 +56,7 @@ const gameSocket = (io) => {
                 });
             }
         });
-        
+
         socket.on('playerSitting', ({ direction }) => {
             const player = players[socket.id];
             if (player) {
@@ -79,7 +81,17 @@ const gameSocket = (io) => {
                 });
             }
         });
-
+        socket.on("leaveRoom", () => {
+            const player = players[socket.id];
+            if (player) {
+                const roomId = player.roomId;
+                delete players[socket.id];
+                socket.leave(roomId);
+                
+                console.log(`User ${player.username} left room ${roomId}`);
+                socket.to(roomId).emit('playerLeft', player.nickname);
+            }
+        });
         socket.on('disconnect', () => {
             const player = players[socket.id];
             if (player) {
