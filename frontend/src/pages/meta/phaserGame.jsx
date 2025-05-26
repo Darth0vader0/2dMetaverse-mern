@@ -39,27 +39,8 @@ export default function PhaserGame({roomId}) {
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user')) ;
-    const avatar = JSON.parse(localStorage.getItem('avatar')) ;
-    socket.emit('joinRoom', {username: user.username , nickname:user.nickname,roomId,avatar:avatar.name});
-    socket.on('currentPlayers', (players) => {
-      
-     console.log('Current players in room:', players);
-    });
-    socket.on('newPlayer', (player) => {
-      console.log('New player joined:', player);
-    });
-    socket.on("playerLeft",(nickname) => {
-      console.log(`${nickname} has left the room`);
-    });
-    socket.on('playerMoved', (data) => {
-      console.log('Player moved:', data);
-      // Handle player movement updates here
-    });
-    return () => {
-      socket.off('currentPlayers');
-      socket.off('newPlayer');
-    }
+    localStorage.setItem('roomId', roomId);
+
   },[roomId]);
 
 

@@ -4,18 +4,19 @@ export default class OfficeMapScene extends Phaser.Scene {
   constructor() {
     super('OfficeMapScene');
   }
-   init(data) {
+
+  init(data) {
     this.socket = data.socket;
   }
 
   preload() {
     const avatar = JSON.parse(localStorage.getItem('avatar'));
-    
-
+    // Local player avatar
+    this.load.spritesheet('avatar', `/avatars/animation_frames/${avatar.name}.png`, { frameWidth: 64, frameHeight: 64 });
+    // Bob for remote players
+    this.load.spritesheet('bob', '/avatars/animation_frames/bob.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('tiles', '/assets/background/final_map.png');
     this.load.tilemapTiledJSON('officeMap', '/assets/tiledMap/officeMapFinal.json');
-    this.load.spritesheet('avatar', `/avatars/animation_frames/${avatar.name}.png`, { frameWidth: 64, frameHeight:64  });
-
     this.load.image('female1Back', `/avatars/sitting/${avatar.name}Back.png`);
     this.load.image('female1Top', `/avatars/sitting/${avatar.name}Top.png`);
   }
@@ -25,7 +26,22 @@ export default class OfficeMapScene extends Phaser.Scene {
     if (!socket) {
       console.error('Socket not initialized in OfficeMapScene');
     }
+    const user = JSON.parse(localStorage.getItem('user'));
+const avatar = JSON.parse(localStorage.getItem('avatar'));
+const roomId = localStorage.getItem('roomId');
 
+if (user && avatar && roomId && socket) {
+  socket.emit('joinRoom', {
+    username: user.username,
+    nickname: user.nickname,
+    avatar: avatar.name,
+    roomId
+  });
+} else {
+  console.error('Missing user, avatar, roomId, or socket for joinRoom');
+}
+
+    // --- Map and world setup ---
     const map = this.make.tilemap({ key: 'officeMap' });
     this.add.image(1, -3, 'tiles').setOrigin(0);
 
@@ -43,16 +59,24 @@ export default class OfficeMapScene extends Phaser.Scene {
       }
     }
 
+    // --- Local player setup ---
     this.player = this.physics.add.sprite(spawnX, spawnY, 'avatar', 0);
     this.player.setScale(0.5);
     this.player.body.setSize(24, 32);
     this.player.body.setOffset(20, 24);
     this.player.setCollideWorldBounds(true);
 
+    // Local player animations
     this.anims.create({ key: 'walk-down', frames: this.anims.generateFrameNumbers('avatar', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'walk-left', frames: this.anims.generateFrameNumbers('avatar', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'walk-right', frames: this.anims.generateFrameNumbers('avatar', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'walk-up', frames: this.anims.generateFrameNumbers('avatar', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
+    // Bob animations for remote players
+    this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -71,6 +95,10 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyE = this.input.keyboard.addKey('E');
     this.keyQ = this.input.keyboard.addKey('Q');
+    this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
     this.sitPrompt = this.add.text(0, 0, 'Press E to Sit', {
       font: '16px Arial',
@@ -82,6 +110,51 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.isSitting = false;
     this.sittingSprite = null;
     this.currentChair = null;
+
+    // --- Remote players setup ---
+    this.remotePlayers = {};
+
+    // Listen for current players
+   socket.on('currentPlayers', (players) => {
+      players.forEach(player => {
+        
+        this.addRemotePlayer(player);
+      });
+
+     console.log('Current players in room:', players);
+    });
+
+    // Listen for new player
+    socket.on('newPlayer', (player) => {
+      this.addRemotePlayer(player);
+    });
+
+    // Listen for player movement
+    socket.on('playerMoved', ({ id, x, y, direction, animKey }) => {
+      const remote = this.remotePlayers[id];
+      if (remote) {
+        remote.sprite.setPosition(x, y);
+        if (animKey) remote.sprite.anims.play('bob-' + animKey, true);
+      }
+    });
+
+    // Listen for player disconnect
+    socket.on('playerDisconnected', (id) => {
+      if (this.remotePlayers[id]) {
+        this.remotePlayers[id].sprite.destroy();
+        delete this.remotePlayers[id];
+      }
+    });
+  }
+
+  addRemotePlayer(player) {
+    if (this.remotePlayers[player.id]) return;
+    // Always use 'bob' as the texture key for remote players
+    const sprite = this.physics.add.sprite(player.x, player.y, 'bob', 0)
+      .setScale(0.5)
+      .setDepth(5);
+    if (player.animKey) sprite.anims.play('bob-' + player.animKey, true);
+    this.remotePlayers[player.id] = { sprite, info: player };
   }
 
   addCollidersFromLayer(map, layerName, group, isChair = false) {
@@ -108,7 +181,7 @@ export default class OfficeMapScene extends Phaser.Scene {
   }
 
   update() {
-    const speed = 80;
+    const speed = 100;
     let moved = false;
     let direction = '';
     let animKey = '';
@@ -136,62 +209,62 @@ export default class OfficeMapScene extends Phaser.Scene {
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
         this.player.setVisible(false);
 
-      // ...existing code...
-let spriteKey = 'female1Back';
-let angle = 0;
-let offsetY = -13;
-let offsetX = 0;
-let displayWidth = 22;
-let displayHeight = 24;
+        // ...existing code...
+        let spriteKey = 'female1Back';
+        let angle = 0;
+        let offsetY = -13;
+        let offsetX = 0;
+        let displayWidth = 22;
+        let displayHeight = 24;
 
-switch (nearbyChair.direction) {
-  case 'north':
-    spriteKey = 'female1Back';
-    angle = 0;
-    offsetY = -13;
-    displayWidth = 22;
-    displayHeight = 24;
-    break;
-  case 'south':
-    spriteKey = 'female1Top';
-    angle = 0;
-    offsetY = -1;
-    displayWidth = 18; // smaller
-    displayHeight = 20; // smaller
-    break;
-  case 'east':
-    spriteKey = 'female1Top';
-    angle = -90;
-    offsetY = 0;
-    offsetX = -2;
-    displayWidth = 18; // smaller
-    displayHeight = 20; // smaller
-    break;
-  case 'west':
-    spriteKey = 'female1Top';
-    angle = 90;
-    offsetY = 0;
-    offsetX = 1;
-    displayWidth = 18; // smaller
-    displayHeight = 20; // smaller
-    break;
-  default:
-    spriteKey = 'female1Back';
-    angle = 0;
-    offsetY = -13;
-    displayWidth = 22;
-    displayHeight = 24;
-}
+        switch (nearbyChair.direction) {
+          case 'north':
+            spriteKey = 'female1Back';
+            angle = 0;
+            offsetY = -13;
+            displayWidth = 22;
+            displayHeight = 24;
+            break;
+          case 'south':
+            spriteKey = 'female1Top';
+            angle = 0;
+            offsetY = -1;
+            displayWidth = 18;
+            displayHeight = 20;
+            break;
+          case 'east':
+            spriteKey = 'female1Top';
+            angle = -90;
+            offsetY = 0;
+            offsetX = -2;
+            displayWidth = 18;
+            displayHeight = 20;
+            break;
+          case 'west':
+            spriteKey = 'female1Top';
+            angle = 90;
+            offsetY = 0;
+            offsetX = 1;
+            displayWidth = 18;
+            displayHeight = 20;
+            break;
+          default:
+            spriteKey = 'female1Back';
+            angle = 0;
+            offsetY = -13;
+            displayWidth = 22;
+            displayHeight = 24;
+        }
 
-this.sittingSprite = this.add.image(
-  nearbyChair.x + offsetX,
-  nearbyChair.y + offsetY,
-  spriteKey
-)
-  .setDepth(10)
-  .setDisplaySize(displayWidth, displayHeight)
-  .setAngle(angle);
-// ...existing code...
+        this.sittingSprite = this.add.image(
+          nearbyChair.x + offsetX,
+          nearbyChair.y + offsetY,
+          spriteKey
+        )
+          .setDepth(10)
+          .setDisplaySize(displayWidth, displayHeight)
+          .setAngle(angle);
+
         nearbyChair.occupied = true;
         this.isSitting = true;
         this.currentChair = nearbyChair;
@@ -202,43 +275,41 @@ this.sittingSprite = this.add.image(
     }
 
     this.player.setVelocity(0);
-
-   if (this.cursors.left.isDown) {
-    this.player.setVelocityX(-speed);
-    this.player.anims.play('walk-left', true);
-    moved = true;
-    direction = 'left';
-    animKey = 'walk-left';
-  } else if (this.cursors.right.isDown) {
-    this.player.setVelocityX(speed);
-    this.player.anims.play('walk-right', true);
-    moved = true;
-    direction = 'right';
-    animKey = 'walk-right';
-  } else if (this.cursors.up.isDown) {
-    this.player.setVelocityY(-speed);
-    this.player.anims.play('walk-up', true);
-    moved = true;
-    direction = 'up';
-    animKey = 'walk-up';
-  } else if (this.cursors.down.isDown) {
-    this.player.setVelocityY(speed);
-    this.player.anims.play('walk-down', true);
-    moved = true;
-    direction = 'down';
-    animKey = 'walk-down';
-  } else {
-    this.player.anims.stop();
-  }
- // Emit movement only if moved
-  if (moved && this.socket) {
-    this.socket.emit('playerMovement', {
-      x: this.player.x,
-      y: this.player.y,
-      direction,
-      animKey,
-    });
-  }
-
+    if (this.cursors.left.isDown || this.aKey.isDown) {
+      this.player.setVelocityX(-speed);
+      this.player.anims.play('walk-left', true);
+      moved = true;
+      direction = 'left';
+      animKey = 'walk-left';
+    } else if (this.cursors.right.isDown || this.dKey.isDown) {
+      this.player.setVelocityX(speed);
+      this.player.anims.play('walk-right', true);
+      moved = true;
+      direction = 'right';
+      animKey = 'walk-right';
+    } else if (this.cursors.up.isDown || this.wKey.isDown) {
+      this.player.setVelocityY(-speed);
+      this.player.anims.play('walk-up', true);
+      moved = true;
+      direction = 'up';
+      animKey = 'walk-up';
+    } else if (this.cursors.down.isDown || this.sKey.isDown) {
+      this.player.setVelocityY(speed);
+      this.player.anims.play('walk-down', true);
+      moved = true;
+      direction = 'down';
+      animKey = 'walk-down';
+    } else {
+      this.player.anims.stop();
+    }
+    // Emit movement only if moved
+    if (moved && this.socket) {
+      this.socket.emit('playerMovement', {
+        x: this.player.x,
+        y: this.player.y,
+        direction,
+        animKey,
+      });
+    }
   }
 }

@@ -21,9 +21,8 @@ const gameSocket = (io) => {
 
             // Send existing players to new one
             const existingPlayers = Object.entries(players)
-                .filter(([id, player]) => id !== socket.id && player.roomId === roomId)
+                .filter(([id, player]) => id !== socket.id)
                 .map(([id, player]) => ({ id, ...player }));
-
             socket.emit('currentPlayers', existingPlayers);
 
             // Notify others in the room
@@ -39,7 +38,6 @@ const gameSocket = (io) => {
         });
 
         socket.on('playerMovement', ({ x, y, direction, animKey }) => {
-            console.log(`User ${players[socket.id]?.username} moved to (${x}, ${y}) in room ${players[socket.id]?.roomId}`);
             if (players[socket.id]) {
                 const player = players[socket.id];
                 player.x = x;
@@ -87,10 +85,12 @@ const gameSocket = (io) => {
                 const roomId = player.roomId;
                 delete players[socket.id];
                 socket.leave(roomId);
-                
+
                 console.log(`User ${player.username} left room ${roomId}`);
                 socket.to(roomId).emit('playerLeft', player.nickname);
             }
+
+            
         });
         socket.on('disconnect', () => {
             const player = players[socket.id];
