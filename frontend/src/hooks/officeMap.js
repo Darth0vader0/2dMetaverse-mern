@@ -139,12 +139,17 @@ if (user && avatar && roomId && socket) {
     });
 
     // Listen for player disconnect
-    socket.on('playerDisconnected', (id) => {
-      if (this.remotePlayers[id]) {
-        this.remotePlayers[id].sprite.destroy();
-        delete this.remotePlayers[id];
-      }
-    });
+      // Listen for player leaving the room
+  socket.on('playerLeft', (nicknameOrId) => {
+    // If your backend emits nickname, you may need to map nickname to id.
+    // But it's best to emit the id from backend for consistency.
+    // If you emit id:
+    const id = nicknameOrId;
+    if (this.remotePlayers[id]) {
+      this.remotePlayers[id].sprite.destroy();
+      delete this.remotePlayers[id];
+    }
+  });
   }
 
   addRemotePlayer(player) {
