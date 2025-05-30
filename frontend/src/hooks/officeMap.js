@@ -170,6 +170,12 @@ if (user && avatar && roomId && socket) {
         if (animKey) remote.sprite.anims.play(`${avatar}-` + animKey, true);
       }
     });
+    socket.on('playerStopped',({id})=>{
+      const remote = this.remotePlayers[id];
+      if(remote){
+        remote.sprite.anims.stop();
+      }
+    })
 
     // Listen for player disconnect
       // Listen for player leaving the room
@@ -339,6 +345,7 @@ if (user && avatar && roomId && socket) {
       animKey = 'walk-down';
     } else {
       this.player.anims.stop();
+      this.socket.emit('playerIsStop')
     }
     // Emit movement only if moved
     if (moved && this.socket) {

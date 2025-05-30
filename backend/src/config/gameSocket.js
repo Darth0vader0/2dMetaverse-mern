@@ -18,6 +18,7 @@ const gameSocket = (io) => {
                 direction: 'down',
                 animKey: '',
                 isSitting: false,
+               
                 chairDirection: null
             };
 
@@ -74,6 +75,10 @@ const gameSocket = (io) => {
                 });
             }
         });
+        socket.on('playerIsStop',()=>{
+            const player = players[socket.id];
+            socket.to(player.roomId).emit('playerStopped',{id:socket.id})
+        })
 
         socket.on('playerStanding', () => {
             const player = players[socket.id];
