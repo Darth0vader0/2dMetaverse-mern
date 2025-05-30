@@ -56,7 +56,8 @@ const gameSocket = (io) => {
                     x,
                     y,
                     direction,
-                    animKey
+                    animKey,
+                    avatar:player.avatar
                 });
             }
         });

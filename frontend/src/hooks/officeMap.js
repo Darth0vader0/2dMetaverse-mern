@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 export default class OfficeMapScene extends Phaser.Scene {
+  static name = null;
   constructor() {
     super('OfficeMapScene');
   }
@@ -14,7 +15,13 @@ export default class OfficeMapScene extends Phaser.Scene {
     // Local player avatar
     this.load.spritesheet('avatar', `/avatars/animation_frames/${avatar.name}.png`, { frameWidth: 64, frameHeight: 64 });
     // Bob for remote players
-    this.load.spritesheet('bob', '/avatars/animation_frames/bob.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('alice', `/avatars/animation_frames/alice.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bob', `/avatars/animation_frames/bob.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('natasha', `/avatars/animation_frames/natasha.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('tom', `/avatars/animation_frames/tom.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('david', `/avatars/animation_frames/david.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('nisha', `/avatars/animation_frames/nisha.png`, { frameWidth: 64, frameHeight: 64 });
+
     this.load.image('tiles', '/assets/background/final_map.png');
     this.load.tilemapTiledJSON('officeMap', '/assets/tiledMap/officeMapFinal.json');
     this.load.image('female1Back', `/avatars/sitting/${avatar.name}Back.png`);
@@ -72,11 +79,36 @@ if (user && avatar && roomId && socket) {
     this.anims.create({ key: 'walk-right', frames: this.anims.generateFrameNumbers('avatar', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'walk-up', frames: this.anims.generateFrameNumbers('avatar', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
-    // Bob animations for remote players
+    // alice animations for remote players
+    this.anims.create({ key: 'alice-walk-down', frames: this.anims.generateFrameNumbers('alice', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-left', frames: this.anims.generateFrameNumbers('alice', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-right', frames: this.anims.generateFrameNumbers('alice', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-up', frames: this.anims.generateFrameNumbers('alice', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
     this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
+    this.anims.create({ key: 'tom-walk-down', frames: this.anims.generateFrameNumbers('tom', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-left', frames: this.anims.generateFrameNumbers('tom', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-right', frames: this.anims.generateFrameNumbers('tom', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-up', frames: this.anims.generateFrameNumbers('tom', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
+    this.anims.create({ key: 'natasha-walk-down', frames: this.anims.generateFrameNumbers('natasha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-left', frames: this.anims.generateFrameNumbers('natasha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-right', frames: this.anims.generateFrameNumbers('natasha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-up', frames: this.anims.generateFrameNumbers('natasha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
+    this.anims.create({ key: 'nisha-walk-down', frames: this.anims.generateFrameNumbers('nisha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-left', frames: this.anims.generateFrameNumbers('nisha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-right', frames: this.anims.generateFrameNumbers('nisha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-up', frames: this.anims.generateFrameNumbers('nisha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+
+    this.anims.create({ key: 'david-walk-down', frames: this.anims.generateFrameNumbers('david', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-left', frames: this.anims.generateFrameNumbers('david', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-right', frames: this.anims.generateFrameNumbers('david', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-up', frames: this.anims.generateFrameNumbers('david', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -126,15 +158,16 @@ if (user && avatar && roomId && socket) {
 
     // Listen for new player
     socket.on('newPlayer', (player) => {
+      console.log(player)
       this.addRemotePlayer(player);
     });
 
     // Listen for player movement
-    socket.on('playerMoved', ({ id, x, y, direction, animKey }) => {
+    socket.on('playerMoved', ({ id, x, y, direction, animKey,avatar }) => {
       const remote = this.remotePlayers[id];
       if (remote) {
         remote.sprite.setPosition(x, y);
-        if (animKey) remote.sprite.anims.play('bob-' + animKey, true);
+        if (animKey) remote.sprite.anims.play(`${avatar}-` + animKey, true);
       }
     });
 
@@ -154,11 +187,11 @@ if (user && avatar && roomId && socket) {
 
   addRemotePlayer(player) {
     if (this.remotePlayers[player.id]) return;
-    // Always use 'bob' as the texture key for remote players
-    const sprite = this.physics.add.sprite(player.x, player.y, 'bob', 0)
+    
+    const sprite = this.physics.add.sprite(player.x, player.y, player.avatar, 0)
       .setScale(0.5)
       .setDepth(5);
-    if (player.animKey) sprite.anims.play('bob-' + player.animKey, true);
+    if (player.animKey) sprite.anims.play(`${player.avatar}-`+ player.animKey, true);
     this.remotePlayers[player.id] = { sprite, info: player };
   }
 
