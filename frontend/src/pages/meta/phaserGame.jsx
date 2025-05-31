@@ -11,6 +11,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import io from "socket.io-client";
 const socket = io(backendUrl);
+
+
 export default function PhaserGame({roomId}) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -40,6 +42,27 @@ export default function PhaserGame({roomId}) {
 
   useEffect(() => {
     localStorage.setItem('roomId', roomId);
+
+    socket.on('currentPlayersForFrontend',(players)=>{
+      const existingPlayers=players.map((player)=>{
+        return {
+          id:player.id,
+          name:player.username,
+          status : 'active',
+          isHost:false
+        }
+      })
+     
+    })
+    socket.on('newPlayerInFrontend',({id,username,avatar})=>{
+      const newPlayer= {
+        id,
+        name:username,
+        status:'active',
+        avatar:avatar,
+        isHost:false
+      }
+    })
 
   },[roomId]);
 

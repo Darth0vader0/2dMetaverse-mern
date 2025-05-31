@@ -32,8 +32,22 @@ const gameSocket = (io) => {
                 .map(([id, player]) => ({ id, ...player }));
             socket.emit('currentPlayers', existingPlayers);
 
+            //for frontend
+            socket.emit('currentPlayersForFrontend', existingPlayers);
+
             // Notify others in the room
             socket.to(roomId).emit('newPlayer', {
+                id: socket.id,
+                username,
+                nickname,
+                avatar,
+                x: 100,
+                y: 100,
+                direction: 'down'
+            });
+
+            //for frontend emit
+            socket.to(roomId).emit('newPlayerInFrontend', {
                 id: socket.id,
                 username,
                 nickname,
@@ -75,9 +89,13 @@ const gameSocket = (io) => {
                 });
             }
         });
+
         socket.on('playerIsStop',()=>{
             const player = players[socket.id];
+            if (player) {
+                
             socket.to(player.roomId).emit('playerStopped',{id:socket.id})
+            }
         })
 
         socket.on('playerStanding', () => {

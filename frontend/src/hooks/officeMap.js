@@ -24,7 +24,8 @@ export default class OfficeMapScene extends Phaser.Scene {
 
     this.load.image('tiles', '/assets/background/final_map.png');
     this.load.tilemapTiledJSON('officeMap', '/assets/tiledMap/officeMapFinal.json');
-    this.load.image('female1Back', `/avatars/sitting/${avatar.name}Back.png`);
+    this.load.image('female1Back', `/avatars/sitting/aliceSitting.png`);
+    this.load.image('male1Back', `/avatars/sitting/davidSitting.png`);
     this.load.image('female1Top', `/avatars/sitting/${avatar.name}Top.png`);
   }
 
@@ -164,6 +165,7 @@ if (user && avatar && roomId && socket) {
 
     // Listen for player movement
     socket.on('playerMoved', ({ id, x, y, direction, animKey,avatar }) => {
+
       const remote = this.remotePlayers[id];
       if (remote) {
         remote.sprite.setPosition(x, y);
@@ -252,9 +254,10 @@ if (user && avatar && roomId && socket) {
 
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
         this.player.setVisible(false);
-
-        // ...existing code...
+           // ...existing code...
         let spriteKey = 'female1Back';
+      console.log(this.player)
+       
         let angle = 0;
         let offsetY = -13;
         let offsetX = 0;
@@ -263,11 +266,11 @@ if (user && avatar && roomId && socket) {
 
         switch (nearbyChair.direction) {
           case 'north':
-            spriteKey = 'female1Back';
+            spriteKey ;
             angle = 0;
-            offsetY = -13;
-            displayWidth = 22;
-            displayHeight = 24;
+            offsetY = -6;
+            displayWidth = 48;
+            displayHeight = 50;
             break;
           case 'south':
             spriteKey = 'female1Top';

@@ -40,6 +40,7 @@ export default function AvatarCustomizationPage() {
   const handleSaveAvatar = async () => {
 
     localStorage.setItem("avatar", JSON.stringify(avatars[currentAvatar]))
+    
     // save avatar name in backend
     const response = await fetch(`${backendUrl}/api/save-avatar`, {
       method: "PUT",
