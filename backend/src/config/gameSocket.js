@@ -82,6 +82,7 @@ const gameSocket = (io) => {
             if (player) {
                 player.isSitting = true;
                 player.chairDirection = direction;
+                console.log("player issitting",player.username)
 
                 socket.to(player.roomId).emit('playerSitting', {
                     id: socket.id,

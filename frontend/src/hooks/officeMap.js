@@ -9,12 +9,14 @@ export default class OfficeMapScene extends Phaser.Scene {
   init(data) {
     this.socket = data.socket;
   }
-
+  // loading every assets 
   preload() {
     const avatar = JSON.parse(localStorage.getItem('avatar'));
     // Local player avatar
     this.load.spritesheet('avatar', `/avatars/animation_frames/${avatar.name}.png`, { frameWidth: 64, frameHeight: 64 });
-    // Bob for remote players
+
+    // animation frames for remote players
+
     this.load.spritesheet('alice', `/avatars/animation_frames/alice.png`, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bob', `/avatars/animation_frames/bob.png`, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('natasha', `/avatars/animation_frames/natasha.png`, { frameWidth: 64, frameHeight: 64 });
@@ -22,32 +24,50 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.load.spritesheet('david', `/avatars/animation_frames/david.png`, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('nisha', `/avatars/animation_frames/nisha.png`, { frameWidth: 64, frameHeight: 64 });
 
+    //background image of map
     this.load.image('tiles', '/assets/background/final_map.png');
     this.load.tilemapTiledJSON('officeMap', '/assets/tiledMap/officeMapFinal.json');
+    //sitting of character default right now for every player but gender wise
     this.load.image('female1Back', `/avatars/sitting/aliceSitting.png`);
     this.load.image('male1Back', `/avatars/sitting/davidSitting.png`);
-    this.load.image('female1Top', `/avatars/sitting/${avatar.name}Top.png`);
-  }
 
+    //south , east ,west png for every player just named as female1Top
+    this.load.image('female1Top', `/avatars/sitting/${avatar.name}Top.png`);
+
+    //remote players top view
+    this.load.image('aliceTop', `/avatars/sitting/aliceTop.png`)
+    this.load.image('bobTop', `/avatars/sitting/bobTop.png`)
+    this.load.image('davidTop', `/avatars/sitting/davidTop.png`)
+    this.load.image('tomTop', `/avatars/sitting/tomTop.png`)
+    this.load.image('nishaTop', `/avatars/sitting/nishaTop.png`)
+    this.load.image('natashaTop', `/avatars/sitting/natashaTop.png`)
+  }
+  // when player enters in game
   create() {
     const socket = this.socket;
     if (!socket) {
       console.error('Socket not initialized in OfficeMapScene');
     }
+    //user's data from local storage 
     const user = JSON.parse(localStorage.getItem('user'));
-const avatar = JSON.parse(localStorage.getItem('avatar'));
-const roomId = localStorage.getItem('roomId');
 
-if (user && avatar && roomId && socket) {
-  socket.emit('joinRoom', {
-    username: user.username,
-    nickname: user.nickname,
-    avatar: avatar.name,
-    roomId
-  });
-} else {
-  console.error('Missing user, avatar, roomId, or socket for joinRoom');
-}
+    //avatar's data from local storage 
+    const avatar = JSON.parse(localStorage.getItem('avatar'));
+
+    //room id from local storage 
+    const roomId = localStorage.getItem('roomId');
+
+    //socekt connection 
+    if (user && avatar && roomId && socket) {
+      socket.emit('joinRoom', {
+        username: user.username,
+        nickname: user.nickname,
+        avatar: avatar.name,
+        roomId
+      });
+    } else {
+      console.error('Missing user, avatar, roomId, or socket for joinRoom');
+    }
 
     // --- Map and world setup ---
     const map = this.make.tilemap({ key: 'officeMap' });
@@ -58,6 +78,7 @@ if (user && avatar && roomId && socket) {
     this.tables = this.physics.add.staticGroup();
 
     let spawnX = 100, spawnY = 100;
+    //layers for collision
     const doorLayer = map.getObjectLayer('doors');
     if (doorLayer && doorLayer.objects.length > 0) {
       const entryDoor = doorLayer.objects.find(obj => obj.name === 'door_entry' || obj.type === 'door');
@@ -80,43 +101,46 @@ if (user && avatar && roomId && socket) {
     this.anims.create({ key: 'walk-right', frames: this.anims.generateFrameNumbers('avatar', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'walk-up', frames: this.anims.generateFrameNumbers('avatar', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
-    // alice animations for remote players
+    // alice animations for remote players whoes avatar is alice
     this.anims.create({ key: 'alice-walk-down', frames: this.anims.generateFrameNumbers('alice', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'alice-walk-left', frames: this.anims.generateFrameNumbers('alice', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'alice-walk-right', frames: this.anims.generateFrameNumbers('alice', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'alice-walk-up', frames: this.anims.generateFrameNumbers('alice', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-
+    // bob animations
     this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-
+    //tom animations
     this.anims.create({ key: 'tom-walk-down', frames: this.anims.generateFrameNumbers('tom', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'tom-walk-left', frames: this.anims.generateFrameNumbers('tom', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'tom-walk-right', frames: this.anims.generateFrameNumbers('tom', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'tom-walk-up', frames: this.anims.generateFrameNumbers('tom', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-
+    //natasha animation 
     this.anims.create({ key: 'natasha-walk-down', frames: this.anims.generateFrameNumbers('natasha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'natasha-walk-left', frames: this.anims.generateFrameNumbers('natasha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'natasha-walk-right', frames: this.anims.generateFrameNumbers('natasha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'natasha-walk-up', frames: this.anims.generateFrameNumbers('natasha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-
+    // nisha animation
     this.anims.create({ key: 'nisha-walk-down', frames: this.anims.generateFrameNumbers('nisha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'nisha-walk-left', frames: this.anims.generateFrameNumbers('nisha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'nisha-walk-right', frames: this.anims.generateFrameNumbers('nisha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'nisha-walk-up', frames: this.anims.generateFrameNumbers('nisha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-
+    //david animation
     this.anims.create({ key: 'david-walk-down', frames: this.anims.generateFrameNumbers('david', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'david-walk-left', frames: this.anims.generateFrameNumbers('david', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'david-walk-right', frames: this.anims.generateFrameNumbers('david', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
     this.anims.create({ key: 'david-walk-up', frames: this.anims.generateFrameNumbers('david', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
+    //remote players top views
+
+    //camera angle
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(1.6);
     this.cameras.main.setDeadzone(200, 150);
-
+    //walls chairs and tables collisions
     this.addCollidersFromLayer(map, 'walls', this.walls);
     this.addCollidersFromLayer(map, 'chairs', this.chairs, true);
     this.addCollidersFromLayer(map, 'tables', this.tables);
@@ -126,13 +150,16 @@ if (user && avatar && roomId && socket) {
     this.physics.add.collider(this.player, this.tables);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
     this.keyE = this.input.keyboard.addKey('E');
     this.keyQ = this.input.keyboard.addKey('Q');
+    //motion from WASD control
     this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+    //sit text
     this.sitPrompt = this.add.text(0, 0, 'Press E to Sit', {
       font: '16px Arial',
       fill: '#ffffff',
@@ -144,17 +171,19 @@ if (user && avatar && roomId && socket) {
     this.sittingSprite = null;
     this.currentChair = null;
 
+
+    //socket events 
     // --- Remote players setup ---
     this.remotePlayers = {};
 
     // Listen for current players
-   socket.on('currentPlayers', (players) => {
+    socket.on('currentPlayers', (players) => {
       players.forEach(player => {
-        
+
         this.addRemotePlayer(player);
       });
 
-     console.log('Current players in room:', players);
+      console.log('Current players in room:', players);
     });
 
     // Listen for new player
@@ -164,7 +193,7 @@ if (user && avatar && roomId && socket) {
     });
 
     // Listen for player movement
-    socket.on('playerMoved', ({ id, x, y, direction, animKey,avatar }) => {
+    socket.on('playerMoved', ({ id, x, y, direction, animKey, avatar }) => {
 
       const remote = this.remotePlayers[id];
       if (remote) {
@@ -172,37 +201,108 @@ if (user && avatar && roomId && socket) {
         if (animKey) remote.sprite.anims.play(`${avatar}-` + animKey, true);
       }
     });
-    socket.on('playerStopped',({id})=>{
+    socket.on('playerStopped', ({ id }) => {
       const remote = this.remotePlayers[id];
-      if(remote){
+      if (remote) {
         remote.sprite.anims.stop();
       }
-    })
+    });
 
-    // Listen for player disconnect
-      // Listen for player leaving the room
-  socket.on('playerLeft', (nicknameOrId) => {
-    // If your backend emits nickname, you may need to map nickname to id.
-    // But it's best to emit the id from backend for consistency.
-    // If you emit id:
-    const id = nicknameOrId;
-    if (this.remotePlayers[id]) {
-      this.remotePlayers[id].sprite.destroy();
-      delete this.remotePlayers[id];
-    }
-  });
+    socket.on('playerSitting', ({ id, direction }) => {
+
+      const remote = this.remotePlayers[id];
+
+      if (remote && !remote.isSitting) {
+
+        const chair = this.findClosestChair(remote.sprite.x, remote.sprite.y);
+        if (!chair) return;
+
+        const avatarName = remote.info.avatar;
+    
+
+        let spriteKey = 'female1Back'; // fallback
+        console.log(user + "sitting true")
+
+        // Build spriteKey
+        if (direction === 'north') {
+          if (user.gender == 'male') {
+            spriteKey = 'male1Back'
+          } else {
+            spriteKey = "female1Back";
+
+          }
+        } else {
+          spriteKey = avatarName + 'Top';
+        }
+
+        // Position adjustments like you did for local
+        let offsetY = -13, offsetX = 0, angle = 0, width = 22, height = 24;
+
+        switch (direction) {
+          case 'north': offsetY = -6; width = 42; height = 45; break;
+          case 'south': offsetY = -1; width = 18; height = 20; break;
+          case 'east': angle = -90; offsetX = -2; break;
+          case 'west': angle = 90; offsetX = 1; break;
+        }
+
+        const sittingSprite = this.add.image(
+          chair.x + offsetX,
+          chair.y + offsetY,
+          spriteKey
+        ).setDepth(10).setDisplaySize(width, height).setAngle(angle);
+
+        remote.sittingSprite = sittingSprite;
+        remote.sprite.setVisible(false);
+        remote.isSitting = true;
+      }
+    });
+
+    socket.on('playerStanding', ({ id }) => {
+      const remote = this.remotePlayers[id];
+      if (remote && remote.isSitting) {
+        if (remote.sittingSprite) remote.sittingSprite.destroy();
+        remote.sprite.setVisible(true);
+        remote.isSitting = false;
+      }
+    });
+
+
+    // Listen for player leaving the room
+    socket.on('playerLeft', (nicknameOrId) => {
+
+      const id = nicknameOrId;
+      if (this.remotePlayers[id]) {
+        this.remotePlayers[id].sprite.destroy();
+        delete this.remotePlayers[id];
+      }
+    });
   }
 
+  findClosestChair(x, y) {
+    let closest = null;
+    let minDist = 100; // max chair distance threshold
+    this.chairs.getChildren().forEach(chair => {
+      const dist = Phaser.Math.Distance.Between(x, y, chair.x, chair.y);
+      if (dist < minDist && !chair.occupied) {
+        closest = chair;
+        minDist = dist;
+      }
+    });
+    return closest;
+  }
+
+  //remote player adding and showing to user also his/her animation motion 
   addRemotePlayer(player) {
     if (this.remotePlayers[player.id]) return;
-    
+
     const sprite = this.physics.add.sprite(player.x, player.y, player.avatar, 0)
       .setScale(0.5)
       .setDepth(5);
-    if (player.animKey) sprite.anims.play(`${player.avatar}-`+ player.animKey, true);
+    if (player.animKey) sprite.anims.play(`${player.avatar}-` + player.animKey, true);
     this.remotePlayers[player.id] = { sprite, info: player };
   }
 
+  //collision layers
   addCollidersFromLayer(map, layerName, group, isChair = false) {
     const layer = map.getObjectLayer(layerName);
     if (!layer) return;
@@ -226,6 +326,8 @@ if (user && avatar && roomId && socket) {
     });
   }
 
+  //motion of player 
+
   update() {
     const speed = 100;
     let moved = false;
@@ -237,6 +339,7 @@ if (user && avatar && roomId && socket) {
         this.player.setVisible(true);
         if (this.currentChair) this.currentChair.occupied = false;
         this.isSitting = false;
+        this.socket.emit('playerStanding');
         this.currentChair = null;
       }
       return;
@@ -254,10 +357,11 @@ if (user && avatar && roomId && socket) {
 
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
         this.player.setVisible(false);
-           // ...existing code...
+        // ...existing code...
         let spriteKey = 'female1Back';
-      console.log(this.player)
-       
+        const user = JSON.parse(localStorage.getItem('user'));
+
+
         let angle = 0;
         let offsetY = -13;
         let offsetX = 0;
@@ -266,11 +370,13 @@ if (user && avatar && roomId && socket) {
 
         switch (nearbyChair.direction) {
           case 'north':
-            spriteKey ;
+            spriteKey = user.gender + "1Back";
             angle = 0;
             offsetY = -6;
-            displayWidth = 48;
-            displayHeight = 50;
+            displayWidth = 42;
+            displayHeight = 45;
+
+
             break;
           case 'south':
             spriteKey = 'female1Top';
@@ -314,6 +420,7 @@ if (user && avatar && roomId && socket) {
 
         nearbyChair.occupied = true;
         this.isSitting = true;
+        this.socket.emit('playerSitting', { direction: nearbyChair.direction });
         this.currentChair = nearbyChair;
         this.sitPrompt.setVisible(false);
       }
