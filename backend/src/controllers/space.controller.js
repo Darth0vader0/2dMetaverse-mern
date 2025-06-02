@@ -89,6 +89,35 @@ class SpaceController {
         }
     }
 
+    async assignSit(req,res){
+        const { spaceId} = req.body;
+        const { id } = req.user;
+        try {
+            const space = await Space.findById(spaceId);
+            if (!space) {
+                return res.status(404).json({ message: 'Space not found' });
+            }
+            const chairs = space.mapConfig.chairs;
+            const lastChairId = chairs[chairs.length - 1]?.chairId || '0';
+            const assignedChairId = 'ch_'+ (parseInt(lastChairId.split('_')[1]) + 1);
+            // assign the chair to the user and push it to the chairs array
+            space.mapConfig.mapId = spaceId;
+            await space.save()
+            space.mapConfig.chairs.push({
+                chairId : assignedChairId,
+                isOccupied:true,
+                occupiedBy: id
+            })
+            await space.save();
+            res.status(201).json({success:true , assignedChairId  })
+
+
+    }catch(e){
+        console.log(e);
+        res.status(500).json({message : 'enternal server error'});
+    }
+}
+            
 }
 
 module.exports = new SpaceController();

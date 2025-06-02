@@ -16,6 +16,9 @@ const socket = io(backendUrl);
 export default function PhaserGame({roomId}) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+    const [showChairDialog, setShowChairDialog] = useState(true);
+  const [selectedChair, setSelectedChair] = useState(null);
+
   const [stats, setStats] = useState({
     hoursWorked: 0,
     gitPushes: 0,
@@ -109,6 +112,9 @@ export default function PhaserGame({roomId}) {
     }
   }, []);
 
+  const handleChairSelection = () => {
+  }
+
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
     // Allow the state to update before resizing
@@ -143,6 +149,24 @@ export default function PhaserGame({roomId}) {
         >
           <Zap className="h-4 w-4" />
         </Button>
+         {/* Chair Chooser Dialog */}
+        {showChairDialog && (
+          <div
+            className="absolute top-6 right-6 z-20 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-64"
+            style={{ minHeight: '120px' }}
+          >
+            <h3 className="font-bold mb-2 text-blue-400">Choose Your Chair</h3>
+            <div className="flex flex-wrap gap-2 mb-3 text-black">
+              Click here to get your chair 
+            </div>
+            <Button
+              className="w-full"
+              onClick={() => setShowChairDialog(false)}
+            >
+              show
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Sidebar */}

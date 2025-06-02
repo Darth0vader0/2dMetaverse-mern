@@ -23,8 +23,6 @@ const SpaceSchema = new mongoose.Schema({
     chairs: [
       {
         chairId: String,
-        x: Number,
-        y: Number,
         isOccupied: { type: Boolean, default: false },
         occupiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
       }
