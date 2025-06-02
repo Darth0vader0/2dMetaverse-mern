@@ -112,7 +112,21 @@ export default function PhaserGame({roomId}) {
     }
   }, []);
 
-  const handleChairSelection = () => {
+  const handleChairSelection = async () => {
+    const response = await fetch(`${backendUrl}/api/assign-chairs`,{
+      method:"POST",
+      headers:{  "Content-Type": "application/json",},
+      body:JSON.stringify({
+        spaceId: roomId
+      }),
+      credentials:'include'
+    });
+    if(!response.ok){
+      alert('something is wrong');
+    }
+    const result = await response.json();
+    console.log(result)
+    setShowChairDialog(false)
   }
 
   const toggleFullscreen = () => {
@@ -161,7 +175,7 @@ export default function PhaserGame({roomId}) {
             </div>
             <Button
               className="w-full"
-              onClick={() => setShowChairDialog(false)}
+              onClick={() => handleChairSelection()}
             >
               show
             </Button>

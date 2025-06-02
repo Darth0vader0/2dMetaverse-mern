@@ -99,7 +99,19 @@ class SpaceController {
             }
             const chairs = space.mapConfig.chairs;
             const lastChairId = chairs[chairs.length - 1]?.chairId || '0';
-            const assignedChairId = 'ch_'+ (parseInt(lastChairId.split('_')[1]) + 1);
+         
+            
+          
+            
+            let assignedChairId = 'ch_'
+            if(lastChairId == '0'){
+                assignedChairId = 'ch_0'
+            }else{
+                let lastChairNumber = parseInt(lastChairId.slice(3));
+                
+                assignedChairId = 'ch_'+ (lastChairNumber+1);
+                
+            }
             // assign the chair to the user and push it to the chairs array
             space.mapConfig.mapId = spaceId;
             await space.save()
