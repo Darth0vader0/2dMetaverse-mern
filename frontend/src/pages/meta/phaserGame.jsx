@@ -128,8 +128,16 @@ useEffect(() => {
         gameRef.current = null;
       };
     }
-  }, [roomId, showArrow]);
+  }, [roomId]);
 
+  useEffect(() => {
+  if (gameRef.current) {
+    const scene = gameRef.current.scene.getScene('OfficeMapScene');
+    if (scene && scene.data) {
+      scene.data.set('showArrow', showArrow);
+    }
+  }
+}, [showArrow]);
   const handleChairSelection = async () => {
     const response = await fetch(`${backendUrl}/api/assign-chairs`,{
       method:"POST",

@@ -119,6 +119,36 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.anims.create({ key: 'walk-up', frames: this.anims.generateFrameNumbers('avatar', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     // ...remote player animations (unchanged)...
+       // alice animations for remote players whoes avatar is alice
+        this.anims.create({ key: 'alice-walk-down', frames: this.anims.generateFrameNumbers('alice', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'alice-walk-left', frames: this.anims.generateFrameNumbers('alice', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'alice-walk-right', frames: this.anims.generateFrameNumbers('alice', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'alice-walk-up', frames: this.anims.generateFrameNumbers('alice', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+        // bob animations
+        this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+        //tom animations
+        this.anims.create({ key: 'tom-walk-down', frames: this.anims.generateFrameNumbers('tom', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'tom-walk-left', frames: this.anims.generateFrameNumbers('tom', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'tom-walk-right', frames: this.anims.generateFrameNumbers('tom', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'tom-walk-up', frames: this.anims.generateFrameNumbers('tom', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+        //natasha animation 
+        this.anims.create({ key: 'natasha-walk-down', frames: this.anims.generateFrameNumbers('natasha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'natasha-walk-left', frames: this.anims.generateFrameNumbers('natasha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'natasha-walk-right', frames: this.anims.generateFrameNumbers('natasha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'natasha-walk-up', frames: this.anims.generateFrameNumbers('natasha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+        // nisha animation
+        this.anims.create({ key: 'nisha-walk-down', frames: this.anims.generateFrameNumbers('nisha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'nisha-walk-left', frames: this.anims.generateFrameNumbers('nisha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'nisha-walk-right', frames: this.anims.generateFrameNumbers('nisha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'nisha-walk-up', frames: this.anims.generateFrameNumbers('nisha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+        //david animation
+        this.anims.create({ key: 'david-walk-down', frames: this.anims.generateFrameNumbers('david', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'david-walk-left', frames: this.anims.generateFrameNumbers('david', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'david-walk-right', frames: this.anims.generateFrameNumbers('david', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+        this.anims.create({ key: 'david-walk-up', frames: this.anims.generateFrameNumbers('david', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     // camera angle
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
