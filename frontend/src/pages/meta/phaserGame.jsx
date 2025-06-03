@@ -16,8 +16,9 @@ const socket = io(backendUrl);
 export default function PhaserGame({roomId}) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-    const [showChairDialog, setShowChairDialog] = useState(true);
-  const [selectedChair, setSelectedChair] = useState(null);
+  const [showChairDialog, setShowChairDialog] = useState(false);
+  const [showArrow, setShowArrow] = useState(true);
+
 
   const [stats, setStats] = useState({
     hoursWorked: 0,
@@ -42,6 +43,21 @@ export default function PhaserGame({roomId}) {
       ...newStats
     }));
   };
+useEffect(() => {
+  // Get all assigned chairs from localStorage
+  let assignedChairs = {};
+  try {
+    assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
+  } catch (e) {
+    assignedChairs = {};
+  }
+  // If there is no chair for this room, show the dialog
+  if (!assignedChairs[roomId]) {
+    setShowChairDialog(true);
+  } else {
+    setShowChairDialog(false);
+  }
+}, [roomId]);
 
   useEffect(() => {
     localStorage.setItem('roomId', roomId);
@@ -73,6 +89,8 @@ export default function PhaserGame({roomId}) {
   useEffect(() => {
     if (!gameRef.current) {
       const container = document.getElementById('phaser-container');
+      const assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
+      const assignedChairId = assignedChairs[roomId] || null;
 
       gameRef.current = new Phaser.Game({
         type: Phaser.AUTO,
@@ -92,7 +110,7 @@ export default function PhaserGame({roomId}) {
           autoCenter: Phaser.Scale.NO_CENTER,
         },
       });
-      gameRef.current.scene.start('OfficeMapScene', { socket });
+      gameRef.current.scene.start('OfficeMapScene', { socket ,assignedChairId,showArrow, updateStats });
 
       // Handle window resize to make game responsive
       const handleResize = () => {
@@ -110,7 +128,7 @@ export default function PhaserGame({roomId}) {
         gameRef.current = null;
       };
     }
-  }, []);
+  }, [roomId, showArrow]);
 
   const handleChairSelection = async () => {
     const response = await fetch(`${backendUrl}/api/assign-chairs`,{
@@ -126,6 +144,18 @@ export default function PhaserGame({roomId}) {
     }
     const result = await response.json();
     console.log(result)
+      // Get existing assignments or initialize
+  let assignedChairs = {};
+  try {
+    assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
+  } catch (e) {
+    assignedChairs = {};
+  }
+  // Set/update the chair for this room
+  assignedChairs[roomId] = result.assignedChairId;
+  localStorage.setItem('assignedChairIds', JSON.stringify(assignedChairs));
+
+
     setShowChairDialog(false)
   }
 
@@ -154,15 +184,30 @@ export default function PhaserGame({roomId}) {
         className={`relative ${isFullscreen ? 'w-full' : 'flex-3'} h-full overflow-hidden border-8 border-primary/40 rounded-xl`}
         style={{ flex: isFullscreen ? '1' : '3' }}
       >
+        <div>
+  {/* Fullscreen toggle button */}
+  <Button 
+    variant="outline" 
+    size="icon" 
+    className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+    onClick={toggleFullscreen}
+  >
+    <Zap className="h-4 w-4" />
+  </Button>
+  {/* Arrow toggle button, positioned right below the fullscreen button */}
+  <Button
+    variant={showArrow ? "default" : "outline"}
+    size="icon"
+    className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+    onClick={() => setShowArrow((prev) => !prev)}
+    title={showArrow ? "Hide Arrow" : "Show Arrow"}
+  >
+    <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
+  </Button>
+</div>
         {/* Fullscreen toggle button - absolute positioned over the game */}
-        <Button 
-          variant="outline" 
-          size="icon" 
-          className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-          onClick={toggleFullscreen}
-        >
-          <Zap className="h-4 w-4" />
-        </Button>
+      
+
          {/* Chair Chooser Dialog */}
         {showChairDialog && (
           <div
@@ -198,6 +243,7 @@ export default function PhaserGame({roomId}) {
               </Button>
             </div>
           </div>
+         
 
           <div className="flex-1 overflow-auto p-4 space-y-4">
             <Card>
