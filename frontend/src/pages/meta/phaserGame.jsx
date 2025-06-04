@@ -13,7 +13,7 @@ import io from "socket.io-client";
 const socket = io(backendUrl);
 
 
-export default function PhaserGame({roomId}) {
+export default function PhaserGame({ roomId }) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showChairDialog, setShowChairDialog] = useState(false);
@@ -26,7 +26,7 @@ export default function PhaserGame({roomId}) {
     coffeeBreaks: 0,
     linesOfCode: 0,
   });
-  
+
   // Sample online players data
   const [onlinePlayers, setOnlinePlayers] = useState([
     { id: 1, name: "DevLead", status: "active", avatar: "👨‍💻", isHost: true },
@@ -43,47 +43,70 @@ export default function PhaserGame({roomId}) {
       ...newStats
     }));
   };
-useEffect(() => {
-  // Get all assigned chairs from localStorage
-  let assignedChairs = {};
-  try {
-    assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
-  } catch (e) {
-    assignedChairs = {};
-  }
-  // If there is no chair for this room, show the dialog
-  if (!assignedChairs[roomId]) {
-    setShowChairDialog(true);
-  } else {
-    setShowChairDialog(false);
-  }
-}, [roomId]);
+
+
+  // useEffect(() => {
+  //   // On mount: check if we should redirect
+  //   if (localStorage.getItem('redirectToMetaverse') === 'true') {
+  //     localStorage.removeItem('redirectToMetaverse');
+  //     window.location.href = '/metaverse';
+  //     return;
+  //   }
+
+  //   const handleBeforeUnload = () => {
+  //     socket.emit('leaveRoom');
+  //     localStorage.setItem('redirectToMetaverse', 'true');
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, []);
+
+
+  useEffect(() => {
+    // Get all assigned chairs from localStorage
+    let assignedChairs = {};
+    try {
+      assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
+    } catch (e) {
+      assignedChairs = {};
+    }
+    // If there is no chair for this room, show the dialog
+    if (!assignedChairs[roomId]) {
+      setShowChairDialog(true);
+    } else {
+      setShowChairDialog(false);
+    }
+  }, [roomId]);
 
   useEffect(() => {
     localStorage.setItem('roomId', roomId);
 
-    socket.on('currentPlayersForFrontend',(players)=>{
-      const existingPlayers=players.map((player)=>{
+    socket.on('currentPlayersForFrontend', (players) => {
+      const existingPlayers = players.map((player) => {
         return {
-          id:player.id,
-          name:player.username,
-          status : 'active',
-          isHost:false
+          id: player.id,
+          name: player.username,
+          status: 'active',
+          isHost: false
         }
       })
-     
+
     })
-    socket.on('newPlayerInFrontend',({id,username,avatar})=>{
-      const newPlayer= {
+    socket.on('newPlayerInFrontend', ({ id, username, avatar }) => {
+      const newPlayer = {
         id,
-        name:username,
-        status:'active',
-        avatar:avatar,
-        isHost:false
+        name: username,
+        status: 'active',
+        avatar: avatar,
+        isHost: false
       }
     })
 
-  },[roomId]);
+  }, [roomId]);
 
 
   useEffect(() => {
@@ -110,7 +133,7 @@ useEffect(() => {
           autoCenter: Phaser.Scale.NO_CENTER,
         },
       });
-      gameRef.current.scene.start('OfficeMapScene', { socket ,assignedChairId,showArrow, updateStats });
+      gameRef.current.scene.start('OfficeMapScene', { socket, assignedChairId, showArrow, updateStats });
 
       // Handle window resize to make game responsive
       const handleResize = () => {
@@ -131,38 +154,49 @@ useEffect(() => {
   }, [roomId]);
 
   useEffect(() => {
-  if (gameRef.current) {
-    const scene = gameRef.current.scene.getScene('OfficeMapScene');
-    if (scene && scene.data) {
-      scene.data.set('showArrow', showArrow);
+    if (gameRef.current) {
+      const scene = gameRef.current.scene.getScene('OfficeMapScene');
+      if (scene && scene.data) {
+        scene.data.set('showArrow', showArrow);
+      }
     }
-  }
-}, [showArrow]);
+  }, [showArrow]);
+
+
+
   const handleChairSelection = async () => {
-    const response = await fetch(`${backendUrl}/api/assign-chairs`,{
-      method:"POST",
-      headers:{  "Content-Type": "application/json",},
-      body:JSON.stringify({
+    const response = await fetch(`${backendUrl}/api/assign-chairs`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", },
+      body: JSON.stringify({
         spaceId: roomId
       }),
-      credentials:'include'
+      credentials: 'include'
     });
-    if(!response.ok){
+    if (!response.ok) {
       alert('something is wrong');
     }
     const result = await response.json();
     console.log(result)
-      // Get existing assignments or initialize
-  let assignedChairs = {};
-  try {
-    assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
-  } catch (e) {
-    assignedChairs = {};
-  }
-  // Set/update the chair for this room
-  assignedChairs[roomId] = result.assignedChairId;
-  localStorage.setItem('assignedChairIds', JSON.stringify(assignedChairs));
+    // Get existing assignments or initialize
+    let assignedChairs = {};
+    try {
+      assignedChairs = JSON.parse(localStorage.getItem('assignedChairIds')) || {};
+    } catch (e) {
+      assignedChairs = {};
+    }
+    // Set/update the chair for this room
+    assignedChairs[roomId] = result.assignedChairId;
+    localStorage.setItem('assignedChairIds', JSON.stringify(assignedChairs));
 
+    if (gameRef.current) {
+      const scene = gameRef.current.scene.getScene('OfficeMapScene');
+      if (scene && scene.data) {
+        scene.data.set('assignedChairId', result.assignedChairId);
+        // Optionally, also update the property directly for immediate effect:
+        scene.assignedChairId = result.assignedChairId;
+      }
+    }
 
     setShowChairDialog(false)
   }
@@ -193,30 +227,30 @@ useEffect(() => {
         style={{ flex: isFullscreen ? '1' : '3' }}
       >
         <div>
-  {/* Fullscreen toggle button */}
-  <Button 
-    variant="outline" 
-    size="icon" 
-    className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-    onClick={toggleFullscreen}
-  >
-    <Zap className="h-4 w-4" />
-  </Button>
-  {/* Arrow toggle button, positioned right below the fullscreen button */}
-  <Button
-    variant={showArrow ? "default" : "outline"}
-    size="icon"
-    className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-    onClick={() => setShowArrow((prev) => !prev)}
-    title={showArrow ? "Hide Arrow" : "Show Arrow"}
-  >
-    <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
-  </Button>
-</div>
+          {/* Fullscreen toggle button */}
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+            onClick={toggleFullscreen}
+          >
+            <Zap className="h-4 w-4" />
+          </Button>
+          {/* Arrow toggle button, positioned right below the fullscreen button */}
+          <Button
+            variant={showArrow ? "default" : "outline"}
+            size="icon"
+            className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+            onClick={() => setShowArrow((prev) => !prev)}
+            title={showArrow ? "Hide Arrow" : "Show Arrow"}
+          >
+            <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
+          </Button>
+        </div>
         {/* Fullscreen toggle button - absolute positioned over the game */}
-      
 
-         {/* Chair Chooser Dialog */}
+
+        {/* Chair Chooser Dialog */}
         {showChairDialog && (
           <div
             className="absolute top-6 right-6 z-20 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-64"
@@ -224,7 +258,7 @@ useEffect(() => {
           >
             <h3 className="font-bold mb-2 text-blue-400">Choose Your Chair</h3>
             <div className="flex flex-wrap gap-2 mb-3 text-black">
-              Click here to get your chair 
+              Click here to get your chair
             </div>
             <Button
               className="w-full"
@@ -242,16 +276,10 @@ useEffect(() => {
           <div className="p-4 border-b">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold">Office Dashboard</h2>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={handleExit}
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
+              
             </div>
           </div>
-         
+
 
           <div className="flex-1 overflow-auto p-4 space-y-4">
             <Card>
@@ -339,7 +367,7 @@ useEffect(() => {
                         <p className="text-xs text-muted-foreground capitalize">{player.status}</p>
                       </div>
                     </div>
-                    
+
                     <Button variant="ghost" size="icon" className="h-7 w-7">
                       <UserCircle2 className="h-4 w-4" />
                     </Button>

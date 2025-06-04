@@ -73,6 +73,7 @@ export default class OfficeMapScene extends Phaser.Scene {
 
     // --- Map and world setup ---
     const map = this.make.tilemap({ key: 'officeMap' });
+    this.map = map; // Save map reference for later use
     this.add.image(1, -3, 'tiles').setOrigin(0);
 
     this.walls = this.physics.add.staticGroup();
@@ -119,36 +120,36 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.anims.create({ key: 'walk-up', frames: this.anims.generateFrameNumbers('avatar', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     // ...remote player animations (unchanged)...
-       // alice animations for remote players whoes avatar is alice
-        this.anims.create({ key: 'alice-walk-down', frames: this.anims.generateFrameNumbers('alice', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'alice-walk-left', frames: this.anims.generateFrameNumbers('alice', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'alice-walk-right', frames: this.anims.generateFrameNumbers('alice', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'alice-walk-up', frames: this.anims.generateFrameNumbers('alice', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-        // bob animations
-        this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-        //tom animations
-        this.anims.create({ key: 'tom-walk-down', frames: this.anims.generateFrameNumbers('tom', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'tom-walk-left', frames: this.anims.generateFrameNumbers('tom', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'tom-walk-right', frames: this.anims.generateFrameNumbers('tom', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'tom-walk-up', frames: this.anims.generateFrameNumbers('tom', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-        //natasha animation 
-        this.anims.create({ key: 'natasha-walk-down', frames: this.anims.generateFrameNumbers('natasha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'natasha-walk-left', frames: this.anims.generateFrameNumbers('natasha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'natasha-walk-right', frames: this.anims.generateFrameNumbers('natasha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'natasha-walk-up', frames: this.anims.generateFrameNumbers('natasha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-        // nisha animation
-        this.anims.create({ key: 'nisha-walk-down', frames: this.anims.generateFrameNumbers('nisha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'nisha-walk-left', frames: this.anims.generateFrameNumbers('nisha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'nisha-walk-right', frames: this.anims.generateFrameNumbers('nisha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'nisha-walk-up', frames: this.anims.generateFrameNumbers('nisha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
-        //david animation
-        this.anims.create({ key: 'david-walk-down', frames: this.anims.generateFrameNumbers('david', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'david-walk-left', frames: this.anims.generateFrameNumbers('david', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'david-walk-right', frames: this.anims.generateFrameNumbers('david', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
-        this.anims.create({ key: 'david-walk-up', frames: this.anims.generateFrameNumbers('david', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    // alice animations for remote players whoes avatar is alice
+    this.anims.create({ key: 'alice-walk-down', frames: this.anims.generateFrameNumbers('alice', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-left', frames: this.anims.generateFrameNumbers('alice', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-right', frames: this.anims.generateFrameNumbers('alice', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'alice-walk-up', frames: this.anims.generateFrameNumbers('alice', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    // bob animations
+    this.anims.create({ key: 'bob-walk-down', frames: this.anims.generateFrameNumbers('bob', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-left', frames: this.anims.generateFrameNumbers('bob', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-right', frames: this.anims.generateFrameNumbers('bob', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'bob-walk-up', frames: this.anims.generateFrameNumbers('bob', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    //tom animations
+    this.anims.create({ key: 'tom-walk-down', frames: this.anims.generateFrameNumbers('tom', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-left', frames: this.anims.generateFrameNumbers('tom', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-right', frames: this.anims.generateFrameNumbers('tom', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'tom-walk-up', frames: this.anims.generateFrameNumbers('tom', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    //natasha animation 
+    this.anims.create({ key: 'natasha-walk-down', frames: this.anims.generateFrameNumbers('natasha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-left', frames: this.anims.generateFrameNumbers('natasha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-right', frames: this.anims.generateFrameNumbers('natasha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'natasha-walk-up', frames: this.anims.generateFrameNumbers('natasha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    // nisha animation
+    this.anims.create({ key: 'nisha-walk-down', frames: this.anims.generateFrameNumbers('nisha', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-left', frames: this.anims.generateFrameNumbers('nisha', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-right', frames: this.anims.generateFrameNumbers('nisha', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'nisha-walk-up', frames: this.anims.generateFrameNumbers('nisha', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
+    //david animation
+    this.anims.create({ key: 'david-walk-down', frames: this.anims.generateFrameNumbers('david', { start: 0, end: 3 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-left', frames: this.anims.generateFrameNumbers('david', { start: 4, end: 7 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-right', frames: this.anims.generateFrameNumbers('david', { start: 8, end: 11 }), frameRate: 10, repeat: -1 });
+    this.anims.create({ key: 'david-walk-up', frames: this.anims.generateFrameNumbers('david', { start: 12, end: 15 }), frameRate: 10, repeat: -1 });
 
     // camera angle
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -177,7 +178,7 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
     // sit text
-    this.sitPrompt = this.add.text(0, 0, 'Press E to Sit', {
+    this.sitPrompt = this.add.text(250, 150, 'Press E to Sit', {
       font: '16px Arial',
       fill: '#ffffff',
       backgroundColor: '#000000',
@@ -307,6 +308,9 @@ export default class OfficeMapScene extends Phaser.Scene {
         rect.occupied = false;
         const dirProp = obj.properties.find(p => p.name === 'direction');
         rect.direction = dirProp?.value || 'north';
+        // Set chairId for sitting logic
+        const chairIdProp = obj.properties.find(p => p.name === 'chairId');
+        rect.chairId = chairIdProp?.value || null;
       }
     });
   }
@@ -316,6 +320,7 @@ export default class OfficeMapScene extends Phaser.Scene {
     let moved = false;
     let direction = '';
     let animKey = '';
+
     if (this.isSitting) {
       if (Phaser.Input.Keyboard.JustDown(this.keyQ)) {
         if (this.sittingSprite) this.sittingSprite.destroy();
@@ -330,19 +335,43 @@ export default class OfficeMapScene extends Phaser.Scene {
 
     let nearbyChair = null;
     this.chairs.getChildren().forEach(chair => {
-      if (!chair.occupied && Phaser.Math.Distance.Between(this.player.x, this.player.y, chair.x, chair.y) < 32) {
+      // Only consider the assigned chair
+      const assignedChairId = this.data.get('assignedChairId') || this.assignedChairId;
+      if (
+        !chair.occupied &&
+        Phaser.Math.Distance.Between(this.player.x, this.player.y, chair.x, chair.y) < 32 &&
+        chair.chairId === assignedChairId // <-- Only allow sitting on assigned chair
+      ) {
         nearbyChair = chair;
       }
     });
 
-    // Arrow navigation logic
-     const showArrow = this.data.get('showArrow');
+    // --- Arrow navigation logic ---
+    const showArrow = this.data.get('showArrow');
+    const assignedChairId = this.data.get('assignedChairId') || this.assignedChairId;
+
+    // Dynamically create the arrow and assignedChairObj if needed
+    if ((!this.arrow || !this.assignedChairObj) && assignedChairId && this.chairs) {
+      // Find the assigned chair object from the "chairs" layer
+      // Save map reference in create(): this.map = map;
+      const chairsLayer = this.map?.getObjectLayer?.('chairs');
+      if (chairsLayer) {
+        this.assignedChairObj = chairsLayer.objects.find(obj => {
+          const chairIdProp = obj.properties?.find(p => p.name === 'chairId');
+          return chairIdProp && chairIdProp.value === assignedChairId;
+        });
+        if (this.assignedChairObj && !this.arrow) {
+          this.arrow = this.add.image(this.player.x, this.player.y, 'arrow').setDepth(20).setScale(0.5);
+        }
+      }
+    }
+
     if (this.arrow && this.assignedChairObj) {
       // Use center of chair object if width/height exist
       const chairX = this.assignedChairObj.x + (this.assignedChairObj.width || 0) / 2;
       const chairY = this.assignedChairObj.y + (this.assignedChairObj.height || 0) / 2;
       this.arrow.x = this.player.x;
-      this.arrow.y = this.player.y-30;
+      this.arrow.y = this.player.y - 30;
       const dx = chairX - this.player.x;
       const dy = chairY - this.player.y;
       this.arrow.rotation = Math.atan2(dy, dx);
@@ -350,8 +379,9 @@ export default class OfficeMapScene extends Phaser.Scene {
       this.arrow.setVisible(showArrow && dist > 40); // Hide arrow if close
     }
 
+    // --- Sitting logic ---
     if (nearbyChair) {
-      this.sitPrompt.setPosition(this.player.x - 40, this.player.y - 40).setVisible(true);
+      this.sitPrompt.setVisible(true);
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
         this.player.setVisible(false);
         let spriteKey = 'female1Back';
@@ -417,6 +447,7 @@ export default class OfficeMapScene extends Phaser.Scene {
       this.sitPrompt.setVisible(false);
     }
 
+    // --- Movement logic ---
     this.player.setVelocity(0);
     if (this.cursors.left.isDown || this.aKey.isDown) {
       this.player.setVelocityX(-speed);
@@ -444,7 +475,7 @@ export default class OfficeMapScene extends Phaser.Scene {
       animKey = 'walk-down';
     } else {
       this.player.anims.stop();
-      this.socket.emit('playerIsStop')
+      this.socket.emit('playerIsStop');
     }
     // Emit movement only if moved
     if (moved && this.socket) {
