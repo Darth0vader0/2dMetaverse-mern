@@ -6,6 +6,7 @@ import OfficeMapScene from '../../hooks/officeMap';
 import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
 import { ArrowLeft, Clock, GitBranch, Coffee, Code, Zap, Activity, Users, Crown, UserCircle2 } from "lucide-react";
+import { ArrowUp, Armchair, Search, User, X } from 'lucide-react';
 import { Badge } from "../../components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -18,8 +19,9 @@ export default function PhaserGame({ roomId }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showChairDialog, setShowChairDialog] = useState(false);
   const [showArrow, setShowArrow] = useState(true);
-
-
+  const [showArrowOptions, setShowArrowOptions] = useState(false);
+  const [findPersonInput, setFindPersonInput] = useState("");
+  
   const [stats, setStats] = useState({
     hoursWorked: 0,
     gitPushes: 0,
@@ -162,6 +164,24 @@ export default function PhaserGame({ roomId }) {
     }
   }, [showArrow]);
 
+    const handleToggleArrow = () => {
+    setShowArrow(prev => !prev);
+    setShowArrowOptions(false);
+  };
+
+  const handleFindChair = () => {
+    // Your existing chair finding logic here
+    console.log("Finding chair...");
+    setShowArrowOptions(false);
+  };
+
+  const handleFindPerson = () => {
+    if (findPersonInput.trim()) {
+      console.log(`Finding person: ${findPersonInput}`);
+      setShowArrowOptions(false);
+      setFindPersonInput("");
+    }
+  };
 
 
   const handleChairSelection = async () => {
@@ -241,7 +261,7 @@ export default function PhaserGame({ roomId }) {
             variant={showArrow ? "default" : "outline"}
             size="icon"
             className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-            onClick={() => setShowArrow((prev) => !prev)}
+            onClick={() => setShowArrowOptions((true))}
             title={showArrow ? "Hide Arrow" : "Show Arrow"}
           >
             <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
@@ -268,6 +288,81 @@ export default function PhaserGame({ roomId }) {
             </Button>
           </div>
         )}
+
+        {showArrowOptions && (
+        <div className="absolute top-24 right-4 z-30 bg-slate-800 border border-slate-600 rounded-lg shadow-xl p-4 w-64">
+      {/* Header with close button */}
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="font-bold text-purple-400 flex items-center gap-2">
+          <ArrowUp className="w-4 h-4" />
+          Arrow Options
+        </h3>
+        <button 
+          onClick={() => setShowArrowOptions(false)}
+          className="text-gray-400 hover:text-gray-200 transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Toggle Arrow Button */}
+      <button
+        className={`w-full mb-3 px-3 py-2 rounded-md border transition-all duration-200 flex items-center justify-center gap-2 ${
+          showArrow 
+            ? "bg-purple-600 text-white border-purple-500 hover:bg-purple-700" 
+            : "bg-slate-700 text-gray-200 border-slate-600 hover:bg-slate-600"
+        }`}
+        onClick={handleToggleArrow}
+      >
+        {showArrow ? (
+          <>
+            <div className="relative">
+              <ArrowUp className="w-4 h-4" />
+              <X className="w-2 h-2 absolute -top-1 -right-1 text-red-500" />
+            </div>
+            Hide your arrow
+          </>
+        ) : (
+          <>
+            <ArrowUp className="w-4 h-4" />
+            Show your arrow
+          </>
+        )}
+      </button>
+
+      {/* Find Chair Button */}
+      <button
+        className="w-full mb-3 px-3 py-2 rounded-md border border-slate-600 bg-slate-700 text-gray-200 hover:bg-slate-600 transition-all duration-200 flex items-center justify-center gap-2"
+        onClick={handleFindChair}
+      >
+        <Armchair className="w-4 h-4" />
+        Find your chair
+      </button>
+
+      {/* Find Person Section */}
+      <div className="space-y-2">
+        <div className="relative">
+          <User className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            className="w-full border border-slate-600 bg-slate-700 text-gray-200 rounded-md pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-400"
+            placeholder="Find person by username"
+            value={findPersonInput}
+            onChange={e => setFindPersonInput(e.target.value)}
+            onKeyPress={e => e.key === 'Enter' && handleFindPerson()}
+          />
+        </div>
+        <button
+          className="w-full px-3 py-2 rounded-md border border-slate-600 bg-slate-700 text-gray-200 hover:bg-slate-600 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleFindPerson}
+          disabled={!findPersonInput.trim()}
+        >
+          <Search className="w-4 h-4" />
+          Find person
+        </button>
+      </div>
+    </div>
+        )}
       </div>
 
       {/* Sidebar */}
@@ -276,7 +371,7 @@ export default function PhaserGame({ roomId }) {
           <div className="p-4 border-b">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold">Office Dashboard</h2>
-              
+
             </div>
           </div>
 
