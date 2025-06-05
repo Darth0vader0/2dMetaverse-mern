@@ -98,6 +98,8 @@ export default class OfficeMapScene extends Phaser.Scene {
     this.player.body.setOffset(20, 24);
     this.player.setCollideWorldBounds(true);
 
+
+
     // Find the assigned chair object from the "chairs" layer
     const chairsLayer = map.getObjectLayer('chairs');
     this.assignedChairObj = null;
@@ -266,6 +268,9 @@ export default class OfficeMapScene extends Phaser.Scene {
       const id = nicknameOrId;
       if (this.remotePlayers[id]) {
         this.remotePlayers[id].sprite.destroy();
+        if (this.remotePlayers[id].nicknameText) {
+          this.remotePlayers[id].nicknameText.destroy();
+        }
         delete this.remotePlayers[id];
       }
     });
@@ -290,7 +295,22 @@ export default class OfficeMapScene extends Phaser.Scene {
       .setScale(0.5)
       .setDepth(5);
     if (player.animKey) sprite.anims.play(`${player.avatar}-` + player.animKey, true);
-    this.remotePlayers[player.id] = { sprite, info: player };
+
+    // Add nickname text above the remote player's head
+    const nicknameText = this.add.text(
+      player.x,
+      player.y - 10, // 10 pixels above the sprite
+      player.nickname || player.username || "Player",
+      {
+        font: '14px Arial',
+        fill: '#fff',
+        stroke: '#000',
+        strokeThickness: 3,
+        align: 'center'
+      }
+    ).setOrigin(0.5, 1).setDepth(30);
+
+    this.remotePlayers[player.id] = { sprite, info: player, nicknameText };
   }
 
   addCollidersFromLayer(map, layerName, group, isChair = false) {
@@ -321,6 +341,14 @@ export default class OfficeMapScene extends Phaser.Scene {
     let direction = '';
     let animKey = '';
 
+    Object.values(this.remotePlayers).forEach(remote => {
+      if (remote.nicknameText && remote.sprite) {
+        remote.nicknameText.x = remote.sprite.x;
+        remote.nicknameText.y = remote.sprite.y - 10;
+      }
+    });
+
+
     if (this.isSitting) {
       if (Phaser.Input.Keyboard.JustDown(this.keyQ)) {
         if (this.sittingSprite) this.sittingSprite.destroy();
@@ -330,7 +358,7 @@ export default class OfficeMapScene extends Phaser.Scene {
         this.socket.emit('playerStanding');
         this.currentChair = null;
       }
-      return;
+      return; // <--- Only return after updating remote nicknames!
     }
 
     let nearbyChair = null;
@@ -345,6 +373,7 @@ export default class OfficeMapScene extends Phaser.Scene {
         nearbyChair = chair;
       }
     });
+
 
     // --- Arrow navigation logic ---
     const showArrow = this.data.get('showArrow');
