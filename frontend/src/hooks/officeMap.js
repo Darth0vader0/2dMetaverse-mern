@@ -60,11 +60,12 @@ export default class OfficeMapScene extends Phaser.Scene {
     const roomId = localStorage.getItem('roomId');
 
     // socket connection 
-    if (user && avatar && roomId && socket) {
+    if (user && avatar && roomId && socket &&user.gender) {
       socket.emit('joinRoom', {
         username: user.username,
         nickname: user.nickname,
         avatar: avatar.name,
+        gender : user.gender,
         roomId
       });
     } else {
@@ -196,7 +197,39 @@ export default class OfficeMapScene extends Phaser.Scene {
 
     socket.on('currentPlayers', (players) => {
       players.forEach(player => {
+        console.log(player)
         this.addRemotePlayer(player);
+        // If the player is sitting, make them sit visually
+        if (player.isSitting && player.chairDirection) {
+          // Simulate the playerSitting event for this remote player
+          const remote = this.remotePlayers[player.id];
+          if (remote && !remote.isSitting) {
+            const chair = this.findClosestChair(remote.sprite.x, remote.sprite.y);
+            if (!chair) return;
+            const avatarName = remote.info.avatar;
+            let spriteKey = 'female1Back'; // fallback
+            if (player.chairDirection === 'north') {
+              spriteKey = (player.gender === 'male' ? 'male1Back' : 'female1Back');
+            } else {
+              spriteKey = avatarName + 'Top';
+            }
+            let offsetY = -13, offsetX = 0, angle = 0, width = 22, height = 24;
+            switch (player.chairDirection) {
+              case 'north': offsetY = -6; width = 42; height = 45; break;
+              case 'south': offsetY = -1; width = 18; height = 20; break;
+              case 'east': angle = -90; offsetX = -2; break;
+              case 'west': angle = 90; offsetX = 1; break;
+            }
+            const sittingSprite = this.add.image(
+              chair.x + offsetX,
+              chair.y + offsetY,
+              spriteKey
+            ).setDepth(10).setDisplaySize(width, height).setAngle(angle);
+            remote.sittingSprite = sittingSprite;
+            remote.sprite.setVisible(false);
+            remote.isSitting = true;
+          }
+        }
       });
       console.log('Current players in room:', players);
     });
@@ -210,6 +243,8 @@ export default class OfficeMapScene extends Phaser.Scene {
       const remote = this.remotePlayers[id];
       if (remote) {
         remote.sprite.setPosition(x, y);
+        remote.info.x=remote.sprite.x;
+        remote.info.y= remote.sprite.y;
         if (animKey) remote.sprite.anims.play(`${avatar}-` + animKey, true);
       }
     });
@@ -223,6 +258,7 @@ export default class OfficeMapScene extends Phaser.Scene {
 
     socket.on('playerSitting', ({ id, direction }) => {
       const remote = this.remotePlayers[id];
+   
       if (remote && !remote.isSitting) {
         const chair = this.findClosestChair(remote.sprite.x, remote.sprite.y);
         if (!chair) return;
@@ -251,7 +287,11 @@ export default class OfficeMapScene extends Phaser.Scene {
         ).setDepth(10).setDisplaySize(width, height).setAngle(angle);
         remote.sittingSprite = sittingSprite;
         remote.sprite.setVisible(false);
-        remote.isSitting = true;
+        remote.info.isSitting = true;
+        remote.info.x=remote.sprite.x;
+        remote.info.y= remote.sprite.y;
+        console.log(remote)
+
       }
     });
 
@@ -260,7 +300,7 @@ export default class OfficeMapScene extends Phaser.Scene {
       if (remote && remote.isSitting) {
         if (remote.sittingSprite) remote.sittingSprite.destroy();
         remote.sprite.setVisible(true);
-        remote.isSitting = false;
+        remote.info.isSitting = false;
       }
     });
 

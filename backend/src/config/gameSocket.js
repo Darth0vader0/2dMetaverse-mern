@@ -4,7 +4,7 @@ const rooms = {}; // { roomId: Set of socket ids }
 const gameSocket = (io) => {
 
     io.on('connection', (socket) => {
-        socket.on('joinRoom', ({ username, nickname, avatar, roomId }) => {
+        socket.on('joinRoom', ({ username, nickname, avatar, roomId, gender }) => {
             console.log(`User ${username} joined room ${roomId}`);
             socket.join(roomId);
 
@@ -13,37 +13,49 @@ const gameSocket = (io) => {
                 nickname,
                 avatar,
                 roomId,
+                gender,
                 x: 100,
                 y: 100,
                 direction: 'down',
                 animKey: '',
                 isSitting: false,
-               
                 chairDirection: null
             };
 
-              // Add to rooms map
-    if (!rooms[roomId]) rooms[roomId] = new Set();
-    rooms[roomId].add(socket.id);
+            // Add to rooms map
+            if (!rooms[roomId]) rooms[roomId] = new Set();
+            rooms[roomId].add(socket.id);
 
+            // Send existing players to new one
             // Send existing players to new one
             const existingPlayers = Object.entries(players)
                 .filter(([id, player]) => id !== socket.id)
-                .map(([id, player]) => ({ id, ...player }));
+                .map(([id, player]) => ({
+                    id,
+                    ...player,
+                    // Ensure these are included:
+                    isSitting: player.isSitting,
+                    chairDirection: player.chairDirection,
+                    gender: player.gender
+                }));
             socket.emit('currentPlayers', existingPlayers);
 
             //for frontend
             socket.emit('currentPlayersForFrontend', existingPlayers);
 
             // Notify others in the room
+            const player = players[socket.id];
             socket.to(roomId).emit('newPlayer', {
                 id: socket.id,
-                username,
-                nickname,
-                avatar,
-                x: 100,
-                y: 100,
-                direction: 'down'
+                username: player.username,
+                nickname: player.nickname,
+                avatar: player.avatar,
+                x: player.x,
+                y: player.y,
+                direction: player.direction,
+                isSitting: player.isSitting,
+                chairDirection: player.chairDirection,
+                gender: player.gender
             });
 
             //for frontend emit
@@ -72,7 +84,7 @@ const gameSocket = (io) => {
                     y,
                     direction,
                     animKey,
-                    avatar:player.avatar
+                    avatar: player.avatar
                 });
             }
         });
@@ -82,7 +94,7 @@ const gameSocket = (io) => {
             if (player) {
                 player.isSitting = true;
                 player.chairDirection = direction;
-                console.log("player issitting",player.username)
+                console.log("player issitting", player.username)
 
                 socket.to(player.roomId).emit('playerSitting', {
                     id: socket.id,
@@ -91,11 +103,11 @@ const gameSocket = (io) => {
             }
         });
 
-        socket.on('playerIsStop',()=>{
+        socket.on('playerIsStop', () => {
             const player = players[socket.id];
             if (player) {
-                
-            socket.to(player.roomId).emit('playerStopped',{id:socket.id})
+
+                socket.to(player.roomId).emit('playerStopped', { id: socket.id })
             }
         })
 
@@ -110,23 +122,23 @@ const gameSocket = (io) => {
                 });
             }
         });
-      
-socket.on("leaveRoom", () => {
-    const player = players[socket.id];
-    const roomId = removePlayerFromRoom(socket);
-    if (player && roomId) {
-        console.log(`User ${player.username} left room ${roomId}`);
-        socket.to(roomId).emit('playerLeft', socket.id);
-    }
-});
 
-socket.on('disconnect', () => {
-    const player = players[socket.id];
-    const roomId = removePlayerFromRoom(socket);
-    if (player && roomId) {
-        socket.to(roomId).emit('playerDisconnected', socket.id);
-    }
-});
+        socket.on("leaveRoom", () => {
+            const player = players[socket.id];
+            const roomId = removePlayerFromRoom(socket);
+            if (player && roomId) {
+                console.log(`User ${player.username} left room ${roomId}`);
+                socket.to(roomId).emit('playerLeft', socket.id);
+            }
+        });
+
+        socket.on('disconnect', () => {
+            const player = players[socket.id];
+            const roomId = removePlayerFromRoom(socket);
+            if (player && roomId) {
+                socket.to(roomId).emit('playerDisconnected', socket.id);
+            }
+        });
 
     })
 
