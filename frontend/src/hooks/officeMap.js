@@ -381,6 +381,14 @@ export default class OfficeMapScene extends Phaser.Scene {
     let direction = '';
     let animKey = '';
 
+    const activeElement = document.activeElement;
+  const isTyping = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
+  if (isTyping) {
+    // Optionally, stop player animation here too
+    this.player.setVelocity(0);
+    this.player.anims.stop();
+    return;
+  }
     Object.values(this.remotePlayers).forEach(remote => {
       if (remote.nicknameText && remote.sprite) {
         remote.nicknameText.x = remote.sprite.x;
