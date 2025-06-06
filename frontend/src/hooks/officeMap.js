@@ -295,21 +295,18 @@ export default class OfficeMapScene extends Phaser.Scene {
       }
     });
 
-    socket.on('playerStanding', ({ id }) => {
-      const remote = this.remotePlayers[id];
-      if (remote && remote.isSitting) {
-        if (remote.sittingSprite) remote.sittingSprite.destroy();
-        remote.sprite.setVisible(true);
-        remote.info.isSitting = false;
-      }
-    });
+socket.on('playerStanding', ({ id }) => {
+  const remote = this.remotePlayers[id];
+  if (remote && remote.info.isSitting) {
+    if (remote.sittingSprite) remote.sittingSprite.destroy();
+    remote.sprite.setVisible(true);
+    remote.info.isSitting = false;
+  }
+});
 
     socket.on('playerLeft', (nicknameOrId) => {
       const id = nicknameOrId;
       if (this.remotePlayers[id]) {
-        if(this.remotePlayers[id].info.isSitting){
-          this.remotePlayers[id].sittingSprite.destroy();
-        }
         this.remotePlayers[id].sprite.destroy();
         if (this.remotePlayers[id].nicknameText) {
           this.remotePlayers[id].nicknameText.destroy();

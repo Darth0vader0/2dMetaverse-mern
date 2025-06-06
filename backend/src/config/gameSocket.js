@@ -116,7 +116,7 @@ const gameSocket = (io) => {
             if (player) {
                 player.isSitting = false;
                 player.chairDirection = null;
-
+                console.log('player ',player.nickname+" is standing")
                 socket.to(player.roomId).emit('playerStanding', {
                     id: socket.id
                 });
