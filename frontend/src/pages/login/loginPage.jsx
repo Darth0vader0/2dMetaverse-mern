@@ -34,6 +34,14 @@ export default function LoginPage() {
     }
     const data = await result.json()
     localStorage.setItem('user', JSON.stringify(data.user))
+    if(!localStorage.getItem('avatar')){
+      localStorage.setItem('avatar',JSON.stringify({
+        id:1,
+        name:'bob',
+        image:"/avatars/bob.jpg",
+        color:'bg-green-600'
+      }))
+    }
     navigate("/settings")
   }
 

@@ -37,7 +37,7 @@ export default function SignupPage() {
     }
     // If the signup is successful, redirect to the settings page
 
-    window.location.href = "/settings" // Replace Next.js router with plain navigation
+    window.location.href ="/login" // Replace Next.js router with plain navigation
   }
 
   return (
