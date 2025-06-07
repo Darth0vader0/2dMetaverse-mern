@@ -50,7 +50,9 @@ class AuthController {
                 maxAge:  24 * 60 * 60 * 1000, // 1day
                 path: "/",
             });
-            return res.status(200).json({ message: 'Login successful', user });
+            const userObj = user.toObject();
+            delete userObj.password;
+            return res.status(200).json({ message: 'Login successful', user:userObj });
 
         } catch (error) {
             return res.status(500).json({ message: 'Server error', error });
