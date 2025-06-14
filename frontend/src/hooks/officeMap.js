@@ -84,6 +84,15 @@ export default class OfficeMapScene extends Phaser.Scene {
     let spawnX = 100, spawnY = 100;
     // layers for collision
     const doorLayer = map.getObjectLayer('doors');
+this.exitArea = null;
+if (doorLayer && doorLayer.objects.length > 0) {
+  this.exitArea = doorLayer.objects.find(obj =>
+    obj.properties?.some(p => p.name === 'type' && p.value === 'exitArea')
+  );
+}
+this.showExitPopup = false;
+this.exitPopupDismissed = false;
+
     if (doorLayer && doorLayer.objects.length > 0) {
       const entryDoor = doorLayer.objects.find(obj => obj.name === 'door_entry' || obj.type === 'door');
       if (entryDoor) {
@@ -375,6 +384,8 @@ socket.on('playerStanding', ({ id }) => {
     });
   }
 
+
+
   update() {
     const speed = 100;
     let moved = false;
@@ -456,6 +467,33 @@ socket.on('playerStanding', ({ id }) => {
       this.arrow.setVisible(showArrow && dist > 40); // Hide arrow if close
     }
 
+
+
+if (this.exitArea && this.player) {
+  const playerRect = new Phaser.Geom.Rectangle(
+    this.player.x - this.player.width / 2,
+    this.player.y - this.player.height / 2,
+    this.player.width,
+    this.player.height
+  );
+  const exitRect = new Phaser.Geom.Rectangle(
+    this.exitArea.x-20,
+    this.exitArea.y-20,
+    this.exitArea.width,
+    this.exitArea.height
+  );
+  if (Phaser.Geom.Intersects.RectangleToRectangle(playerRect, exitRect)) {
+    if (!this.showExitPopup && !this.exitPopupDismissed) {
+      this.showExitPopup = true;
+         window.setShowExitModal(true);
+    }
+  } else {
+    // Reset dismissal when player leaves the area
+    this.exitPopupDismissed = false;
+    this.showExitPopup = false;
+     window.setShowExitModal(false);
+  }
+}
     // --- Sitting logic ---
     if (nearbyChair) {
       this.sitPrompt.setVisible(true);

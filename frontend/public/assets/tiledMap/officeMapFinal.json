@@ -2059,7 +2059,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -2121,10 +2121,42 @@
                  "width":27,
                  "x":382.5,
                  "y":138
+                }, 
+                {
+                 "height":107.666666666667,
+                 "id":170,
+                 "name":"exit",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"exitArea"
+                        }, 
+                        {
+                         "name":"isClickedToOpen",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isCollidable",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isOpen",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":83.6666666666667,
+                 "x":362.666666666667,
+                 "y":16
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -3114,7 +3146,7 @@
                  "value":true
                 }],
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -3714,7 +3746,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":170,
+ "nextobjectid":171,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
