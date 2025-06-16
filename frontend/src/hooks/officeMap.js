@@ -491,7 +491,7 @@ if (this.exitArea && this.player) {
     // Reset dismissal when player leaves the area
     this.exitPopupDismissed = false;
     this.showExitPopup = false;
-     window.setShowExitModal(false);
+     
   }
 }
     // --- Sitting logic ---
