@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
+  const [role,setRole] = useState("user")
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
@@ -24,6 +25,7 @@ export default function LoginPage() {
       body: JSON.stringify({
         username,
         password,
+        role
       }),
       credentials: "include",
     })
@@ -33,7 +35,10 @@ export default function LoginPage() {
       return
     }
     const data = await result.json()
+    console.log(data.user)
     localStorage.setItem('user', JSON.stringify(data.user))
+    localStorage.setItem('role', role)
+    localStorage.setItem("assignedChairIds", JSON.stringify(data.user.assignedChairIds)); // Initialize assigned chairs
     if(!localStorage.getItem('avatar')){
       localStorage.setItem('avatar',JSON.stringify({
         id:1,
@@ -89,6 +94,27 @@ export default function LoginPage() {
                   required
                 />
               </div>
+              <div className="">
+              <label>
+  <input
+    type="radio"
+    value="user"
+    checked={role === "user"}
+    onChange={() => setRole("user")}
+  />
+  User
+</label>
+<label style={{ marginLeft: "1em" }}>
+  <input
+    type="radio"
+    value="admin"
+    checked={role === "admin"}
+    onChange={() => setRole("admin")}
+  />
+  Admin
+</label>
+              </div>
+              
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button type="submit" className="w-full">

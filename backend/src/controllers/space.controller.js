@@ -99,10 +99,7 @@ class SpaceController {
             }
             const chairs = space.mapConfig.chairs;
             const lastChairId = chairs[chairs.length - 1]?.chairId || '0';
-         
-            
-          
-            
+
             let assignedChairId = 'ch_'
             if(lastChairId == '0'){
                 assignedChairId = 'ch_0'
@@ -121,6 +118,10 @@ class SpaceController {
                 occupiedBy: id
             })
             await space.save();
+
+            const user = await User.findById(id);
+            user.assignedChairIds.set(spaceId,assignedChairId)
+            await user.save();
             res.status(201).json({success:true , assignedChairId  })
 
 

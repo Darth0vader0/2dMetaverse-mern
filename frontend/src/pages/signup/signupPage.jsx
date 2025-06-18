@@ -12,6 +12,7 @@ export default function SignupPage() {
   const [nickname, setNickname] = useState("")
   const [gender,setGender] = useState('male')
   const [error, setError] = useState("")
+  const [role,setRole]  = useState("user") // Default role is user
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -26,7 +27,8 @@ export default function SignupPage() {
         email,
         nickname,
         password,
-        gender
+        gender,
+        role
       }),
 
     })
@@ -140,6 +142,33 @@ export default function SignupPage() {
                     className="accent-blue-400"
                   />
                   <span>Other</span>
+                </label>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="gender">Role</Label>
+              <div className="flex items-center gap-6 mt-1">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="user"
+                    checked={role === "user"}
+                    onChange={() =>setRole("user")}
+                    className="accent-purple-600"
+                  />
+                  <span>user</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="admin"
+                    checked={role === "admin"}
+                    onChange={() => setRole("admin")}
+                    className="accent-pink-500"
+                  />
+                  <span>admin</span>
                 </label>
               </div>
             </div>

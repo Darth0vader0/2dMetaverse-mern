@@ -26,34 +26,6 @@ export default function PhaserGame({ roomId }) {
   window.setShowExitModal = setShowExitModal;
   window.setExitPopupDismissed = setExitPopupDismissed;
 
-
-  // Sample online players data
-
-  // This function would be called from your game scene to update stats
-
-
-
-  // useEffect(() => {
-  //   // On mount: check if we should redirect
-  //   if (localStorage.getItem('redirectToMetaverse') === 'true') {
-  //     localStorage.removeItem('redirectToMetaverse');
-  //     window.location.href = '/metaverse';
-  //     return;
-  //   }
-
-  //   const handleBeforeUnload = () => {
-  //     socket.emit('leaveRoom');
-  //     localStorage.setItem('redirectToMetaverse', 'true');
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, []);
-
-
   useEffect(() => {
     // Get all assigned chairs from localStorage
     let assignedChairs = {};
