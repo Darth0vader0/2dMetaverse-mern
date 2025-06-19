@@ -63,18 +63,24 @@ export default class OfficeMapScene extends Phaser.Scene {
     // room id from local storage 
     const roomId = localStorage.getItem('roomId');
 
-    // socket connection 
-    if (user && avatar && roomId && socket &&user.gender) {
-      socket.emit('joinRoom', {
-        username: user.username,
-        nickname: user.nickname,
-        avatar: avatar.name,
-        gender : user.gender,
-        roomId
-      });
-    } else {
-      console.error('Missing user, avatar, roomId, or socket for joinRoom');
+    if (isAdmin) {
+      socket.emit('observerJoinRoom', { roomId: roomId, username: user.username })
     }
+    else {
+      if (user && avatar && roomId && socket && user.gender) {
+        socket.emit('joinRoom', {
+          username: user.username,
+          nickname: user.nickname,
+          avatar: avatar.name,
+          gender: user.gender,
+          roomId
+        });
+      } else {
+        console.error('Missing user, avatar, roomId, or socket for joinRoom');
+      }
+    }
+    // socket connection 
+
 
     // --- Map and world setup ---
     const map = this.make.tilemap({ key: 'officeMap' });
@@ -88,14 +94,14 @@ export default class OfficeMapScene extends Phaser.Scene {
     let spawnX = 100, spawnY = 100;
     // layers for collision
     const doorLayer = map.getObjectLayer('doors');
-this.exitArea = null;
-if (doorLayer && doorLayer.objects.length > 0) {
-  this.exitArea = doorLayer.objects.find(obj =>
-    obj.properties?.some(p => p.name === 'type' && p.value === 'exitArea')
-  );
-}
-this.showExitPopup = false;
-this.exitPopupDismissed = false;
+    this.exitArea = null;
+    if (doorLayer && doorLayer.objects.length > 0) {
+      this.exitArea = doorLayer.objects.find(obj =>
+        obj.properties?.some(p => p.name === 'type' && p.value === 'exitArea')
+      );
+    }
+    this.showExitPopup = false;
+    this.exitPopupDismissed = false;
 
     if (doorLayer && doorLayer.objects.length > 0) {
       const entryDoor = doorLayer.objects.find(obj => obj.name === 'door_entry' || obj.type === 'door');
@@ -113,9 +119,9 @@ this.exitPopupDismissed = false;
     this.player.setCollideWorldBounds(true);
 
     if (isAdmin) {
-  this.player.setAlpha(0); // Invisible
-  this.player.body.checkCollision.none = true; // No collisions
-}
+      this.player.setAlpha(0); // Invisible
+      this.player.body.checkCollision.none = true; // No collisions
+    }
 
 
     // Find the assigned chair object from the "chairs" layer
@@ -260,8 +266,8 @@ this.exitPopupDismissed = false;
       const remote = this.remotePlayers[id];
       if (remote) {
         remote.sprite.setPosition(x, y);
-        remote.info.x=remote.sprite.x;
-        remote.info.y= remote.sprite.y;
+        remote.info.x = remote.sprite.x;
+        remote.info.y = remote.sprite.y;
         if (animKey) remote.sprite.anims.play(`${avatar}-` + animKey, true);
       }
     });
@@ -275,7 +281,7 @@ this.exitPopupDismissed = false;
 
     socket.on('playerSitting', ({ id, direction }) => {
       const remote = this.remotePlayers[id];
-   
+
       if (remote && !remote.isSitting) {
         const chair = this.findClosestChair(remote.sprite.x, remote.sprite.y);
         if (!chair) return;
@@ -305,21 +311,21 @@ this.exitPopupDismissed = false;
         remote.sittingSprite = sittingSprite;
         remote.sprite.setVisible(false);
         remote.info.isSitting = true;
-        remote.info.x=remote.sprite.x;
-        remote.info.y= remote.sprite.y;
+        remote.info.x = remote.sprite.x;
+        remote.info.y = remote.sprite.y;
         console.log(remote)
 
       }
     });
 
-socket.on('playerStanding', ({ id }) => {
-  const remote = this.remotePlayers[id];
-  if (remote && remote.info.isSitting) {
-    if (remote.sittingSprite) remote.sittingSprite.destroy();
-    remote.sprite.setVisible(true);
-    remote.info.isSitting = false;
-  }
-});
+    socket.on('playerStanding', ({ id }) => {
+      const remote = this.remotePlayers[id];
+      if (remote && remote.info.isSitting) {
+        if (remote.sittingSprite) remote.sittingSprite.destroy();
+        remote.sprite.setVisible(true);
+        remote.info.isSitting = false;
+      }
+    });
 
     socket.on('playerLeft', (nicknameOrId) => {
       const id = nicknameOrId;
@@ -395,20 +401,20 @@ socket.on('playerStanding', ({ id }) => {
 
 
   update() {
-    
-    const speed = OfficeMapScene.isAdmin?600:100;
+
+    const speed = OfficeMapScene.isAdmin ? 600 : 100;
     let moved = false;
     let direction = '';
     let animKey = '';
 
     const activeElement = document.activeElement;
-  const isTyping = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
-  if (isTyping) {
-    // Optionally, stop player animation here too
-    this.player.setVelocity(0);
-    this.player.anims.stop();
-    return;
-  }
+    const isTyping = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
+    if (isTyping) {
+      // Optionally, stop player animation here too
+      this.player.setVelocity(0);
+      this.player.anims.stop();
+      return;
+    }
     Object.values(this.remotePlayers).forEach(remote => {
       if (remote.nicknameText && remote.sprite) {
         remote.nicknameText.x = remote.sprite.x;
@@ -478,31 +484,31 @@ socket.on('playerStanding', ({ id }) => {
 
 
 
-if (this.exitArea && this.player && !OfficeMapScene.isAdmin) {
-  const playerRect = new Phaser.Geom.Rectangle(
-    this.player.x - this.player.width / 2,
-    this.player.y - this.player.height / 2,
-    this.player.width,
-    this.player.height
-  );
-  const exitRect = new Phaser.Geom.Rectangle(
-    this.exitArea.x-20,
-    this.exitArea.y-20,
-    this.exitArea.width,
-    this.exitArea.height
-  );
-  if (Phaser.Geom.Intersects.RectangleToRectangle(playerRect, exitRect)) {
-    if (!this.showExitPopup && !this.exitPopupDismissed) {
-      this.showExitPopup = true;
-         window.setShowExitModal(true);
+    if (this.exitArea && this.player && !OfficeMapScene.isAdmin) {
+      const playerRect = new Phaser.Geom.Rectangle(
+        this.player.x - this.player.width / 2,
+        this.player.y - this.player.height / 2,
+        this.player.width,
+        this.player.height
+      );
+      const exitRect = new Phaser.Geom.Rectangle(
+        this.exitArea.x - 20,
+        this.exitArea.y - 20,
+        this.exitArea.width,
+        this.exitArea.height
+      );
+      if (Phaser.Geom.Intersects.RectangleToRectangle(playerRect, exitRect)) {
+        if (!this.showExitPopup && !this.exitPopupDismissed) {
+          this.showExitPopup = true;
+          window.setShowExitModal(true);
+        }
+      } else {
+        // Reset dismissal when player leaves the area
+        this.exitPopupDismissed = false;
+        this.showExitPopup = false;
+
+      }
     }
-  } else {
-    // Reset dismissal when player leaves the area
-    this.exitPopupDismissed = false;
-    this.showExitPopup = false;
-     
-  }
-}
     // --- Sitting logic ---
     if (nearbyChair) {
       this.sitPrompt.setVisible(true);

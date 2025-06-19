@@ -16,6 +16,7 @@ const gameSocket = (io) => {
                 gender,
                 x: 100,
                 y: 100,
+                role:'user',
                 direction: 'down',
                 animKey: '',
                 isSitting: false,
@@ -70,7 +71,8 @@ const gameSocket = (io) => {
             });
         });
 
-        socket.on('observerJoinRoom', ({ username, roomId }) => {
+
+socket.on('observerJoinRoom', ({ username, roomId }) => {
     console.log(`Observer ${username} joined room ${roomId}`);
     socket.join(roomId);
 

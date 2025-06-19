@@ -89,13 +89,13 @@ export default function PhaserGame({ roomId }) {
         scene: [OfficeMapScene],
         socket,
         scale: {
-          mode: Phaser.Scale.FIT, // we will size it manually
+          mode: Phaser.Scale.NONE, // we will size it manually
           autoCenter: Phaser.Scale.NO_CENTER,
         },
       });
       gameRef.current.scene.start('OfficeMapScene', {
         socket,
-        assignedChairId : isObserver ? null : assignedChairId, // Pass assigned chair ID only if not observer
+        assignedChairId: isObserver ? null : assignedChairId, // Pass assigned chair ID only if not observer
         showArrow,
         observerMode: isObserver,
       });
@@ -294,11 +294,11 @@ export default function PhaserGame({ roomId }) {
       </div>
 
       {/* Sidebar */}
-      {!isFullscreen &&
-        localStorage.getItem('role') === 'user' ?
-        <SidebarStates socket={socket} gameRef={gameRef} /> :
-        <AdminSidebar socket={socket} />
-      }
+      {!isFullscreen && (
+        localStorage.getItem('role') === 'user'
+          ? <SidebarStates socket={socket} gameRef={gameRef} />
+          : <AdminSidebar socket={socket} />
+      )}
     </div>
   );
 }
