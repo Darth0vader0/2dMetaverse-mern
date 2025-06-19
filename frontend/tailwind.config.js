@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const css = require("tailwindcss-animate");
 
 const  config = {

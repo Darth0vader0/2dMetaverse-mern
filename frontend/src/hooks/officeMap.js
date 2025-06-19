@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 export default class OfficeMapScene extends Phaser.Scene {
   static name = null;
+  static isAdmin = false;
   constructor() {
     super('OfficeMapScene');
   }
@@ -52,6 +53,9 @@ export default class OfficeMapScene extends Phaser.Scene {
     if (!socket) {
       console.error('Socket not initialized in OfficeMapScene');
     }
+    const isAdmin = localStorage.getItem('role') === 'admin';
+    OfficeMapScene.isAdmin = isAdmin;
+
     // user's data from local storage 
     const user = JSON.parse(localStorage.getItem('user'));
     // avatar's data from local storage 
@@ -108,6 +112,10 @@ this.exitPopupDismissed = false;
     this.player.body.setOffset(20, 24);
     this.player.setCollideWorldBounds(true);
 
+    if (isAdmin) {
+  this.player.setAlpha(0); // Invisible
+  this.player.body.checkCollision.none = true; // No collisions
+}
 
 
     // Find the assigned chair object from the "chairs" layer
@@ -387,7 +395,8 @@ socket.on('playerStanding', ({ id }) => {
 
 
   update() {
-    const speed = 100;
+    
+    const speed = OfficeMapScene.isAdmin?600:100;
     let moved = false;
     let direction = '';
     let animKey = '';
@@ -469,7 +478,7 @@ socket.on('playerStanding', ({ id }) => {
 
 
 
-if (this.exitArea && this.player) {
+if (this.exitArea && this.player && !OfficeMapScene.isAdmin) {
   const playerRect = new Phaser.Geom.Rectangle(
     this.player.x - this.player.width / 2,
     this.player.y - this.player.height / 2,

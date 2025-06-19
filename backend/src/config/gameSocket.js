@@ -70,6 +70,18 @@ const gameSocket = (io) => {
             });
         });
 
+        socket.on('observerJoinRoom', ({ username, roomId }) => {
+    console.log(`Observer ${username} joined room ${roomId}`);
+    socket.join(roomId);
+
+    // Send all current players to the observer
+    const existingPlayers = Object.entries(players).map(([id, player]) => ({
+        id,
+        ...player
+    }));
+    socket.emit('currentPlayers', existingPlayers);
+});
+
         socket.on('playerMovement', ({ x, y, direction, animKey }) => {
             if (players[socket.id]) {
                 const player = players[socket.id];

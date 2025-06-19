@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Phaser from 'phaser';
 import OfficeMapScene from '../../hooks/officeMap';
 import { Button } from "../../components/ui/button";
-import {  Zap, OptionIcon } from "lucide-react";
+import { Zap, OptionIcon } from "lucide-react";
 import AdminSidebar from '../../components/admin-components/adminSidebar';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import io from "socket.io-client";
@@ -21,7 +21,7 @@ export default function PhaserGame({ roomId }) {
   const [findPersonInput, setFindPersonInput] = useState("");
   const [showExitModal, setShowExitModal] = useState(false);
   const [exitPopupDismissed, setExitPopupDismissed] = useState(false);
-
+  const isObserver = localStorage.getItem('role') === 'admin';
   // Make these available globally for Phaser to call
   window.setShowExitModal = setShowExitModal;
   window.setExitPopupDismissed = setExitPopupDismissed;
@@ -89,11 +89,16 @@ export default function PhaserGame({ roomId }) {
         scene: [OfficeMapScene],
         socket,
         scale: {
-          mode: Phaser.Scale.NONE, // we will size it manually
+          mode: Phaser.Scale.FIT, // we will size it manually
           autoCenter: Phaser.Scale.NO_CENTER,
         },
       });
-      gameRef.current.scene.start('OfficeMapScene', { socket, assignedChairId, showArrow });
+      gameRef.current.scene.start('OfficeMapScene', {
+        socket,
+        assignedChairId : isObserver ? null : assignedChairId, // Pass assigned chair ID only if not observer
+        showArrow,
+        observerMode: isObserver,
+      });
 
       // Handle window resize to make game responsive
       const handleResize = () => {
@@ -218,7 +223,7 @@ export default function PhaserGame({ roomId }) {
       >
         <div>
           {/* Fullscreen toggle button */}
-          
+
           <Button
             variant="outline"
             size="icon"
@@ -241,8 +246,8 @@ export default function PhaserGame({ roomId }) {
             variant={showArrow ? "default" : "outline"}
             size="icon"
             className="absolute top-28 right-4   bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-            onClick={() => {window.setShowExitModal(true); }}
-            
+            onClick={() => { window.setShowExitModal(true); }}
+
           >
             <OptionIcon></OptionIcon>
           </Button>
@@ -270,7 +275,7 @@ export default function PhaserGame({ roomId }) {
         )}
 
         {showExitModal && (
-         <ExitModel setShowExitModal={setShowExitModal} setExitPopupDismissed={setExitPopupDismissed} />
+          <ExitModel setShowExitModal={setShowExitModal} setExitPopupDismissed={setExitPopupDismissed} />
         )}
         {showArrowOptions && (
           <ArrowOptions
@@ -290,12 +295,9 @@ export default function PhaserGame({ roomId }) {
 
       {/* Sidebar */}
       {!isFullscreen &&
-        localStorage.getItem('user').role==='admin'?(
+        localStorage.getItem('role') === 'user' ?
+        <SidebarStates socket={socket} gameRef={gameRef} /> :
         <AdminSidebar socket={socket} />
-
-        ):(
-          <SidebarStates socket={socket}/>
-        )
       }
     </div>
   );
