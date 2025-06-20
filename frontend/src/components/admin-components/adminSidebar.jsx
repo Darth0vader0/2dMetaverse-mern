@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-
+import ScheduleMeetingDialog from './ScheduleMeetingDialog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { 
   ArrowLeft, Clock, GitBranch, Coffee, Code, Zap, DoorOpen, Activity, Users, Crown, 
@@ -59,6 +59,19 @@ export default function AdminSidebar({ socket }) {
     { id: 4, name: "DataScientist", status: "active", avatar: "🧪", role: "Data Analyst", isHost: false },
     { id: 5, name: "FrontendWiz", status: "active", avatar: "✨", role: "Frontend Developer", isHost: false },
   ]);
+  
+const [showMeetingDialog, setShowMeetingDialog] = useState(false);
+
+const handleScheduleMeeting = ({ title, time }) => {
+  const roomId = localStorage.getItem('roomId');
+  // You can get participants from your state or context if needed
+  socket.emit('scheduleMeeting', {
+    title,
+    time,
+    participants: [], // or your participant list
+    roomId,
+  });
+};
 
   const handleExit = () => {
     socket.emit('leaveRoom');
@@ -93,7 +106,7 @@ export default function AdminSidebar({ socket }) {
               <Crown className="h-6 w-6 text-yellow-500" />
               Admin Dashboard
             </h2>
-            <Badge variant="outline" className="bg-yellow-50">
+            <Badge variant="outline" className="bg-yellow-500">
               HR/PM
             </Badge>
           </div>
@@ -317,23 +330,25 @@ export default function AdminSidebar({ socket }) {
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="grid grid-cols-1 gap-3">
-                <Button variant="outline" className="justify-start h-10 border-blue-200 hover:bg-blue-50">
+                <Button variant="outline" 
+                onClick={() => setShowMeetingDialog(true)}
+                className="justify-start h-10 border-blue-200 hover:bg-blue-500">
                   <Calendar className="h-4 w-4 mr-3 text-blue-600" />
                   <span className="font-medium">Schedule Meeting</span>
                 </Button>
-                <Button variant="outline" className="justify-start h-10 border-green-200 hover:bg-green-50">
+                <Button variant="outline" className="justify-start h-10 border-green-200 hover:bg-green-500">
                   <ClipboardList className="h-4 w-4 mr-3 text-green-600" />
                   <span className="font-medium">Assign Task</span>
                 </Button>
-                <Button variant="outline" className="justify-start h-10 border-purple-200 hover:bg-purple-50">
+                <Button variant="outline" className="justify-start h-10 border-purple-200 hover:bg-purple-500">
                   <MessageSquare className="h-4 w-4 mr-3 text-purple-600" />
                   <span className="font-medium">Team Broadcast</span>
                 </Button>
-                <Button variant="outline" className="justify-start h-10 border-orange-200 hover:bg-orange-50">
+                <Button variant="outline" className="justify-start h-10 border-orange-200 hover:bg-orange-500">
                   <FileText className="h-4 w-4 mr-3 text-orange-600" />
                   <span className="font-medium">Generate Report</span>
                 </Button>
-                <Button variant="outline" className="justify-start h-10 border-indigo-200 hover:bg-indigo-50">
+                <Button variant="outline" className="justify-start h-10 border-indigo-200 hover:bg-indigo-500">
                   <Settings className="h-4 w-4 mr-3 text-indigo-600" />
                   <span className="font-medium">Admin Settings</span>
                 </Button>
@@ -341,6 +356,12 @@ export default function AdminSidebar({ socket }) {
             </CardContent>
           </Card>
         </div>
+
+        <ScheduleMeetingDialog
+  open={showMeetingDialog}
+  onClose={() => setShowMeetingDialog(false)}
+  onSchedule={handleScheduleMeeting}
+/>
 
         <div className="p-4 border-t mt-auto">
           <Button className="w-full" variant="destructive" onClick={handleExit}>

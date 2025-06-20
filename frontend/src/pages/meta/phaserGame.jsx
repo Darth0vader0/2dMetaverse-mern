@@ -12,6 +12,8 @@ const socket = io(backendUrl);
 import SidebarStates from '../../components/sidebarStates';
 import ExitModel from '../../components/exitModel';
 import ArrowOptions from '../../components/arrowOptions';
+
+
 export default function PhaserGame({ roomId }) {
   const gameRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -22,6 +24,8 @@ export default function PhaserGame({ roomId }) {
   const [showExitModal, setShowExitModal] = useState(false);
   const [exitPopupDismissed, setExitPopupDismissed] = useState(false);
   const isObserver = localStorage.getItem('role') === 'admin';
+  const [meetingNotification, setMeetingNotification] = useState(null);
+
   // Make these available globally for Phaser to call
   window.setShowExitModal = setShowExitModal;
   window.setExitPopupDismissed = setExitPopupDismissed;
@@ -67,6 +71,18 @@ export default function PhaserGame({ roomId }) {
     })
 
   }, [roomId]);
+
+
+  useEffect(() => {
+    socket.on('meetingScheduled', (meetingData) => {
+      setMeetingNotification(meetingData);
+      // Auto-hide after 10 seconds
+      setTimeout(() => setMeetingNotification(null), 10000);
+    });
+    return () => {
+      socket.off('meetingScheduled');
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -223,37 +239,53 @@ export default function PhaserGame({ roomId }) {
       >
         <div>
           {/* Fullscreen toggle button */}
+          {
+            localStorage.getItem('role') !== 'admin' && (
+              <>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+                  onClick={toggleFullscreen}
+                >
+                  <Zap className="h-4 w-4" />
+                </Button>
+                {/* Arrow toggle button, positioned right below the fullscreen button */}
+                <Button
+                  variant={showArrow ? "default" : "outline"}
+                  size="icon"
+                  className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+                  onClick={() => { setShowArrowOptions((true)); }}
+                  title={showArrow ? "Hide Arrow" : "Show Arrow"}
+                >
+                  <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant={showArrow ? "default" : "outline"}
+                  size="icon"
+                  className="absolute top-28 right-4   bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+                  onClick={() => { window.setShowExitModal(true); }}
 
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-            onClick={toggleFullscreen}
-          >
-            <Zap className="h-4 w-4" />
-          </Button>
-          {/* Arrow toggle button, positioned right below the fullscreen button */}
-          <Button
-            variant={showArrow ? "default" : "outline"}
-            size="icon"
-            className="absolute right-4 top-16 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-            onClick={() => { setShowArrowOptions((true)); }}
-            title={showArrow ? "Hide Arrow" : "Show Arrow"}
-          >
-            <img src="/arrows/arrow.png" alt="Arrow" className="h-5 w-5" />
-          </Button>
-          <Button
-            variant={showArrow ? "default" : "outline"}
-            size="icon"
-            className="absolute top-28 right-4   bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
-            onClick={() => { window.setShowExitModal(true); }}
+                >
+                  <OptionIcon></OptionIcon>
+                </Button>
+              </>
+            )
+          }
 
-          >
-            <OptionIcon></OptionIcon>
-          </Button>
+          {meetingNotification && (
+            <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 bg-blue-600 text-white px-6 py-4 rounded-lg shadow-lg flex flex-col items-center animate-fade-in">
+              <div className="font-bold text-lg mb-1">📅 Meeting Scheduled!</div>
+              <div className="font-semibold">{meetingNotification.title}</div>
+              <div className="text-sm">
+                Time: {meetingNotification.time}
+              </div>
+              <div className="text-xs mt-1">
+                Participants: {meetingNotification.participants?.join(', ')}
+              </div>
+            </div>
+          )}
         </div>
-        {/* Fullscreen toggle button - absolute positioned over the game */}
-
 
         {/* Chair Chooser Dialog */}
         {showChairDialog && (

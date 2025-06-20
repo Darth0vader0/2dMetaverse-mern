@@ -16,7 +16,7 @@ const gameSocket = (io) => {
                 gender,
                 x: 100,
                 y: 100,
-                role:'user',
+                role: 'user',
                 direction: 'down',
                 animKey: '',
                 isSitting: false,
@@ -71,18 +71,21 @@ const gameSocket = (io) => {
             });
         });
 
+        socket.on('scheduleMeeting', (meetingData) => {
+            io.to(meetingData.roomId).emit('meetingScheduled', meetingData);
+        });
 
-socket.on('observerJoinRoom', ({ username, roomId }) => {
-    console.log(`Observer ${username} joined room ${roomId}`);
-    socket.join(roomId);
+        socket.on('observerJoinRoom', ({ username, roomId }) => {
+            console.log(`Observer ${username} joined room ${roomId}`);
+            socket.join(roomId);
 
-    // Send all current players to the observer
-    const existingPlayers = Object.entries(players).map(([id, player]) => ({
-        id,
-        ...player
-    }));
-    socket.emit('currentPlayers', existingPlayers);
-});
+            // Send all current players to the observer
+            const existingPlayers = Object.entries(players).map(([id, player]) => ({
+                id,
+                ...player
+            }));
+            socket.emit('currentPlayers', existingPlayers);
+        });
 
         socket.on('playerMovement', ({ x, y, direction, animKey }) => {
             if (players[socket.id]) {
@@ -130,7 +133,7 @@ socket.on('observerJoinRoom', ({ username, roomId }) => {
             if (player) {
                 player.isSitting = false;
                 player.chairDirection = null;
-                console.log('player ',player.nickname+" is standing")
+                console.log('player ', player.nickname + " is standing")
                 socket.to(player.roomId).emit('playerStanding', {
                     id: socket.id
                 });
