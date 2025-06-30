@@ -408,7 +408,10 @@ export default class OfficeMapScene extends Phaser.Scene {
     let animKey = '';
 
     const activeElement = document.activeElement;
-    const isTyping = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA');
+  const isTyping = activeElement &&
+  (activeElement.tagName === 'INPUT' ||
+   activeElement.tagName === 'TEXTAREA' ||
+   activeElement.isContentEditable);
     if (isTyping) {
       // Optionally, stop player animation here too
       this.player.setVelocity(0);

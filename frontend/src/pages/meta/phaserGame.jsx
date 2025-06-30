@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 
 import React, { useEffect, useRef, useState } from 'react';
 import Phaser from 'phaser';
 import OfficeMapScene from '../../hooks/officeMap';
 import { Button } from "../../components/ui/button";
-import { Zap, OptionIcon } from "lucide-react";
+import { Zap, OptionIcon, BellIcon,X,Calendar, Clock, Users,  CheckCircle } from "lucide-react";
 import AdminSidebar from '../../components/admin-components/adminSidebar';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import io from "socket.io-client";
@@ -25,7 +26,8 @@ export default function PhaserGame({ roomId }) {
   const [exitPopupDismissed, setExitPopupDismissed] = useState(false);
   const isObserver = localStorage.getItem('role') === 'admin';
   const [meetingNotification, setMeetingNotification] = useState(null);
-
+  const [showMeetingDialog, setShowMeetingDialog] = useState(false);
+  const [hasMeetingNotification, setHasMeetingNotification] = useState(false);
   // Make these available globally for Phaser to call
   window.setShowExitModal = setShowExitModal;
   window.setExitPopupDismissed = setExitPopupDismissed;
@@ -76,8 +78,9 @@ export default function PhaserGame({ roomId }) {
   useEffect(() => {
     socket.on('meetingScheduled', (meetingData) => {
       setMeetingNotification(meetingData);
-      // Auto-hide after 10 seconds
-      setTimeout(() => setMeetingNotification(null), 10000);
+      setHasMeetingNotification(true); // Show red dot
+      // Optionally, auto-hide after some time:
+      // setTimeout(() => setHasMeetingNotification(false), 10000);
     });
     return () => {
       socket.off('meetingScheduled');
@@ -263,6 +266,23 @@ export default function PhaserGame({ roomId }) {
                 <Button
                   variant={showArrow ? "default" : "outline"}
                   size="icon"
+                  className="absolute right-4 top-40 bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
+                  onClick={() => {
+                    if (meetingNotification) setShowMeetingDialog(true);
+                    setHasMeetingNotification(false); // Clear red dot
+                  }}
+                  title="Show Meeting Notification"
+                >
+                  <div className="relative">
+                    <BellIcon className="h-5 w-5" />
+                    {hasMeetingNotification && (
+                      <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                    )}
+                  </div>
+                </Button>
+                <Button
+                  variant={showArrow ? "default" : "outline"}
+                  size="icon"
                   className="absolute top-28 right-4   bg-background/80 backdrop-blur-sm z-10 hover:bg-background"
                   onClick={() => { window.setShowExitModal(true); }}
 
@@ -272,8 +292,92 @@ export default function PhaserGame({ roomId }) {
               </>
             )
           }
+         {showMeetingDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-slate-700/50 p-0 w-96 max-w-md mx-4 overflow-hidden transform transition-all duration-300 scale-100">
+            {/* Header with gradient */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4 relative">
+              <button
+                onClick={() => setShowMeetingDialog(false)}
+                className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+              <div className="flex items-center space-x-3">
+                <div className="bg-white/20 rounded-full p-2">
+                  <Calendar className="text-white" size={20} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg">Meeting Scheduled</h3>
+                  <p className="text-white/80 text-sm">You have been invited</p>
+                </div>
+              </div>
+            </div>
 
-          {meetingNotification && (
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* Meeting Title */}
+              <div className="text-center mb-4">
+                <h4 className="text-white font-semibold text-xl mb-1">{meetingNotification.title}</h4>
+                <p className="text-slate-400 text-sm">{meetingNotification.location}</p>
+              </div>
+
+              {/* Meeting Details */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 bg-slate-700/30 rounded-lg p-3">
+                  <div className="bg-blue-600/20 rounded-full p-2">
+                    <Clock className="text-blue-400" size={16} />
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-medium">{meetingNotification.time}</p>
+                    <p className="text-slate-400 text-xs">{meetingNotification.date}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3 bg-slate-700/30 rounded-lg p-3">
+                  <div className="bg-purple-600/20 rounded-full p-2 mt-0.5">
+                    <Users className="text-purple-400" size={16} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white text-sm font-medium mb-1">Participants</p>
+                    <div className="flex flex-wrap gap-1">
+                      {meetingNotification.participants.map((participant, index) => (
+                        <span
+                          key={index}
+                          className="bg-slate-600/50 text-slate-300 text-xs px-2 py-1 rounded-full"
+                        >
+                          {participant}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex space-x-3 pt-4">
+                <button
+                  onClick={() => setShowMeetingDialog(false)}
+                  className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                >
+                  Dismiss
+                </button>
+                <button
+                  onClick={() => {
+                    // Handle join meeting
+                    setShowMeetingDialog(false);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
+                >
+                  <CheckCircle size={18} />
+                  <span>Join Now</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+          {isObserver && meetingNotification && (
             <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 bg-blue-600 text-white px-6 py-4 rounded-lg shadow-lg flex flex-col items-center animate-fade-in">
               <div className="font-bold text-lg mb-1">📅 Meeting Scheduled!</div>
               <div className="font-semibold">{meetingNotification.title}</div>
@@ -288,7 +392,7 @@ export default function PhaserGame({ roomId }) {
         </div>
 
         {/* Chair Chooser Dialog */}
-        {showChairDialog && (
+        {!isObserver && showChairDialog && (
           <div
             className="absolute top-6 right-6 z-20 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-64"
             style={{ minHeight: '120px' }}
@@ -329,7 +433,7 @@ export default function PhaserGame({ roomId }) {
       {!isFullscreen && (
         localStorage.getItem('role') === 'user'
           ? <SidebarStates socket={socket} gameRef={gameRef} />
-          : <AdminSidebar socket={socket} />
+          : <AdminSidebar socket={socket} gameRef={gameRef} />
       )}
     </div>
   );

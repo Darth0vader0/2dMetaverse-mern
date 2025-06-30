@@ -12,7 +12,7 @@ import { ArrowUp, Armchair, Search, User, X } from 'lucide-react';
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 
-export default function AdminSidebar({ socket }) {
+export default function AdminSidebar({ socket , gameRef}) {
   
   // Admin-specific stats for HR/Product Manager
   const [adminStats, setAdminStats] = useState({
@@ -62,6 +62,21 @@ export default function AdminSidebar({ socket }) {
   
 const [showMeetingDialog, setShowMeetingDialog] = useState(false);
 
+
+  React.useEffect(() => {
+    const scene = gameRef?.current?.scene?.getScene?.('OfficeMapScene');
+    if (showMeetingDialog) {
+      // Disable Phaser keyboard input
+      if (scene && scene.input && scene.input.keyboard && scene.input.keyboard.manager) {
+        scene.input.keyboard.manager.enabled = false;
+      }
+    } else {
+      // Enable Phaser keyboard input
+      if (scene && scene.input && scene.input.keyboard && scene.input.keyboard.manager) {
+        scene.input.keyboard.manager.enabled = true;
+      }
+    }
+  }, [showMeetingDialog, gameRef]);
 const handleScheduleMeeting = ({ title, time }) => {
   const roomId = localStorage.getItem('roomId');
   // You can get participants from your state or context if needed
