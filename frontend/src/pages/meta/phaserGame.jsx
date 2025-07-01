@@ -13,7 +13,7 @@ const socket = io(backendUrl);
 import SidebarStates from '../../components/sidebarStates';
 import ExitModel from '../../components/exitModel';
 import ArrowOptions from '../../components/arrowOptions';
-
+import MeetingRoom from './meetingRoom';
 
 export default function PhaserGame({ roomId }) {
   const gameRef = useRef(null);
@@ -29,6 +29,21 @@ export default function PhaserGame({ roomId }) {
   const [showMeetingDialog, setShowMeetingDialog] = useState(false);
   const [hasMeetingNotification, setHasMeetingNotification] = useState(false);
   // Make these available globally for Phaser to call
+
+  const [inMeeting, setInMeeting] = useState(false);
+const [meetingRoomId, setMeetingRoomId] = useState(null);
+
+const handleJoinMeeting = (meetingData) => {
+  setMeetingRoomId(meetingData.roomId);
+  setInMeeting(true);
+  // Optionally: Remove character from map here (see step 4)
+};
+
+const handleLeaveMeeting = () => {
+  setInMeeting(false);
+  setMeetingRoomId(null);
+  // Optionally: Add character back to map here
+};
   window.setShowExitModal = setShowExitModal;
   window.setExitPopupDismissed = setExitPopupDismissed;
 
@@ -365,6 +380,7 @@ export default function PhaserGame({ roomId }) {
                 <button
                   onClick={() => {
                     // Handle join meeting
+                    handleJoinMeeting(meetingNotification);
                     setShowMeetingDialog(false);
                   }}
                   className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
@@ -391,6 +407,14 @@ export default function PhaserGame({ roomId }) {
           )}
         </div>
 
+          {inMeeting && (
+  <MeetingRoom
+    roomId={meetingRoomId}
+    socket={socket}
+    userId={localStorage.getItem("userId")}
+    onLeave={handleLeaveMeeting}
+  />
+)}
         {/* Chair Chooser Dialog */}
         {!isObserver && showChairDialog && (
           <div
