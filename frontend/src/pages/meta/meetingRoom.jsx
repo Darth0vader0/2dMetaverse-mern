@@ -24,12 +24,6 @@ export default function MeetingRoom({ roomId, participants = [], userId, onLeave
     { userId: "user3", username: "Mike Johnson", isVideoOn: true, isMuted: false, avatar: "MJ" },
     { userId: "user4", username: "Emma Davis", isVideoOn: true, isMuted: false, avatar: "ED" },
     { userId: "user5", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user6", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user7", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user7", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user7", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user7", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
-    { userId: "user7", username: "Ryan Wilson", isVideoOn: false, isMuted: false, avatar: "RW" },
   ];
 
   const allParticipants = participants.length > 0 ? participants : mockParticipants;
@@ -39,8 +33,8 @@ export default function MeetingRoom({ roomId, participants = [], userId, onLeave
     if (count <= 1) return "grid-cols-1";
     if (count <= 2) return "grid-cols-2";
     if (count <= 4) return "grid-cols-2";
-    if (count <= 6) return "grid-cols-4";
-    if (count <= 9) return "grid-cols-5";
+    if (count <= 6) return "grid-cols-3";
+    if (count <= 9) return "grid-cols-3";
     return "grid-cols-4";
   };
 
@@ -130,27 +124,88 @@ export default function MeetingRoom({ roomId, participants = [], userId, onLeave
       <div className="flex-1 p-4">
         {selectedParticipant ? (
           /* Selected Participant Full View */
-          <div className="h-full flex flex-col">
-            <div className="flex-1 mb-4">
-              <ParticipantVideo
-                participant={selectedParticipant}
-                isSelected={false}
-                onClick={() => {}}
-              />
+          <div className="h-full flex flex-col animate-in fade-in duration-300">
+            {/* Main Featured Participant */}
+            <div className="flex-1 mb-4 relative">
+              <div className="w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 relative">
+                {selectedParticipant.isVideoOn ? (
+                  /* Video Feed Full Screen */
+                  <div className="w-full h-full bg-gray-800 flex items-center justify-center relative">
+                    <div className="text-6xl">📹</div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div className="absolute top-4 left-4 text-white/80 text-sm">
+                      Video Feed - {selectedParticipant.username}
+                    </div>
+                  </div>
+                ) : (
+                  /* Large Avatar Display */
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative">
+                    {/* Animated Background */}
+                    <div className="absolute inset-0 opacity-20">
+                      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
+                      <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                    </div>
+                    
+                    {/* Large Avatar */}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="w-48 h-48 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-6xl shadow-2xl mb-6 animate-in zoom-in duration-500">
+                        {selectedParticipant.avatar}
+                      </div>
+                      <h2 className="text-white text-3xl font-semibold mb-2">
+                        {selectedParticipant.username}
+                      </h2>
+                      <div className="flex items-center space-x-4 text-gray-300">
+                        {selectedParticipant.isMuted ? (
+                          <div className="flex items-center space-x-2 bg-red-500/20 px-3 py-1 rounded-full">
+                            <MicOff className="w-5 h-5 text-red-400" />
+                            <span className="text-sm">Muted</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center space-x-2 bg-green-500/20 px-3 py-1 rounded-full">
+                            <Mic className="w-5 h-5 text-green-400" />
+                            <span className="text-sm">Speaking</span>
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Click to minimize indicator */}
+                <div className="absolute top-4 right-4 bg-black/50 rounded-lg px-3 py-1 text-white/70 text-sm cursor-pointer hover:bg-black/70 transition-all"
+                     onClick={() => setSelectedParticipant(null)}>
+                  ← Back to Grid
+                </div>
+              </div>
             </div>
             
             {/* Other Participants Strip */}
-            <div className="h-32">
-              <div className="flex space-x-2 overflow-x-auto pb-2">
+            <div className="h-28 bg-gray-800/50 rounded-lg p-3">
+              <div className="flex space-x-3 overflow-x-auto scrollbar-hide">
                 {allParticipants
                   .filter(p => p.userId !== selectedParticipant.userId)
                   .map((participant) => (
-                    <div key={participant.userId} className="flex-shrink-0 w-24 h-28">
-                      <ParticipantVideo
-                        participant={participant}
-                        isSelected={false}
-                        onClick={setSelectedParticipant}
-                      />
+                    <div key={participant.userId} className="flex-shrink-0 w-20 h-20 group">
+                      <div
+                        className="w-full h-full rounded-lg overflow-hidden cursor-pointer transition-all duration-200 hover:scale-110 hover:shadow-lg"
+                        onClick={() => setSelectedParticipant(participant)}
+                      >
+                        {participant.isVideoOn ? (
+                          <div className="w-full h-full bg-gray-700 flex items-center justify-center text-xs text-gray-400">
+                            📹
+                          </div>
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">
+                              {participant.avatar}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-center text-xs text-gray-400 mt-1 truncate">
+                        {participant.username}
+                      </div>
                     </div>
                   ))}
               </div>
@@ -159,7 +214,7 @@ export default function MeetingRoom({ roomId, participants = [], userId, onLeave
         ) : (
           /* Grid View */
           <div className={`
-            h-full grid gap-4 
+            h-full grid gap-4 animate-in fade-in duration-300
             ${getGridLayout(allParticipants.length)} 
             ${getGridRows(allParticipants.length)}
           `}>
