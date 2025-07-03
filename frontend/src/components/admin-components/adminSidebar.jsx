@@ -77,16 +77,17 @@ const [showMeetingDialog, setShowMeetingDialog] = useState(false);
       }
     }
   }, [showMeetingDialog, gameRef]);
-const handleScheduleMeeting = ({ title, time }) => {
-  const roomId = localStorage.getItem('roomId');
-  // You can get participants from your state or context if needed
-  socket.emit('scheduleMeeting', {
-    title,
-    time,
-    participants: [], // or your participant list
-    roomId,
-  });
-};
+  const handleScheduleMeeting = ({ title, date, time, description }) => {
+    const roomId = localStorage.getItem('roomId');
+    socket.emit('scheduleMeeting', {
+      title,
+      date,
+      time,
+      description,
+      participants: [], // or your participant list
+      roomId,
+    });
+  };
 
   const handleExit = () => {
     socket.emit('leaveRoom');
