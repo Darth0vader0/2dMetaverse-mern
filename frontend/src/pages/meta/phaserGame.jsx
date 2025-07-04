@@ -328,19 +328,7 @@ export default function PhaserGame({ roomId }) {
                       <div className="bg-purple-600/20 rounded-full p-2 mt-0.5">
                         <Users className="text-purple-400" size={16} />
                       </div>
-                      <div className="flex-1">
-                        <p className="text-white text-sm font-medium mb-1">Participants</p>
-                        <div className="flex flex-wrap gap-1">
-                          {meetingNotification.participants.map((participant, index) => (
-                            <span
-                              key={index}
-                              className="bg-slate-600/50 text-slate-300 text-xs px-2 py-1 rounded-full"
-                            >
-                              {participant}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                    
                     </div>
                   </div>
                   <div className="flex space-x-3 pt-4">
@@ -368,33 +356,28 @@ export default function PhaserGame({ roomId }) {
 
           {/* Admin: Meeting Timer */}
           {isObserver && meetingTimer && (
-  <div className="fixed top-8 left-8 z-50 flex flex-col items-center">
-    <div className="bg-gradient-to-br from-blue-700 to-blue-900 rounded-full shadow-2xl border-4 border-blue-400 w-40 h-40 flex flex-col items-center justify-center relative animate-fade-in">
-      {/* Stopwatch Icon */}
-      <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#38bdf8" strokeWidth="2" fill="#1e293b"/>
-          <rect x="11" y="4" width="2" height="4" rx="1" fill="#38bdf8"/>
-          <rect x="16.24" y="7.76" width="2" height="4" rx="1" transform="rotate(45 16.24 7.76)" fill="#38bdf8"/>
-        </svg>
-      </div>
-      {/* Timer */}
-      <div className="text-4xl font-mono font-bold text-white mb-2 mt-6">
-        {Math.floor(meetingTimer.timeLeft / 60).toString().padStart(2, '0')}
-        :
-        {(meetingTimer.timeLeft % 60).toString().padStart(2, '0')}
-      </div>
-      <div className="text-white text-center font-semibold px-2">
-        {meetingTimer.meetingData.title}
-      </div>
-    </div>
-    {/* Details below the stopwatch */}
-    <div className="mt-3 bg-blue-900/80 rounded-lg px-4 py-2 text-white text-xs shadow">
-      <div>Time: {meetingTimer.meetingData.time}</div>
-      <div>Participants: {meetingTimer.meetingData.participants?.join(', ')}</div>
-    </div>
-  </div>
-)}
+            <div className="fixed top-8 left-8 z-50 flex flex-col items-center">
+              <div className="bg-gradient-to-br from-blue-700 to-blue-900 rounded-full shadow-2xl border-4 border-blue-400 w-40 h-40 flex flex-col items-center justify-center relative animate-fade-in">
+                {/* Stopwatch Icon */}
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="#38bdf8" strokeWidth="2" fill="#1e293b" />
+                    <rect x="11" y="4" width="2" height="4" rx="1" fill="#38bdf8" />
+                    <rect x="16.24" y="7.76" width="2" height="4" rx="1" transform="rotate(45 16.24 7.76)" fill="#38bdf8" />
+                  </svg>
+                </div>
+                {/* Timer */}
+                <div className="text-4xl font-mono font-bold text-white mb-2 mt-6">
+                  {Math.floor(meetingTimer.timeLeft / 60).toString().padStart(2, '0')}
+                  :
+                  {(meetingTimer.timeLeft % 60).toString().padStart(2, '0')}
+                </div>
+                <div className="text-white text-center font-semibold px-2">
+                  {meetingTimer.meetingData.title}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Meeting Room */}

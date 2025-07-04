@@ -1,5 +1,5 @@
 const players = {};
-
+const meetings = {};
 const rooms = {}; // { roomId: Set of socket ids }
 const gameSocket = (io) => {
 
@@ -72,6 +72,7 @@ const gameSocket = (io) => {
         });
 
         socket.on('scheduleMeeting', (meetingData) => {
+            console.log("meetingData", meetingData)
             io.to(meetingData.roomId).emit('meetingScheduled', meetingData);
         });
 
