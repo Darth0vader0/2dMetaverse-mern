@@ -37,7 +37,7 @@ A real-time **2D virtual office** built for remote collaboration using **React**
 ### 1. 📥 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/2dmeta-mern.git
+git clone https://github.com/Darth0vader0/2dmeta-mern.git
 cd 2dmeta-mern
 ```
 
